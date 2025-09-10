@@ -25,3 +25,6 @@ pluginManagement {
         maven("https://files.minecraftforge.net/maven/")
     }
 }
+
+include("forge-1.7.10")
+project(":forge-1.7.10").projectDir = file("./forge/1.7.10")
