@@ -1,7 +1,7 @@
 package am2.items.renderers;
 
 import am2.api.spell.ItemSpellBase;
-import am2.api.spell.enums.Affinity;
+import am2.common.api.spell.enums.Affinity;
 import am2.items.ItemSpellBook;
 import am2.particles.AMParticleIcons;
 import am2.spell.SpellUtils;

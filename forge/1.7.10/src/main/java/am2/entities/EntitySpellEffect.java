@@ -4,7 +4,7 @@ import am2.AMCore;
 import am2.api.math.AMLineSegment;
 import am2.api.math.AMVector3;
 import am2.api.spell.component.interfaces.ISpellModifier;
-import am2.api.spell.enums.SpellModifiers;
+import am2.common.api.spell.enums.SpellModifiers;
 import am2.buffs.BuffEffectFrostSlowed;
 import am2.damage.DamageSources;
 import am2.particles.*;

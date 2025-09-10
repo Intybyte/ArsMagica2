@@ -1,6 +1,6 @@
 package am2.utility;
 
-import am2.api.spell.enums.Affinity;
+import am2.common.api.spell.enums.Affinity;
 import am2.items.ItemsCommonProxy;
 import am2.spell.SpellUtils;
 import net.minecraft.item.ItemStack;

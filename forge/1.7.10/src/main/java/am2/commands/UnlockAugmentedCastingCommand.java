@@ -1,6 +1,6 @@
 package am2.commands;
 
-import am2.api.spell.enums.SkillPointTypes;
+import am2.common.api.spell.enums.SkillPointTypes;
 import am2.playerextensions.SkillData;
 import am2.spell.SkillManager;
 import net.minecraft.command.CommandBase;

@@ -3,7 +3,7 @@ package am2.blocks.tileentities.flickers;
 import am2.LogHelper;
 import am2.api.flickers.IFlickerFunctionality;
 import am2.api.flickers.IFlickerRegistry;
-import am2.api.spell.enums.Affinity;
+import am2.common.api.spell.enums.Affinity;
 
 import java.util.TreeMap;
 

@@ -1,7 +1,7 @@
 package am2.particles;
 
 import am2.AMCore;
-import am2.api.spell.enums.Affinity;
+import am2.common.api.spell.enums.Affinity;
 import am2.texture.ResourceManager;
 import net.minecraft.client.renderer.texture.IIconRegister;
 import net.minecraft.util.IIcon;

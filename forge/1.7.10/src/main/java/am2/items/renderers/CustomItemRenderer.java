@@ -1,6 +1,6 @@
 package am2.items.renderers;
 
-import am2.api.spell.enums.Affinity;
+import am2.common.api.spell.enums.Affinity;
 import am2.bosses.models.ModelPlantGuardianSickle;
 import am2.items.ItemsCommonProxy;
 import am2.proxy.gui.ModelLibrary;

@@ -5,7 +5,7 @@ import am2.api.events.ManaCostEvent;
 import am2.api.math.AMVector3;
 import am2.api.spell.ItemSpellBase;
 import am2.api.spell.component.interfaces.ISpellShape;
-import am2.api.spell.enums.Affinity;
+import am2.common.api.spell.enums.Affinity;
 import am2.guis.ArsMagicaGuiIdList;
 import am2.playerextensions.SkillData;
 import am2.spell.*;

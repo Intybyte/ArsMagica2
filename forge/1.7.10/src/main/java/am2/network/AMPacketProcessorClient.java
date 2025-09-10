@@ -4,7 +4,7 @@ import am2.AMCore;
 import am2.LogHelper;
 import am2.api.power.IPowerNode;
 import am2.api.spell.component.interfaces.ISpellModifier;
-import am2.api.spell.enums.SpellModifiers;
+import am2.common.api.spell.enums.SpellModifiers;
 import am2.blocks.tileentities.TileEntityCalefactor;
 import am2.blocks.tileentities.TileEntityCraftingAltar;
 import am2.blocks.tileentities.TileEntityLectern;

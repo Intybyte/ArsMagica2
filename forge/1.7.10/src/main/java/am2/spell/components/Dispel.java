@@ -3,7 +3,7 @@ package am2.spell.components;
 import am2.AMCore;
 import am2.api.ArsMagicaApi;
 import am2.api.spell.component.interfaces.ISpellComponent;
-import am2.api.spell.enums.Affinity;
+import am2.common.api.spell.enums.Affinity;
 import am2.buffs.BuffEffect;
 import am2.buffs.BuffList;
 import am2.items.ItemsCommonProxy;

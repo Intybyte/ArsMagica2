@@ -1,6 +1,6 @@
 package am2.commands;
 
-import am2.api.spell.enums.Affinity;
+import am2.common.api.spell.enums.Affinity;
 import am2.playerextensions.AffinityData;
 import net.minecraft.command.CommandBase;
 import net.minecraft.command.ICommandSender;

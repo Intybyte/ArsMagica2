@@ -3,7 +3,7 @@ package am2.blocks.tileentities.flickers;
 import am2.AMCore;
 import am2.api.flickers.IFlickerController;
 import am2.api.flickers.IFlickerFunctionality;
-import am2.api.spell.enums.Affinity;
+import am2.common.api.spell.enums.Affinity;
 import am2.entities.SpawnBlacklists;
 import am2.items.ItemsCommonProxy;
 import am2.particles.AMParticle;

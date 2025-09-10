@@ -2,7 +2,7 @@ package am2.blocks.tileentities;
 
 import am2.LogHelper;
 import am2.api.math.AMVector3;
-import am2.api.spell.enums.Affinity;
+import am2.common.api.spell.enums.Affinity;
 import am2.blocks.BlocksCommonProxy;
 import am2.blocks.tileentities.flickers.FlickerOperatorRegistry;
 import am2.blocks.tileentities.flickers.TileEntityFlickerControllerBase;
@@ -23,7 +23,6 @@ import net.minecraftforge.common.util.ForgeDirection;
 
 import java.util.ArrayList;
 import java.util.HashMap;
-import java.util.Random;
 
 public class TileEntityFlickerHabitat extends TileEntityFlickerControllerBase implements IInventory{
 	private static final float FULL_CIRCLE = 360.0f;

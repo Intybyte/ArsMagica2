@@ -3,7 +3,7 @@ package am2.items;
 import am2.AMCore;
 import am2.MeteorSpawnHelper;
 import am2.api.math.AMVector3;
-import am2.api.spell.enums.SkillPointTypes;
+import am2.common.api.spell.enums.SkillPointTypes;
 import am2.entities.*;
 import am2.particles.AMLineArc;
 import am2.playerextensions.ExtendedProperties;

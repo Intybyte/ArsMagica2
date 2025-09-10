@@ -4,7 +4,7 @@ import am2.AMCore;
 import am2.AMCreativeTab;
 import am2.LogHelper;
 import am2.api.flickers.IFlickerFunctionality;
-import am2.api.spell.enums.Affinity;
+import am2.common.api.spell.enums.Affinity;
 import am2.armor.*;
 import am2.blocks.BlocksCommonProxy;
 import am2.blocks.tileentities.flickers.FlickerOperatorRegistry;

@@ -3,7 +3,7 @@ package am2.blocks.tileentities.flickers;
 import am2.api.flickers.IFlickerController;
 import am2.api.flickers.IFlickerFunctionality;
 import am2.api.math.AMVector3;
-import am2.api.spell.enums.Affinity;
+import am2.common.api.spell.enums.Affinity;
 import am2.blocks.BlockCrystalMarker;
 import am2.blocks.tileentities.TileEntityCrystalMarker;
 import am2.blocks.tileentities.TileEntityFlickerHabitat;

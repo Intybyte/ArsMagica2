@@ -1,7 +1,7 @@
 package am2.blocks.tileentities.flickers;
 
 import am2.api.flickers.IFlickerController;
-import am2.api.spell.enums.Affinity;
+import am2.common.api.spell.enums.Affinity;
 import am2.items.ItemsCommonProxy;
 import net.minecraft.init.Blocks;
 import net.minecraft.item.ItemStack;

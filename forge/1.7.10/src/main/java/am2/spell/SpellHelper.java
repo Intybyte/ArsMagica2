@@ -7,8 +7,8 @@ import am2.api.spell.ItemSpellBase;
 import am2.api.spell.component.interfaces.ISpellComponent;
 import am2.api.spell.component.interfaces.ISpellModifier;
 import am2.api.spell.component.interfaces.ISpellShape;
-import am2.api.spell.enums.SpellCastResult;
-import am2.api.spell.enums.SpellModifiers;
+import am2.common.api.spell.enums.SpellCastResult;
+import am2.common.api.spell.enums.SpellModifiers;
 import am2.armor.ArmorHelper;
 import am2.armor.ArsMagicaArmorMaterial;
 import am2.blocks.BlocksCommonProxy;
@@ -40,7 +40,6 @@ import net.minecraft.world.World;
 import net.minecraftforge.common.MinecraftForge;
 
 import java.util.ArrayList;
-import java.util.Random;
 
 public class SpellHelper{
 

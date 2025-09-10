@@ -1,6 +1,6 @@
 package am2.api.flickers;
 
-import am2.api.spell.enums.Affinity;
+import am2.common.api.spell.enums.Affinity;
 import net.minecraft.world.World;
 
 public interface IFlickerFunctionality{

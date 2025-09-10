@@ -25,14 +25,13 @@ public class BreadCrumb implements Comparable<BreadCrumb>{
 	public boolean equals(Object o){
 		if (o instanceof BreadCrumb){
 			BreadCrumb b = (BreadCrumb)o;
-			if (this.position.equals(b.position))
-				return true;
+			return this.position.equals(b.position);
 		}
 		return false;
 	}
 
 	@Override
 	public int compareTo(BreadCrumb o){
-		return this.cost < o.cost ? -1 : this.cost > o.cost ? 1 : 0;
+		return Integer.compare(this.cost, o.cost);
 	}
 }

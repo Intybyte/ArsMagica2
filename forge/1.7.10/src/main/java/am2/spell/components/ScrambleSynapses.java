@@ -1,8 +1,8 @@
 package am2.spell.components;
 
 import am2.api.spell.component.interfaces.ISpellComponent;
-import am2.api.spell.enums.Affinity;
-import am2.api.spell.enums.SpellModifiers;
+import am2.common.api.spell.enums.Affinity;
+import am2.common.api.spell.enums.SpellModifiers;
 import am2.buffs.BuffEffectScrambleSynapses;
 import am2.spell.SpellUtils;
 import net.minecraft.entity.Entity;

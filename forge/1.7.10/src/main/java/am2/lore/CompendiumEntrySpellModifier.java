@@ -2,7 +2,7 @@ package am2.lore;
 
 import am2.LogHelper;
 import am2.api.SkillTreeEntry;
-import am2.api.spell.enums.SpellModifiers;
+import am2.common.api.spell.enums.SpellModifiers;
 import am2.guis.GuiArcaneCompendium;
 import am2.items.ItemsCommonProxy;
 import am2.spell.SkillManager;

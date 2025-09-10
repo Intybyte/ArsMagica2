@@ -1,6 +1,6 @@
 package am2.api.events;
 
-import am2.api.spell.enums.SpellModifiers;
+import am2.common.api.spell.enums.SpellModifiers;
 import cpw.mods.fml.common.eventhandler.Event;
 import net.minecraft.entity.EntityLivingBase;
 import net.minecraft.item.ItemStack;

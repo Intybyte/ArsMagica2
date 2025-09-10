@@ -2,7 +2,7 @@ package am2.entities;
 
 import am2.AMCore;
 import am2.api.math.AMVector3;
-import am2.api.spell.enums.Affinity;
+import am2.common.api.spell.enums.Affinity;
 import am2.armor.ArmorHelper;
 import am2.armor.infusions.GenericImbuement;
 import am2.items.ItemsCommonProxy;

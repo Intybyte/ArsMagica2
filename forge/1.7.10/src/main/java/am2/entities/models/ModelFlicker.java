@@ -1,6 +1,6 @@
 package am2.entities.models;
 
-import am2.api.spell.enums.Affinity;
+import am2.common.api.spell.enums.Affinity;
 import am2.entities.EntityFlicker;
 import net.minecraft.client.model.ModelBase;
 import net.minecraft.client.model.ModelRenderer;

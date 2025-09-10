@@ -4,7 +4,7 @@ import am2.AMCore;
 import am2.api.ArsMagicaApi;
 import am2.api.math.AMVector3;
 import am2.api.spell.component.interfaces.ISpellComponent;
-import am2.api.spell.enums.Affinity;
+import am2.common.api.spell.enums.Affinity;
 import am2.items.ItemsCommonProxy;
 import am2.particles.AMParticle;
 import am2.particles.ParticleApproachPoint;

@@ -3,7 +3,7 @@ package am2.playerextensions;
 import am2.AMCore;
 import am2.api.IAffinityData;
 import am2.api.math.AMVector3;
-import am2.api.spell.enums.Affinity;
+import am2.common.api.spell.enums.Affinity;
 import am2.network.AMDataReader;
 import am2.network.AMDataWriter;
 import am2.network.AMNetHandler;

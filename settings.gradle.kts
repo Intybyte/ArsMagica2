@@ -28,3 +28,5 @@ pluginManagement {
 
 include("forge-1.7.10")
 project(":forge-1.7.10").projectDir = file("./forge/1.7.10")
+
+include("common")

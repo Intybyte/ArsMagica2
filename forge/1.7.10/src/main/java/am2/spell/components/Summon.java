@@ -2,8 +2,8 @@ package am2.spell.components;
 
 import am2.api.power.PowerTypes;
 import am2.api.spell.component.interfaces.ISpellComponent;
-import am2.api.spell.enums.Affinity;
-import am2.api.spell.enums.SpellModifiers;
+import am2.common.api.spell.enums.Affinity;
+import am2.common.api.spell.enums.SpellModifiers;
 import am2.blocks.BlocksCommonProxy;
 import am2.entities.EntityBattleChicken;
 import am2.entities.EntityHellCow;

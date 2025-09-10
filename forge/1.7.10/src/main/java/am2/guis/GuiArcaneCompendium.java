@@ -9,7 +9,7 @@ import am2.api.spell.component.interfaces.IRitualInteraction;
 import am2.api.spell.component.interfaces.ISkillTreeEntry;
 import am2.api.spell.component.interfaces.ISpellModifier;
 import am2.api.spell.component.interfaces.ISpellPart;
-import am2.api.spell.enums.SpellModifiers;
+import am2.common.api.spell.enums.SpellModifiers;
 import am2.blocks.BlocksCommonProxy;
 import am2.blocks.RecipesEssenceRefiner;
 import am2.bosses.IArsMagicaBoss;

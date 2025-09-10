@@ -2,8 +2,8 @@ package am2.spell.shapes;
 
 import am2.api.spell.ItemSpellBase;
 import am2.api.spell.component.interfaces.ISpellShape;
-import am2.api.spell.enums.Affinity;
-import am2.api.spell.enums.SpellCastResult;
+import am2.common.api.spell.enums.Affinity;
+import am2.common.api.spell.enums.SpellCastResult;
 import net.minecraft.entity.EntityLivingBase;
 import net.minecraft.item.ItemStack;
 import net.minecraft.world.World;

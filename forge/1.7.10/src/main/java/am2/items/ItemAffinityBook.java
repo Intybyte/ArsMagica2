@@ -1,6 +1,6 @@
 package am2.items;
 
-import am2.api.spell.enums.Affinity;
+import am2.common.api.spell.enums.Affinity;
 import am2.playerextensions.AffinityData;
 import am2.texture.ResourceManager;
 import cpw.mods.fml.relauncher.Side;

@@ -4,7 +4,7 @@ import am2.AMCore;
 import am2.api.events.PlayerMagicLevelChangeEvent;
 import am2.api.events.SkillLearnedEvent;
 import am2.api.events.SpellCastingEvent;
-import am2.api.spell.enums.SkillPointTypes;
+import am2.common.api.spell.enums.SkillPointTypes;
 import am2.playerextensions.ExtendedProperties;
 import am2.spell.SkillTreeManager;
 import am2.spell.components.Summon;

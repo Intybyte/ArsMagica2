@@ -2,9 +2,9 @@ package am2.spell.shapes;
 
 import am2.api.spell.ItemSpellBase;
 import am2.api.spell.component.interfaces.ISpellShape;
-import am2.api.spell.enums.Affinity;
-import am2.api.spell.enums.SpellCastResult;
-import am2.api.spell.enums.SpellModifiers;
+import am2.common.api.spell.enums.Affinity;
+import am2.common.api.spell.enums.SpellCastResult;
+import am2.common.api.spell.enums.SpellModifiers;
 import am2.items.ItemsCommonProxy;
 import am2.spell.SpellHelper;
 import am2.spell.SpellUtils;

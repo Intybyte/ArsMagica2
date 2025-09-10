@@ -1,4 +1,4 @@
-package am2.api.spell.enums;
+package am2.common.api.spell.enums;
 
 public class BuffPowerLevel{
 	public static final int Low = 0;

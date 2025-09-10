@@ -107,6 +107,8 @@ dependencies {
     // api(rfg.deobf("curse.maven:ic2-242638:2353971"))
     // Example: grab the ic2 jar from libs/ in the workspace and deobfuscate
     // api(rfg.deobf(project.files("libs/ic2.jar")))
+    implementation(project(":common"))
+
     compileOnly(files("libs/Thaumcraft-1.7.10-4.2.3.5.jar"))
     compileOnly(files("libs/AnimationAPI-1.7.10-1.2.4.jar"))
 }
@@ -130,6 +132,8 @@ tasks.named<Jar>("jar") {
             "FMLCorePluginContainsFMLMod" to "true"
         )
     }
+
+    from(project(":common").sourceSets["main"].output)
 
     archiveBaseName = "AM2"
 }

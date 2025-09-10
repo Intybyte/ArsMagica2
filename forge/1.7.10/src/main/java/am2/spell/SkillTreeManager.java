@@ -5,8 +5,8 @@ import am2.LogHelper;
 import am2.api.SkillTreeEntry;
 import am2.api.spell.ISkillTreeManager;
 import am2.api.spell.component.interfaces.ISkillTreeEntry;
-import am2.api.spell.enums.SkillPointTypes;
-import am2.api.spell.enums.SkillTrees;
+import am2.common.api.spell.enums.SkillPointTypes;
+import am2.common.api.spell.enums.SkillTrees;
 
 import java.security.InvalidParameterException;
 import java.util.ArrayList;

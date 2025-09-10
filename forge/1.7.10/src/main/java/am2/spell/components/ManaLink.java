@@ -2,7 +2,7 @@ package am2.spell.components;
 
 import am2.AMCore;
 import am2.api.spell.component.interfaces.ISpellComponent;
-import am2.api.spell.enums.Affinity;
+import am2.common.api.spell.enums.Affinity;
 import am2.blocks.BlocksCommonProxy;
 import am2.items.ItemsCommonProxy;
 import am2.particles.AMLineArc;

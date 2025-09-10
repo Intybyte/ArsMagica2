@@ -6,8 +6,8 @@ import am2.api.IExtendedProperties;
 import am2.api.events.PlayerMagicLevelChangeEvent;
 import am2.api.math.AMVector2;
 import am2.api.math.AMVector3;
-import am2.api.spell.enums.ContingencyTypes;
-import am2.api.spell.enums.SkillPointTypes;
+import am2.common.api.spell.enums.ContingencyTypes;
+import am2.common.api.spell.enums.SkillPointTypes;
 import am2.armor.ArmorHelper;
 import am2.armor.ArsMagicaArmorMaterial;
 import am2.armor.infusions.GenericImbuement;
@@ -1210,7 +1210,7 @@ public class ExtendedProperties implements IExtendedProperties, IExtendedEntityP
 		return false;
 	}
 
-	private class ManaLinkEntry{
+	private static class ManaLinkEntry{
 		private final int entityID;
 		private final int range;
 
@@ -1221,7 +1221,7 @@ public class ExtendedProperties implements IExtendedProperties, IExtendedEntityP
 
 		private EntityLivingBase getEntity(World world){
 			Entity e = world.getEntityByID(entityID);
-			if (e == null || !(e instanceof EntityLivingBase))
+			if (!(e instanceof EntityLivingBase))
 				return null;
 			return (EntityLivingBase)e;
 		}
@@ -1267,11 +1267,9 @@ public class ExtendedProperties implements IExtendedProperties, IExtendedEntityP
 	public void performRemoteOp(int mask){
 		if (entity.worldObj.isRemote)
 			return;
-		switch (mask){
-		case BIT_FLIPPED:
+		if (mask == BIT_FLIPPED){
 			toggleFlipped();
 			forceSync();
-			break;
 		}
 	}
 }

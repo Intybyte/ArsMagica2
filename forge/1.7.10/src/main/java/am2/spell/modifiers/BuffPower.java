@@ -1,7 +1,7 @@
 package am2.spell.modifiers;
 
 import am2.api.spell.component.interfaces.ISpellModifier;
-import am2.api.spell.enums.SpellModifiers;
+import am2.common.api.spell.enums.SpellModifiers;
 import net.minecraft.entity.Entity;
 import net.minecraft.entity.EntityLivingBase;
 import net.minecraft.init.Items;

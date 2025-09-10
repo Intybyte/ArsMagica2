@@ -1,8 +1,8 @@
 package am2.api.spell;
 
 import am2.api.spell.component.interfaces.ISkillTreeEntry;
-import am2.api.spell.enums.SkillPointTypes;
-import am2.api.spell.enums.SkillTrees;
+import am2.common.api.spell.enums.SkillPointTypes;
+import am2.common.api.spell.enums.SkillTrees;
 
 public interface ISkillTreeManager{
 	/**

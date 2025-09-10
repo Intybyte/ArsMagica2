@@ -3,7 +3,7 @@ package am2.containers;
 import am2.api.spell.component.interfaces.ISkillTreeEntry;
 import am2.api.spell.component.interfaces.ISpellModifier;
 import am2.api.spell.component.interfaces.ISpellPart;
-import am2.api.spell.enums.SpellModifiers;
+import am2.common.api.spell.enums.SpellModifiers;
 import am2.blocks.tileentities.TileEntityInscriptionTable;
 import am2.containers.slots.SlotInscriptionTable;
 import am2.spell.SpellValidator;

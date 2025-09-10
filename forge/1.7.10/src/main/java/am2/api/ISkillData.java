@@ -1,8 +1,8 @@
 package am2.api;
 
 import am2.api.spell.component.interfaces.ISkillTreeEntry;
-import am2.api.spell.enums.LearnStates;
-import am2.api.spell.enums.SkillPointTypes;
+import am2.common.api.spell.enums.LearnStates;
+import am2.common.api.spell.enums.SkillPointTypes;
 import net.minecraft.entity.player.EntityPlayer;
 
 public interface ISkillData{

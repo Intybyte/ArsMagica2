@@ -1,7 +1,7 @@
 package am2.api.events;
 
 import am2.api.spell.ItemSpellBase;
-import am2.api.spell.enums.SpellCastResult;
+import am2.common.api.spell.enums.SpellCastResult;
 import cpw.mods.fml.common.eventhandler.Cancelable;
 import cpw.mods.fml.common.eventhandler.Event;
 import net.minecraft.entity.EntityLivingBase;

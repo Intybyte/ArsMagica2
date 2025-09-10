@@ -3,7 +3,7 @@ package am2.items;
 import am2.api.power.IPowerNode;
 import am2.api.power.PowerTypes;
 import am2.api.spell.component.interfaces.ISpellShape;
-import am2.api.spell.enums.SpellCastResult;
+import am2.common.api.spell.enums.SpellCastResult;
 import am2.network.AMNetHandler;
 import am2.playerextensions.SkillData;
 import am2.power.PowerNodeRegistry;

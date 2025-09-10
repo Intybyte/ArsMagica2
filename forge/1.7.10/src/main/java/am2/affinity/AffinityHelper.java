@@ -4,8 +4,8 @@ import am2.AMCore;
 import am2.api.events.ManaCostEvent;
 import am2.api.events.SpellCastingEvent;
 import am2.api.math.AMVector3;
-import am2.api.spell.enums.Affinity;
-import am2.api.spell.enums.SpellCastResult;
+import am2.common.api.spell.enums.Affinity;
+import am2.common.api.spell.enums.SpellCastResult;
 import am2.buffs.*;
 import am2.items.ItemsCommonProxy;
 import am2.network.AMDataWriter;
@@ -40,7 +40,6 @@ import net.minecraftforge.event.entity.living.LivingFallEvent;
 import net.minecraftforge.event.entity.living.LivingHurtEvent;
 
 import java.util.List;
-import java.util.Random;
 
 public class AffinityHelper{
 

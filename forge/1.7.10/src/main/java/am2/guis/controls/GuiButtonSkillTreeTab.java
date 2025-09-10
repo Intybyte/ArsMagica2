@@ -1,6 +1,6 @@
 package am2.guis.controls;
 
-import am2.api.spell.enums.SkillTrees;
+import am2.common.api.spell.enums.SkillTrees;
 import net.minecraft.client.Minecraft;
 import net.minecraft.client.gui.FontRenderer;
 import net.minecraft.client.gui.GuiButton;
