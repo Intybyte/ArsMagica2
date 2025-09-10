@@ -16,6 +16,7 @@ import am2.playerextensions.SkillData;
 import am2.spell.SkillManager;
 import am2.spell.SkillTreeManager;
 import am2.texture.SpellIconManager;
+import cpw.mods.fml.common.registry.GameRegistry;
 import net.minecraft.client.Minecraft;
 import net.minecraft.client.gui.FontRenderer;
 import net.minecraft.client.gui.GuiButton;
@@ -23,6 +24,7 @@ import net.minecraft.client.gui.GuiScreen;
 import net.minecraft.client.renderer.RenderHelper;
 import net.minecraft.client.renderer.Tessellator;
 import net.minecraft.entity.player.EntityPlayer;
+import net.minecraft.item.Item;
 import net.minecraft.util.IIcon;
 import net.minecraft.util.ResourceLocation;
 import net.minecraft.util.StatCollector;
@@ -225,7 +227,10 @@ public class GuiSkillTrees extends GuiScreen{
 				for (Affinity a : aff){
 					if (a == Affinity.NONE)
 						continue;
-					DrawIconAtXY(a.representItem.getIconFromDamage(a.representMeta), "item", affX, affY, 16, 16, false);
+
+					Item item = GameRegistry.findItem(a.representItem.namespace, a.representItem.key);
+
+					DrawIconAtXY(item.getIconFromDamage(a.representMeta), "item", affX, affY, 16, 16, false);
 					affX += 18;
 				}
 			}
@@ -357,7 +362,9 @@ public class GuiSkillTrees extends GuiScreen{
 		AffinityData ad = AffinityData.For(Minecraft.getMinecraft().thePlayer);
 
 		for (Affinity aff : Affinity.getOrderedAffinities()){
-			IIcon IIcon = aff.representItem.getIconFromDamage(aff.representMeta);
+			Item item = GameRegistry.findItem(aff.representItem.namespace, aff.representItem.key);
+
+			IIcon IIcon = item.getIconFromDamage(aff.representMeta);
 			int newX = (int)(cx + Math.cos(Math.toRadians(angle)) * distance);
 			int newY = (int)(cy + Math.sin(Math.toRadians(angle)) * distance);
 

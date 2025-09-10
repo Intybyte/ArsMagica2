@@ -15,11 +15,13 @@ import am2.spell.SkillManager;
 import am2.spell.SpellUtils;
 import am2.texture.ResourceManager;
 import am2.texture.SpellIconManager;
+import cpw.mods.fml.common.registry.GameRegistry;
 import net.minecraft.client.Minecraft;
 import net.minecraft.client.gui.FontRenderer;
 import net.minecraft.client.gui.ScaledResolution;
 import net.minecraft.client.renderer.Tessellator;
 import net.minecraft.client.renderer.entity.RenderItem;
+import net.minecraft.item.Item;
 import net.minecraft.item.ItemStack;
 import net.minecraft.potion.Potion;
 import net.minecraft.potion.PotionEffect;
@@ -323,7 +325,9 @@ public class AMIngameGUI{
 		for (Affinity affinity : ad.getHighestAffinities()){
 			if (affinity == null || affinity == Affinity.NONE) continue;
 			GL11.glColor3f(1.0f, 1.0f, 1.0f);
-			AMGuiHelper.instance.DrawIconAtXY(affinity.representItem.getIconFromDamage(affinity.representMeta), x, y, j, 12, 12, true);
+			Item item = GameRegistry.findItem(affinity.representItem.namespace, affinity.representItem.key);
+
+			AMGuiHelper.instance.DrawIconAtXY(item.getIconFromDamage(affinity.representMeta), x, y, j, 12, 12, true);
 
 			if (AMCore.config.getShowNumerics()){
 				String display = String.format("%.2f%%", AffinityData.For(mc.thePlayer).getAffinityDepth(affinity) * 100);

@@ -4,10 +4,11 @@ import am2.AMCore;
 import am2.AMCreativeTab;
 import am2.LogHelper;
 import am2.api.flickers.IFlickerFunctionality;
-import am2.common.api.spell.enums.Affinity;
 import am2.armor.*;
 import am2.blocks.BlocksCommonProxy;
 import am2.blocks.tileentities.flickers.FlickerOperatorRegistry;
+import am2.common.api.spell.enums.Affinity;
+import am2.common.base.NSKey;
 import am2.enchantments.AMEnchantmentHelper;
 import cpw.mods.fml.common.registry.GameRegistry;
 import net.minecraft.init.Blocks;
@@ -281,17 +282,19 @@ public class ItemsCommonProxy{
 
 		itemTab.setIconItemIndex(itemOre);
 
-		Affinity.NONE.setRepresentItem(essence, essence.META_BASE_CORE);
-		Affinity.AIR.setRepresentItem(essence, essence.META_AIR);
-		Affinity.ARCANE.setRepresentItem(essence, essence.META_ARCANE);
-		Affinity.EARTH.setRepresentItem(essence, essence.META_EARTH);
-		Affinity.ENDER.setRepresentItem(essence, essence.META_ENDER);
-		Affinity.FIRE.setRepresentItem(essence, essence.META_FIRE);
-		Affinity.ICE.setRepresentItem(essence, essence.META_ICE);
-		Affinity.LIFE.setRepresentItem(essence, essence.META_LIFE);
-		Affinity.LIGHTNING.setRepresentItem(essence, essence.META_LIGHTNING);
-		Affinity.NATURE.setRepresentItem(essence, essence.META_NATURE);
-		Affinity.WATER.setRepresentItem(essence, essence.META_WATER);
+		GameRegistry.UniqueIdentifier id = GameRegistry.findUniqueIdentifierFor(essence);
+		NSKey key = new NSKey(id.modId, id.name);
+		Affinity.NONE.setRepresentItem(key, ItemEssence.META_BASE_CORE);
+		Affinity.AIR.setRepresentItem(key, ItemEssence.META_AIR);
+		Affinity.ARCANE.setRepresentItem(key, ItemEssence.META_ARCANE);
+		Affinity.EARTH.setRepresentItem(key, ItemEssence.META_EARTH);
+		Affinity.ENDER.setRepresentItem(key, ItemEssence.META_ENDER);
+		Affinity.FIRE.setRepresentItem(key, ItemEssence.META_FIRE);
+		Affinity.ICE.setRepresentItem(key, ItemEssence.META_ICE);
+		Affinity.LIFE.setRepresentItem(key, ItemEssence.META_LIFE);
+		Affinity.LIGHTNING.setRepresentItem(key, ItemEssence.META_LIGHTNING);
+		Affinity.NATURE.setRepresentItem(key, ItemEssence.META_NATURE);
+		Affinity.WATER.setRepresentItem(key, ItemEssence.META_WATER);
 
 		natureScytheEnchanted = AMEnchantmentHelper.soulbindStack(new ItemStack(scythe));
 		arcaneSpellBookEnchanted = AMEnchantmentHelper.soulbindStack(new ItemStack(arcaneSpellbook));

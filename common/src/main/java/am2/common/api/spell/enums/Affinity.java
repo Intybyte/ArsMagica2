@@ -1,6 +1,6 @@
 package am2.common.api.spell.enums;
 
-import net.minecraft.item.Item;
+import am2.common.base.NSKey;
 
 public enum Affinity{
 	NONE(0,
@@ -86,7 +86,7 @@ public enum Affinity{
 	private int[] majorOppositions;
 	private int[] minorOppositions;
 	private int[] adjacentAffinities;
-	public Item representItem;
+	public NSKey representItem;
 	public int representMeta;
 	public final int color;
 
@@ -132,7 +132,7 @@ public enum Affinity{
 		return adjacent;
 	}
 
-	public void setRepresentItem(Item representItem, int meta){
+	public void setRepresentItem(NSKey representItem, int meta){
 		if (this.representItem == null){
 			this.representItem = representItem;
 			this.representMeta = meta;
