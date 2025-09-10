@@ -96,23 +96,23 @@ public class BytecodeTransformers implements IClassTransformer{
 		// RendererLivingEntity.renderLivingAt = boh.a
 		// MCP mapping: boh/a (Lsv;DDD)V net/minecraft/client/renderer/entity/RendererLivingEntity/func_77039_a (Lnet/minecraft/entity/EntityLivingBase;DDD)V
 
-		obf_deobf_pair method1_name = new obf_deobf_pair();
+		ObfTranslation method1_name = new ObfTranslation();
 		method1_name.setVal("doRender", false);
 		method1_name.setVal("a", true);
 
-		obf_deobf_pair method1_desc = new obf_deobf_pair();
+		ObfTranslation method1_desc = new ObfTranslation();
 		method1_desc.setVal("(Lnet/minecraft/entity/EntityLivingBase;DDDFF)V", false);
 		method1_desc.setVal("(Lsv;DDDFF)V", true);
 
-		obf_deobf_pair method1_searchinstruction_function = new obf_deobf_pair();
+		ObfTranslation method1_searchinstruction_function = new ObfTranslation();
 		method1_searchinstruction_function.setVal("renderLivingAt", false);
 		method1_searchinstruction_function.setVal("a", true);
 
-		obf_deobf_pair method1_searchinstruction_desc = new obf_deobf_pair();
+		ObfTranslation method1_searchinstruction_desc = new ObfTranslation();
 		method1_searchinstruction_desc.setVal("(Lnet/minecraft/entity/EntityLivingBase;DDD)V", false);
 		method1_searchinstruction_desc.setVal("(Lsv;DDD)V", true);
 		
-		obf_deobf_pair method1_replaceinstruction_desc = new obf_deobf_pair();
+		ObfTranslation method1_replaceinstruction_desc = new ObfTranslation();
 		method1_replaceinstruction_desc.setVal("(Lnet/minecraft/entity/EntityLivingBase;)V", false);
 		method1_replaceinstruction_desc.setVal("(Lsv;)V", true);
 
@@ -161,7 +161,7 @@ public class BytecodeTransformers implements IClassTransformer{
 		// method 1:
 		// EntityRenderer.setupCameraTransform = blt.a
 		// MCP mapping: blt/a (FI)V net/minecraft/client/renderer/EntityRenderer/func_78479_a (FI)V
-		obf_deobf_pair method1_name = new obf_deobf_pair();
+		ObfTranslation method1_name = new ObfTranslation();
 		method1_name.setVal("setupCameraTransform", false);
 		method1_name.setVal("a", true);
 		
@@ -170,7 +170,7 @@ public class BytecodeTransformers implements IClassTransformer{
 		// EntityRenderer.orientCamera = blt.g
 		// MCP mapping: blt/g (F)V net/minecraft/client/renderer/EntityRenderer/func_78475_f (F)V
 
-		obf_deobf_pair method1_searchinstruction_function = new obf_deobf_pair();
+		ObfTranslation method1_searchinstruction_function = new ObfTranslation();
 		method1_searchinstruction_function.setVal("orientCamera", false);
 		method1_searchinstruction_function.setVal("g", true);
 
@@ -180,7 +180,7 @@ public class BytecodeTransformers implements IClassTransformer{
 		// method 2:
 		// EntityRenderer.updateCameraAndRender = blt.b
 		// MCP mapping: MD: blt/b (F)V net/minecraft/client/renderer/EntityRenderer/func_78480_b (F)V
-		obf_deobf_pair method2_name = new obf_deobf_pair();
+		ObfTranslation method2_name = new ObfTranslation();
 		method2_name.setVal("updateCameraAndRender", false);
 		method2_name.setVal("b", true);
 		
@@ -189,11 +189,11 @@ public class BytecodeTransformers implements IClassTransformer{
 		// search for this function call:
 		// net.minecraft.profiler.Profiler.startSection = qi.a
 		// MCP mapping: MD: qi/a (Ljava/lang/String;)V net/minecraft/profiler/Profiler/func_76320_a (Ljava/lang/String;)V
-		obf_deobf_pair method2_searchinstruction_class = new obf_deobf_pair();
+		ObfTranslation method2_searchinstruction_class = new ObfTranslation();
 		method2_searchinstruction_class.setVal("net/minecraft/profiler/Profiler", false);
 		method2_searchinstruction_class.setVal("qi", true);
 
-		obf_deobf_pair method2_searchinstruction_function = new obf_deobf_pair();
+		ObfTranslation method2_searchinstruction_function = new ObfTranslation();
 		method2_searchinstruction_function.setVal("startSection", false);
 		method2_searchinstruction_function.setVal("a", true);
 
@@ -201,7 +201,7 @@ public class BytecodeTransformers implements IClassTransformer{
 
 		// we will be inserting a call to am2.guis.AMGuiHelper.overrideMouseInput()
 		// description (Lnet/minecraft/client/renderer/EntityRenderer;FZ)Z
-		obf_deobf_pair method2_insertinstruction_desc = new obf_deobf_pair();
+		ObfTranslation method2_insertinstruction_desc = new ObfTranslation();
 		method2_insertinstruction_desc.setVal("(Lnet/minecraft/client/renderer/EntityRenderer;FZ)Z", false);
 		method2_insertinstruction_desc.setVal("(Lblt;FZ)Z", true);
 
@@ -308,7 +308,7 @@ public class BytecodeTransformers implements IClassTransformer{
 
 		// EntityPlayerSP.onLivingUpdate() = blk/e
 		// MCP mapping: blk/e ()V net/minecraft/client/entity/EntityPlayerSP/func_70636_d ()V
-		obf_deobf_pair method1_name = new obf_deobf_pair();
+		ObfTranslation method1_name = new ObfTranslation();
 		method1_name.setVal("onLivingUpdate", false);
 		method1_name.setVal("e", true);
 
@@ -316,7 +316,7 @@ public class BytecodeTransformers implements IClassTransformer{
 
 		// MovementInput.updatePlayerMoveState() = bli/a
 		// note that we don't need the class name, it's referencing an internal variable
-		obf_deobf_pair method1_searchinstruction = new obf_deobf_pair();
+		ObfTranslation method1_searchinstruction = new ObfTranslation();
 		method1_searchinstruction.setVal("updatePlayerMoveState", false);
 		method1_searchinstruction.setVal("a", true);
 
@@ -372,15 +372,15 @@ public class BytecodeTransformers implements IClassTransformer{
 		// World.playSoundAtEntity = ahb.a
 		// MCP mapping: ahb/a (Lsa;Ljava/lang/String;FF)V net/minecraft/world/World/func_72956_a (Lnet/minecraft/entity/Entity;Ljava/lang/String;FF)V
 		
-	      obf_deobf_pair method1_name = new obf_deobf_pair();
+	      ObfTranslation method1_name = new ObfTranslation();
 	      method1_name.setVal("playSoundAtEntity", false);
 	      method1_name.setVal("a", true);
 
-	      obf_deobf_pair method1_desc = new obf_deobf_pair();
+	      ObfTranslation method1_desc = new ObfTranslation();
 	      method1_desc.setVal("(Lnet/minecraft/entity/Entity;Ljava/lang/String;FF)V", false);
 	      method1_desc.setVal("(Lsa;Ljava/lang/String;FF)V", true);
 
-	      obf_deobf_pair method1_replacement_desc = new obf_deobf_pair();
+	      ObfTranslation method1_replacement_desc = new ObfTranslation();
 	      method1_replacement_desc.setVal("(Lnet/minecraft/entity/Entity;F)F", false);
 	      method1_replacement_desc.setVal("(Lsa;F)F", true);
 
@@ -497,11 +497,11 @@ public class BytecodeTransformers implements IClassTransformer{
 		// NetHandlerPlayServer.processPlayer(C03PacketPlayer), nh.a(jd)
 		// MCP mapping: nh/a (Ljd;)V net/minecraft/network/NetHandlerPlayServer/func_147347_a (Lnet/minecraft/network/play/client/C03PacketPlayer;)V
 
-		obf_deobf_pair method1_name = new obf_deobf_pair();
+		ObfTranslation method1_name = new ObfTranslation();
 		method1_name.setVal("processPlayer", false);
 		method1_name.setVal("a", true);
 
-		obf_deobf_pair method1_desc = new obf_deobf_pair();
+		ObfTranslation method1_desc = new ObfTranslation();
 		method1_desc.setVal("(Lnet/minecraft/network/play/client/C03PacketPlayer;)V", false);
 		method1_desc.setVal("(Ljd;)V", true);
 
@@ -513,15 +513,15 @@ public class BytecodeTransformers implements IClassTransformer{
 		// net/minecraft/network/play/client/C03PacketPlayer/func_149467_d = jd/d
 		// both have description ()D
 
-		obf_deobf_pair method1_searchinstruction_class = new obf_deobf_pair();
+		ObfTranslation method1_searchinstruction_class = new ObfTranslation();
 		method1_searchinstruction_class.setVal("net/minecraft/network/play/client/C03PacketPlayer", false);
 		method1_searchinstruction_class.setVal("jd", true);
 		
-		obf_deobf_pair method1_searchinstruction_function1 = new obf_deobf_pair();
+		ObfTranslation method1_searchinstruction_function1 = new ObfTranslation();
 		method1_searchinstruction_function1.setVal("func_149471_f", false);
 		method1_searchinstruction_function1.setVal("f", true);
 
-		obf_deobf_pair method1_searchinstruction_function2 = new obf_deobf_pair();
+		ObfTranslation method1_searchinstruction_function2 = new ObfTranslation();
 		method1_searchinstruction_function2.setVal("func_149467_d", false);
 		method1_searchinstruction_function2.setVal("d", true);
 
@@ -609,65 +609,65 @@ public class BytecodeTransformers implements IClassTransformer{
 	      // NBTTagCompound.getInteger(string) = dh.f
 	      // MCP mapping: dh/f (Ljava/lang/String;)I net/minecraft/nbt/NBTTagCompound/func_74762_e (Ljava/lang/String;)I
 	      
-	      obf_deobf_pair method1_name = new obf_deobf_pair();
+	      ObfTranslation method1_name = new ObfTranslation();
 	      method1_name.setVal("writeCustomPotionEffectToNBT", false);
 	      method1_name.setVal("a", true);
 
-	      obf_deobf_pair method1_desc = new obf_deobf_pair();
+	      ObfTranslation method1_desc = new ObfTranslation();
 	      method1_desc.setVal("(Lnet/minecraft/nbt/NBTTagCompound;)Lnet/minecraft/nbt/NBTTagCompound;", false);
 	      method1_desc.setVal("(Ldh;)Ldh;", true);
 
 	      // don't forget, you need to remove the i2b instruction which immediately precedes this one
-	      obf_deobf_pair method1_searchinstruction_class = new obf_deobf_pair();
+	      ObfTranslation method1_searchinstruction_class = new ObfTranslation();
 	      method1_searchinstruction_class.setVal("net/minecraft/nbt/NBTTagCompound", false);
 	      method1_searchinstruction_class.setVal("dh", true);
 
-	      obf_deobf_pair method1_searchinstruction_function = new obf_deobf_pair();
+	      ObfTranslation method1_searchinstruction_function = new ObfTranslation();
 	      method1_searchinstruction_function.setVal("setByte", false);
 	      method1_searchinstruction_function.setVal("a", true);
 
-	      obf_deobf_pair method1_searchinstruction_desc = new obf_deobf_pair();
+	      ObfTranslation method1_searchinstruction_desc = new ObfTranslation();
 	      method1_searchinstruction_desc.setVal("(Ljava/lang/String;B)V", false);
 	      method1_searchinstruction_desc.setVal("(Ljava/lang/String;B)V", true);
 
 
 	      // replace instruction class is the same as the search instruction class for method1
 
-	      obf_deobf_pair method1_replaceinstruction_function = new obf_deobf_pair();
+	      ObfTranslation method1_replaceinstruction_function = new ObfTranslation();
 	      method1_replaceinstruction_function.setVal("setInteger", false);
 	      method1_replaceinstruction_function.setVal("a", true);
 
-	      obf_deobf_pair method1_replaceinstruction_desc = new obf_deobf_pair();
+	      ObfTranslation method1_replaceinstruction_desc = new ObfTranslation();
 	      method1_replaceinstruction_desc.setVal("(Ljava/lang/String;I)V", false);
 	      method1_replaceinstruction_desc.setVal("(Ljava/lang/String;I)V", true);
 
-	      obf_deobf_pair method2_name = new obf_deobf_pair();
+	      ObfTranslation method2_name = new ObfTranslation();
 	      method2_name.setVal("readCustomPotionEffectFromNBT", false);
 	      method2_name.setVal("b", true);
 
-	      obf_deobf_pair method2_desc = new obf_deobf_pair();
+	      ObfTranslation method2_desc = new ObfTranslation();
 	      method2_desc.setVal("(Lnet/minecraft/nbt/NBTTagCompound;)Lnet/minecraft/potion/PotionEffect;", false);
 	      method2_desc.setVal("(Ldh;)Lrw;", true);
 
-	      obf_deobf_pair method2_searchinstruction_class = new obf_deobf_pair();
+	      ObfTranslation method2_searchinstruction_class = new ObfTranslation();
 	      method2_searchinstruction_class.setVal("net/minecraft/nbt/NBTTagCompound", false);
 	      method2_searchinstruction_class.setVal("dh", true);
 
-	      obf_deobf_pair method2_searchinstruction_function = new obf_deobf_pair();
+	      ObfTranslation method2_searchinstruction_function = new ObfTranslation();
 	      method2_searchinstruction_function.setVal("getByte", false);
 	      method2_searchinstruction_function.setVal("d", true);
 
-	      obf_deobf_pair method2_searchinstruction_desc = new obf_deobf_pair();
+	      ObfTranslation method2_searchinstruction_desc = new ObfTranslation();
 	      method2_searchinstruction_desc.setVal("(Ljava/lang/String;)B", false);
 	      method2_searchinstruction_desc.setVal("(Ljava/lang/String;)B", true);
 
 	      // replace instruction class is the same as the search instruction class for method2 as well
 
-	      obf_deobf_pair method2_replaceinstruction_function = new obf_deobf_pair();
+	      ObfTranslation method2_replaceinstruction_function = new ObfTranslation();
 	      method2_replaceinstruction_function.setVal("getInteger", false);
 	      method2_replaceinstruction_function.setVal("f", true);
 
-	      obf_deobf_pair method2_replaceinstruction_desc = new obf_deobf_pair();
+	      ObfTranslation method2_replaceinstruction_desc = new ObfTranslation();
 	      method2_replaceinstruction_desc.setVal("(Ljava/lang/String;)I", false);
 	      method2_replaceinstruction_desc.setVal("(Ljava/lang/String;)I", true);
 	      
@@ -789,7 +789,7 @@ public class BytecodeTransformers implements IClassTransformer{
 	      // MCP mapping: in/e ()B net/minecraft/network/play/server/S1DPacketEntityEffect/func_149427_e ()B
 	      // need to change signature to ()I, don't change the method at all
 	      
-	      obf_deobf_pair potionid_bytevar_name = new obf_deobf_pair();
+	      ObfTranslation potionid_bytevar_name = new ObfTranslation();
 	      potionid_bytevar_name.setVal("field_149432_b", false);
 	      potionid_bytevar_name.setVal("b", true);
 	      String potionid_bytevar_origdesc = "B";
@@ -799,30 +799,30 @@ public class BytecodeTransformers implements IClassTransformer{
 	      
 	      
 	      String initmethod_name = "<init>";
-	      obf_deobf_pair initmethod_desc = new obf_deobf_pair();
+	      ObfTranslation initmethod_desc = new ObfTranslation();
 	      initmethod_desc.setVal("(ILnet/minecraft/potion/PotionEffect;)V", false);
 	      initmethod_desc.setVal("(ILrw;)V", true);
 	      
-	      obf_deobf_pair initmethod_searchinstruction_owner = new obf_deobf_pair();
+	      ObfTranslation initmethod_searchinstruction_owner = new ObfTranslation();
 	      initmethod_searchinstruction_owner.setVal("net/minecraft/potion/PotionEffect", false);
 	      initmethod_searchinstruction_owner.setVal("rw", true);
 	      
-	      obf_deobf_pair initmethod_searchinstruction_function = new obf_deobf_pair();
+	      ObfTranslation initmethod_searchinstruction_function = new ObfTranslation();
 	      initmethod_searchinstruction_function.setVal("getPotionID", false);
 	      initmethod_searchinstruction_function.setVal("a", true);
 	      
 	      String initmethod_searchinstruction_desc = "()I";
 	      
 	      
-	      obf_deobf_pair method1_name = new obf_deobf_pair();
+	      ObfTranslation method1_name = new ObfTranslation();
 	      method1_name.setVal("readPacketData", false);
 	      method1_name.setVal("a", true);
 	      
-	      obf_deobf_pair method1_desc = new obf_deobf_pair();
+	      ObfTranslation method1_desc = new ObfTranslation();
 	      method1_desc.setVal("(Lnet/minecraft/network/PacketBuffer;)V", false);
 	      method1_desc.setVal("(Let;)V", true);
 	      
-	      obf_deobf_pair method1_searchinstruction_owner = new obf_deobf_pair();
+	      ObfTranslation method1_searchinstruction_owner = new ObfTranslation();
 	      method1_searchinstruction_owner.setVal("net/minecraft/network/PacketBuffer", false);
 	      method1_searchinstruction_owner.setVal("et", true);
 	      
@@ -834,15 +834,15 @@ public class BytecodeTransformers implements IClassTransformer{
 	      String method1_replaceinstruction_desc = "()I";
 	      
 	      
-	      obf_deobf_pair method2_name = new obf_deobf_pair();
+	      ObfTranslation method2_name = new ObfTranslation();
 	      method2_name.setVal("writePacketData", false);
 	      method2_name.setVal("b", true);
 	      
-	      obf_deobf_pair method2_desc = new obf_deobf_pair();
+	      ObfTranslation method2_desc = new ObfTranslation();
 	      method2_desc.setVal("(Lnet/minecraft/network/PacketBuffer;)V", false);
 	      method2_desc.setVal("(Let;)V", true);
 	      
-	      obf_deobf_pair method2_searchinstruction_owner = new obf_deobf_pair();
+	      ObfTranslation method2_searchinstruction_owner = new ObfTranslation();
 	      method2_searchinstruction_owner.setVal("net/minecraft/network/PacketBuffer", false);
 	      method2_searchinstruction_owner.setVal("et", true);
 	      
@@ -855,7 +855,7 @@ public class BytecodeTransformers implements IClassTransformer{
 	      String method2_replaceinstruction_desc = "(I)Lio/netty/buffer/ByteBuf;";
 	      
 	      // need to replace only this method descriptor
-	      obf_deobf_pair method3_name = new obf_deobf_pair();
+	      ObfTranslation method3_name = new ObfTranslation();
 	      method3_name.setVal("func_149427_e", false);
 	      method3_name.setVal("e", true);
 	      
@@ -1007,19 +1007,19 @@ public class BytecodeTransformers implements IClassTransformer{
 	      // in/e ()B [obfuscated]
 	      // replace with S1DPacketEntityEffect/func_149427_e or in/e, ()I
 	      
-	      obf_deobf_pair method1_name = new obf_deobf_pair();
+	      ObfTranslation method1_name = new ObfTranslation();
 	      method1_name.setVal("handleEntityEffect", false);
 	      method1_name.setVal("a", true);
 	      
-	      obf_deobf_pair method1_desc = new obf_deobf_pair();
+	      ObfTranslation method1_desc = new ObfTranslation();
 	      method1_desc.setVal("(Lnet/minecraft/network/play/server/S1DPacketEntityEffect;)V", false);
 	      method1_desc.setVal("(Lin;)V", true);
 	      
-	      obf_deobf_pair method1_searchinstruction_class = new obf_deobf_pair();
+	      ObfTranslation method1_searchinstruction_class = new ObfTranslation();
 	      method1_searchinstruction_class.setVal("net/minecraft/network/play/server/S1DPacketEntityEffect", false);
 	      method1_searchinstruction_class.setVal("in", true);
 	      
-	      obf_deobf_pair method1_searchinstruction_function = new obf_deobf_pair();
+	      ObfTranslation method1_searchinstruction_function = new ObfTranslation();
 	      method1_searchinstruction_function.setVal("func_149427_e", false);
 	      method1_searchinstruction_function.setVal("e", true);
 	      
@@ -1074,15 +1074,15 @@ public class BytecodeTransformers implements IClassTransformer{
 	      // S1EPacketRemoveEntityEffect.readPacketData() = hr/a
 	      // MCP mapping: MD: hr/a (Let;)V net/minecraft/network/play/server/S1EPacketRemoveEntityEffect/func_148837_a (Lnet/minecraft/network/PacketBuffer;)V
 	      
-	      obf_deobf_pair method1_name = new obf_deobf_pair();
+	      ObfTranslation method1_name = new ObfTranslation();
 	      method1_name.setVal("readPacketData", false);
 	      method1_name.setVal("a", true);
 	      
-	      obf_deobf_pair method1_desc = new obf_deobf_pair();
+	      ObfTranslation method1_desc = new ObfTranslation();
 	      method1_desc.setVal("(Lnet/minecraft/network/PacketBuffer;)V", false);
 	      method1_desc.setVal("(Let;)V", true);
 	      
-	      obf_deobf_pair method1_searchinstruction_owner = new obf_deobf_pair();
+	      ObfTranslation method1_searchinstruction_owner = new ObfTranslation();
 	      method1_searchinstruction_owner.setVal("net/minecraft/network/PacketBuffer", false);
 	      method1_searchinstruction_owner.setVal("et", true);
 	      
@@ -1095,15 +1095,15 @@ public class BytecodeTransformers implements IClassTransformer{
 	      String method1_replaceinstruction_desc = "()I";
 	      
 	      
-	      obf_deobf_pair method2_name = new obf_deobf_pair();
+	      ObfTranslation method2_name = new ObfTranslation();
 	      method2_name.setVal("writePacketData", false);
 	      method2_name.setVal("b", true);
 	      
-	      obf_deobf_pair method2_desc = new obf_deobf_pair();
+	      ObfTranslation method2_desc = new ObfTranslation();
 	      method2_desc.setVal("(Lnet/minecraft/network/PacketBuffer;)V", false);
 	      method2_desc.setVal("(Let;)V", true);
 	      
-	      obf_deobf_pair method2_searchinstruction_owner = new obf_deobf_pair();
+	      ObfTranslation method2_searchinstruction_owner = new ObfTranslation();
 	      method2_searchinstruction_owner.setVal("net/minecraft/network/PacketBuffer", false);
 	      method2_searchinstruction_owner.setVal("et", true);
 	      
@@ -1225,11 +1225,11 @@ public class BytecodeTransformers implements IClassTransformer{
 		return "OPCODE_UNKNOWN";
 	}
 
-	public class obf_deobf_pair{
+	public static class ObfTranslation {
 		private String deobf_val;
 		private String obf_val;
 
-		public obf_deobf_pair(){
+		public ObfTranslation(){
 			deobf_val = "";
 			obf_val = "";
 		}
