@@ -40,7 +40,7 @@ options.txt
 /out
 #git stuff
 *.orig
-build.gradle
+build.gradle.kts
 CREDITS-fml.txt
 LICENSE-fml.txt
 MinecraftForge-Credits.txt
