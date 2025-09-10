@@ -1,6 +1,7 @@
 package am2.armor;
 
 import am2.armor.infusions.GenericImbuement;
+import am2.common.armor.ArsMagicaArmorMaterial;
 import net.minecraft.entity.EntityLivingBase;
 import net.minecraft.item.ItemStack;
 

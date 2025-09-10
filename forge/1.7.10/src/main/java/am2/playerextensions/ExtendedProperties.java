@@ -9,7 +9,7 @@ import am2.api.math.AMVector3;
 import am2.common.api.spell.enums.ContingencyTypes;
 import am2.common.api.spell.enums.SkillPointTypes;
 import am2.armor.ArmorHelper;
-import am2.armor.ArsMagicaArmorMaterial;
+import am2.common.armor.ArsMagicaArmorMaterial;
 import am2.armor.infusions.GenericImbuement;
 import am2.armor.infusions.ImbuementRegistry;
 import am2.bosses.EntityLifeGuardian;

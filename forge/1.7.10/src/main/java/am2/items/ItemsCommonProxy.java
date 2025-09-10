@@ -8,6 +8,7 @@ import am2.armor.*;
 import am2.blocks.BlocksCommonProxy;
 import am2.blocks.tileentities.flickers.FlickerOperatorRegistry;
 import am2.common.api.spell.enums.Affinity;
+import am2.common.armor.ArsMagicaArmorMaterial;
 import am2.common.base.NSKey;
 import am2.enchantments.AMEnchantmentHelper;
 import cpw.mods.fml.common.registry.GameRegistry;

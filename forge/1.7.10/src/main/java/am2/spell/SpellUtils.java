@@ -10,7 +10,7 @@ import am2.api.spell.component.interfaces.*;
 import am2.common.api.spell.enums.Affinity;
 import am2.common.api.spell.enums.SpellModifiers;
 import am2.armor.ArmorHelper;
-import am2.armor.ArsMagicaArmorMaterial;
+import am2.common.armor.ArsMagicaArmorMaterial;
 import am2.armor.infusions.GenericImbuement;
 import am2.enchantments.AMEnchantmentHelper;
 import am2.items.ItemsCommonProxy;

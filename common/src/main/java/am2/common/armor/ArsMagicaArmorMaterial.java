@@ -1,10 +1,11 @@
-package am2.armor;
+package am2.common.armor;
 
+
+import lombok.Getter;
 
 public enum ArsMagicaArmorMaterial{
 	//{900, 1700, 6400, 4000}
 	MAGE(
-			"MAGE",
 			33,
 			new int[]{2, 6, 4, 2},
 			15,
@@ -17,7 +18,6 @@ public enum ArsMagicaArmorMaterial{
 	), //stable at L8, 52% DR w/ full set
 
 	BATTLEMAGE(
-			"BATTLEMAGE",
 			48,
 			new int[]{3, 8, 6, 3},
 			10,
@@ -30,7 +30,6 @@ public enum ArsMagicaArmorMaterial{
 	), //stable at L12, ~65% DR w/ full set
 
 	UNIQUE(
-			"UNIQUE",
 			200,
 			new int[]{3, 8, 6, 3},
 			0,
@@ -43,7 +42,6 @@ public enum ArsMagicaArmorMaterial{
 	), //stable at L12, ~65% DR w/ full set
 
 	ARCHMAGE(
-			"ARCHMAGE",
 			78,
 			new int[]{3, 8, 6, 3},
 			0,
@@ -55,15 +53,22 @@ public enum ArsMagicaArmorMaterial{
 			new float[]{0.2f, 0.2f, 0.2f, 0.2f} //cooldown ticks of protection ( n / 20 -> time in seconds)
 	); //stable at L17, 78% DR w/ full set
 
-	private int maxDamageFactor;
-	private int damageReductionAmountArray[];
-	private int enchantability;
-	private float infusionCost;
-	private float infusionRepair;
-	private float[] damageReductionRatios;
-	private float[] protectionCooldownModifiers;
+	private static final int[] maxDamageArray = {
+			11, 16, 15, 13
+	};
 
-	private ArsMagicaArmorMaterial(String identifier, int durability, int armorValueArray[], int enchantability, float infusionCost, float infusionRepair, float[] damageReductionRatios, float[] protectionCooldown){
+	private final int maxDamageFactor;
+	private final int[] damageReductionAmountArray;
+	@Getter
+	private final int enchantability;
+	@Getter
+	private final float infusionCost;
+	@Getter
+	private final float infusionRepair;
+	private final float[] damageReductionRatios;
+	private final float[] protectionCooldownModifiers;
+
+	ArsMagicaArmorMaterial(int durability, int[] armorValueArray, int enchantability, float infusionCost, float infusionRepair, float[] damageReductionRatios, float[] protectionCooldown){
 		this.maxDamageFactor = durability;
 		this.damageReductionAmountArray = armorValueArray;
 		this.enchantability = enchantability;
@@ -73,28 +78,16 @@ public enum ArsMagicaArmorMaterial{
 		this.protectionCooldownModifiers = protectionCooldown;
 	}
 
-	public int func_40576_a(int i){
-		return AMArmor.getMaxDamageArray()[i] * maxDamageFactor;
+	public int getDurabilityForSlot(int i){
+		return maxDamageArray[i] * maxDamageFactor;
 	}
 
 	public int getDamageReductionAmount(int i){
 		return damageReductionAmountArray[i];
 	}
 
-	public int getEnchantability(){
-		return enchantability;
-	}
-
-	public float getInfusionCost(){
-		return infusionCost;
-	}
-
-	public float getInfusionRepair(){
-		return this.infusionRepair;
-	}
-
 	public int getMaterialID(){
-		return maxDamageFactor;
+		return ordinal();
 	}
 
 	public float getDamageReduceRatio(int slot){

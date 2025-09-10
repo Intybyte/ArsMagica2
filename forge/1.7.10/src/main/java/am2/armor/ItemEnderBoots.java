@@ -1,5 +1,6 @@
 package am2.armor;
 
+import am2.common.armor.ArsMagicaArmorMaterial;
 import am2.playerextensions.ExtendedProperties;
 import am2.texture.ResourceManager;
 import net.minecraft.client.renderer.texture.IIconRegister;

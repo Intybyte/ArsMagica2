@@ -1,5 +1,6 @@
 package am2.armor;
 
+import am2.common.armor.ArsMagicaArmorMaterial;
 import am2.items.ItemsCommonProxy;
 import am2.proxy.gui.ModelLibrary;
 import am2.texture.ResourceManager;

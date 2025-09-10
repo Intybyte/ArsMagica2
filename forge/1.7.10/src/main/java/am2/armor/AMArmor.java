@@ -1,6 +1,7 @@
 package am2.armor;
 
 import am2.api.items.armor.ArmorTextureEvent;
+import am2.common.armor.ArsMagicaArmorMaterial;
 import net.minecraft.entity.Entity;
 import net.minecraft.entity.EntityLivingBase;
 import net.minecraft.entity.player.EntityPlayer;
@@ -13,9 +14,6 @@ import net.minecraftforge.common.MinecraftForge;
 
 public class AMArmor extends ItemArmor implements ISpecialArmor{
 
-	private static final int maxDamageArray[] = {
-			11, 16, 15, 13
-	};
 	public final int armorType;
 	public final int damageReduceAmount;
 	private final ArsMagicaArmorMaterial material;
@@ -34,7 +32,7 @@ public class AMArmor extends ItemArmor implements ISpecialArmor{
 		material = enumarmormaterial;
 		armorType = par4;
 		damageReduceAmount = 0;
-		setMaxDamage(enumarmormaterial.func_40576_a(par4));
+		setMaxDamage(enumarmormaterial.getDurabilityForSlot(par4));
 		maxStackSize = 1;
 		damageReduction = enumarmormaterial.getDamageReductionAmount(par4);
 		infusionCost = enumarmormaterial.getInfusionCost();
@@ -50,10 +48,6 @@ public class AMArmor extends ItemArmor implements ISpecialArmor{
 	@Override
 	public int getItemEnchantability(){
 		return material.getEnchantability();
-	}
-
-	static int[] getMaxDamageArray(){
-		return maxDamageArray;
 	}
 
 	public int GetDamageReduction(){

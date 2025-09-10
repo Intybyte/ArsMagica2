@@ -1,5 +1,6 @@
 package am2.armor;
 
+import am2.common.armor.ArsMagicaArmorMaterial;
 import net.minecraft.entity.player.EntityPlayer;
 import net.minecraft.item.ItemStack;
 import net.minecraft.util.IIcon;
