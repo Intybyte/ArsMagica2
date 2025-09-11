@@ -2,7 +2,7 @@ package am2.blocks.tileentities;
 
 import am2.AMCore;
 import am2.api.blocks.MultiblockStructureDefinition;
-import am2.api.blocks.MultiblockStructureDefinition.BlockCoord;
+import am2.common.api.blocks.multiblock.BlockCoord;
 import am2.api.blocks.MultiblockStructureDefinition.BlockDec;
 import am2.api.blocks.MultiblockStructureDefinition.StructureGroup;
 import am2.api.math.AMVector3;

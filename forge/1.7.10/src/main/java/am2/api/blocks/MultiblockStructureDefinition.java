@@ -1,5 +1,7 @@
 package am2.api.blocks;
 
+import am2.common.api.blocks.multiblock.BlockCoord;
+import lombok.Getter;
 import net.minecraft.block.Block;
 import net.minecraft.world.World;
 
@@ -7,21 +9,14 @@ import java.util.ArrayList;
 import java.util.HashMap;
 
 public class MultiblockStructureDefinition{
-	public class BlockDec{
+	@Getter
+	public static class BlockDec{
 		Block block;
 		int meta;
 
 		public BlockDec(Block block, int meta){
 			this.block = block;
 			this.meta = meta;
-		}
-
-		public Block getBlock(){
-			return block;
-		}
-
-		public int getMeta(){
-			return meta;
 		}
 
 		@Override
@@ -46,54 +41,6 @@ public class MultiblockStructureDefinition{
 		@Override
 		public int hashCode(){
 			return Block.getIdFromBlock(block);
-		}
-	}
-
-	public class BlockCoord implements Comparable<BlockCoord>{
-		public int x;
-		public int y;
-		public int z;
-
-		public BlockCoord(int offsetX, int offsetY, int offsetZ){
-			this.x = offsetX;
-			this.y = offsetY;
-			this.z = offsetZ;
-		}
-
-		@Override
-		public boolean equals(Object obj){
-			if (obj instanceof BlockCoord){
-				return this.x == ((BlockCoord)obj).x && this.y == ((BlockCoord)obj).y && this.z == ((BlockCoord)obj).z;
-			}
-			return false;
-		}
-
-		@Override
-		public int hashCode(){
-			return this.x + this.y + this.z;
-		}
-
-
-		public int getX(){
-			return this.x;
-		}
-
-		public int getY(){
-			return this.y;
-		}
-
-		public int getZ(){
-			return this.z;
-		}
-
-		@Override
-		public String toString(){
-			return String.format("BlockCoord: %d, %d, %d", x, y, z);
-		}
-
-		@Override
-		public int compareTo(BlockCoord o){
-			return this.z > o.z ? 1 : this.z < o.z ? -1 : this.x > o.x ? 1 : this.x < o.x ? -1 : this.y > o.y ? 1 : this.y < o.y ? -1 : 0;
 		}
 	}
 
@@ -138,7 +85,7 @@ public class MultiblockStructureDefinition{
 		}
 
 		HashMap<BlockCoord, ArrayList<BlockDec>> getStructureLayer(int layer){
-			HashMap<BlockCoord, ArrayList<BlockDec>> toReturn = new HashMap<MultiblockStructureDefinition.BlockCoord, ArrayList<BlockDec>>();
+			HashMap<BlockCoord, ArrayList<BlockDec>> toReturn = new HashMap<BlockCoord, ArrayList<BlockDec>>();
 
 			if (layer > getMaxLayer() || layer < getMinLayer()){
 				return toReturn;
@@ -236,6 +183,12 @@ public class MultiblockStructureDefinition{
 
 	public void addAllowedBlock(int offsetX, int offsetY, int offsetZ, Block block, int meta){
 
+		updateMaxMin(offsetX, offsetY, offsetZ);
+
+		mainGroup.addAllowedBlock(offsetX, offsetY, offsetZ, block, meta);
+	}
+
+	private void updateMaxMin(int offsetX, int offsetY, int offsetZ){
 		if (offsetY > maxY){
 			maxY = offsetY;
 		}else if (offsetY < minY){
@@ -253,8 +206,6 @@ public class MultiblockStructureDefinition{
 		}else if (offsetZ < minZ){
 			minZ = offsetZ;
 		}
-
-		mainGroup.addAllowedBlock(offsetX, offsetY, offsetZ, block, meta);
 	}
 
 	public void addAllowedBlock(int offsetX, int offsetY, int offsetZ, Block block){
@@ -266,23 +217,7 @@ public class MultiblockStructureDefinition{
 			blockGroups.add(group);
 		}
 
-		if (offsetY > maxY){
-			maxY = offsetY;
-		}else if (offsetY < minY){
-			minY = offsetY;
-		}
-
-		if (offsetX > maxX){
-			maxX = offsetX;
-		}else if (offsetX < minX){
-			minX = offsetX;
-		}
-
-		if (offsetZ > maxZ){
-			maxZ = offsetZ;
-		}else if (offsetZ < minZ){
-			minZ = offsetZ;
-		}
+		updateMaxMin(offsetX, offsetY, offsetZ);
 
 		group.addAllowedBlock(offsetX, offsetY, offsetZ, block, meta);
 	}
