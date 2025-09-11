@@ -1,6 +1,7 @@
 package am2.preloader;
 
 import am2.LogHelper;
+import am2.common.AM2EnviromentData;
 import com.google.common.eventbus.EventBus;
 import cpw.mods.fml.common.DummyModContainer;
 import cpw.mods.fml.common.LoadController;
@@ -16,13 +17,6 @@ public class AM2PreloaderContainer extends DummyModContainer implements IFMLLoad
 
 	private final String[] asmTransformers = new String[]{"am2.preloader.AccessTransformers", "am2.preloader.BytecodeTransformers"};
 	private final ModMetadata md = new ModMetadata();
-
-	public static boolean foundThaumcraft = false;
-	private static boolean foundOptiFine = false;
-	private static boolean confirmedOptiFine = false;
-	public static boolean foundDragonAPI = false;
-	
-	public static boolean isDevEnvironment = false;
 
 	public AM2PreloaderContainer(){
 		LogHelper.info("Core initializing...stand back!  I'm going to try MAGIC!");
@@ -88,7 +82,7 @@ public class AM2PreloaderContainer extends DummyModContainer implements IFMLLoad
 		File loc = (File)data.get("mcLocation");
 
 		LogHelper.trace("MC located at: " + loc.getAbsolutePath());
-		isDevEnvironment = !(Boolean)data.get("runtimeDeobfuscationEnabled");
+		AM2EnviromentData.isDevEnvironment = !(Boolean)data.get("runtimeDeobfuscationEnabled");
 
 		File mcFolder = new File(loc.getAbsolutePath() + File.separatorChar + "mods");
 		File[] subfiles = mcFolder.listFiles();
@@ -99,13 +93,13 @@ public class AM2PreloaderContainer extends DummyModContainer implements IFMLLoad
 				if (name.endsWith(".jar") || name.endsWith(".zip")){
 					if (name.contains("thaumcraft")){
 						LogHelper.info("Core: Located Thaumcraft in " + file.getName());
-						foundThaumcraft = true;
+						AM2EnviromentData.foundThaumcraft = true;
 					}else if (name.contains("optifine")){
 						LogHelper.info("Core: Located OptiFine in " + file.getName() + ". We'll to confirm that...");
-						foundOptiFine = true;
+						AM2EnviromentData.foundOptiFine = true;
 					}else if (name.contains("dragonapi")){
 						LogHelper.info("Core: Located DragonAPI in " + file.getName());
-						foundDragonAPI = true;
+						AM2EnviromentData.foundDragonAPI = true;
 					}
 				}
 			}
@@ -118,7 +112,7 @@ public class AM2PreloaderContainer extends DummyModContainer implements IFMLLoad
 	}
 
 	public static boolean isOptiFinePresent(){
-		if (!confirmedOptiFine && foundOptiFine){
+		if (!AM2EnviromentData.confirmedOptiFine && AM2EnviromentData.foundOptiFine){
 			// Check presence of OptiFine core classes
 			try{
 				Class.forName("optifine.OptiFineForgeTweaker");
@@ -128,16 +122,16 @@ public class AM2PreloaderContainer extends DummyModContainer implements IFMLLoad
 					Class.forName("optifine.OptiFineTweaker");
 				}
 				catch (ClassNotFoundException exception2){
-					foundOptiFine = false;
+					AM2EnviromentData.foundOptiFine = false;
 				}
 			}
-			if (foundOptiFine){
+			if (AM2EnviromentData.foundOptiFine){
 				LogHelper.info("Core: OptiFine presence has been confirmed.");
 			} else {
 				LogHelper.info("Core: OptiFine doesn't seem to be there actually.");
 			}
-			confirmedOptiFine = true;
+			AM2EnviromentData.confirmedOptiFine = true;
 		}
-		return foundOptiFine;
+		return AM2EnviromentData.foundOptiFine;
 	}
 }

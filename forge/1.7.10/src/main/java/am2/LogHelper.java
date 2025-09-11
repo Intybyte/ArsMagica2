@@ -1,6 +1,6 @@
 package am2;
 
-import am2.preloader.AM2PreloaderContainer;
+import am2.common.AM2EnviromentData;
 
 import org.apache.logging.log4j.Level;
 import org.apache.logging.log4j.LogManager;
@@ -36,7 +36,7 @@ public class LogHelper{
 	      // or call some kind of horrible arcane function chain (which is not documented)
 	      // this is a rather hacky way of turning on debug output if we're in a dev environment, but with the redeeming feature that it actually works
 	      // (the default logging level seems to be INFO and I can't change it easily through code)
-		if(AM2PreloaderContainer.isDevEnvironment){
+		if(AM2EnviromentData.isDevEnvironment){
 			log(Level.INFO, "AM2 Debug: " + format, data);
 		}
 		else{
