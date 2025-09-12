@@ -1,5 +1,6 @@
 package am2.api.illeffect;
 
+import am2.common.api.illeffect.IllEffectSeverity;
 import net.minecraft.entity.player.EntityPlayer;
 import net.minecraft.world.World;
 

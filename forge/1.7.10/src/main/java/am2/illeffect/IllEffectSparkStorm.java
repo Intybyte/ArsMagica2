@@ -2,7 +2,7 @@ package am2.illeffect;
 
 import am2.AMCore;
 import am2.api.illeffect.IllEffectBase;
-import am2.api.illeffect.IllEffectSeverity;
+import am2.common.api.illeffect.IllEffectSeverity;
 import net.minecraft.entity.player.EntityPlayer;
 import net.minecraft.util.AxisAlignedBB;
 import net.minecraft.util.DamageSource;
@@ -11,7 +11,6 @@ import net.minecraft.world.World;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
-import java.util.Random;
 
 public class IllEffectSparkStorm extends IllEffectBase{
 

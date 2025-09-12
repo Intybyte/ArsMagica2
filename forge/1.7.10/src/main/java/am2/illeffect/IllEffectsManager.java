@@ -1,8 +1,8 @@
 package am2.illeffect;
 
-import am2.api.illeffect.BadThingTypes;
+import am2.common.api.illeffect.BadThingTypes;
 import am2.api.illeffect.IIllEffect;
-import am2.api.illeffect.IllEffectSeverity;
+import am2.common.api.illeffect.IllEffectSeverity;
 import net.minecraft.entity.player.EntityPlayer;
 import net.minecraft.tileentity.TileEntity;
 

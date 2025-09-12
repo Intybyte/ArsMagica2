@@ -1,4 +1,4 @@
-package am2.api.illeffect;
+package am2.common.api.illeffect;
 
 public enum BadThingTypes{
 	ALL,
