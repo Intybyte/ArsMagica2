@@ -10,8 +10,8 @@ public class ArsMagicaPotion extends Potion{
 
 	private ResourceLocation potionTexture;
 
-	protected ArsMagicaPotion(int par1, boolean par2, int par3){
-		super(par1, par2, par3);
+	protected ArsMagicaPotion(int index, boolean inBad, int color){
+		super(index, inBad, color);
 	}
 
 	public void _setIconIndex(int row, int col){
