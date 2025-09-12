@@ -151,7 +151,7 @@ public class EntityFlicker extends EntityAmbientCreature{
 		if (worldObj.isRemote){
 			//for (int i = 0; i < + 1; ++i){
 			if (getRNG().nextInt(10) < AMCore.config.getGFXLevel()){
-				AMParticle effect = (AMParticle)AMCore.proxy.particleManager.spawn(worldObj, AMParticleIcons.instance.getParticleForAffinity(getFlickerAffinity()), posX, posY, posZ);
+				AMParticle effect = (AMParticle)AMCore.proxy.particleManager.spawn(worldObj, getFlickerAffinity().getMainParticle(), posX, posY, posZ);
 				if (effect != null){
 					effect.addRandomOffset(this.width, this.height, this.width);
 					effect.setDontRequireControllers();

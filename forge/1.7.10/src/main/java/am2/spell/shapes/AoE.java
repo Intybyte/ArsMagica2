@@ -74,7 +74,7 @@ public class AoE implements ISpellShape{
 	}
 
 	private void spawnAoEParticles(ItemStack stack, EntityLivingBase caster, World world, double x, double y, double z, int radius){
-		String pfxName = AMParticleIcons.instance.getParticleForAffinity(SpellUtils.instance.mainAffinityFor(stack));
+		String pfxName = SpellUtils.instance.mainAffinityFor(stack).getMainParticle();
 		float speed = 0.08f * radius;
 
 		int color = 0xFFFFFF;

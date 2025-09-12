@@ -4,20 +4,24 @@ import am2.common.base.NSKey;
 import lombok.Getter;
 
 public enum Affinity {
-	NONE(0xFFFFFF),
-	ARCANE(0xb935cd),
-	WATER(0x0b5cef),
-	FIRE(0xef260b),
-	EARTH(0x61330b),
-	AIR(0x777777),
-	LIGHTNING(0xdece19),
-	ICE(0xd3e8fc),
-	NATURE(0x228718),
-	LIFE(0x34e122),
-	ENDER(0x3f043d);
+	NONE(0xFFFFFF, "lens_flare", "lights"),
+	ARCANE(0xb935cd, "arcane", "symbols"),
+	WATER(0x0b5cef, "water_ball", "water_hand"),
+	FIRE(0xef260b, "explosion_2", "smoke"),
+	EARTH(0x61330b, "rock", "earth_hand"),
+	AIR(0x777777, "wind", "air_hand"),
+	LIGHTNING(0xdece19, "lightning_hand", "lightning_hand"),
+	ICE(0xd3e8fc, "ember", "snowflakes"),
+	NATURE(0x228718, "plant", "leaf"),
+	LIFE(0x34e122, "sparkle", "sparkle2"),
+	ENDER(0x3f043d, "pulse", "ghost");
 
 	public final int ID;
 	public final int color;
+	@Getter
+	private final String mainParticle;
+	@Getter
+	private final String secondaryParticle;
 	public NSKey representItem;
 	public int representMeta;
 
@@ -29,8 +33,11 @@ public enum Affinity {
 	@Getter
 	private Affinity[] adjacentAffinities;
 
-	Affinity(int color) {
-		this.ID = ordinal(); // You can keep or remove this if unnecessary
+	Affinity(int color, String mainParticle, String secondaryParticle) {
+		this.mainParticle = mainParticle;
+		this.secondaryParticle = secondaryParticle;
+
+		this.ID = ordinal();
 		this.color = color;
 	}
 
@@ -107,12 +114,12 @@ public enum Affinity {
 	}
 
 	public static Affinity getByID(int ID) {
-		for (Affinity affinity : Affinity.values()) {
-			if (affinity.ID == ID) {
-				return affinity;
-			}
+		Affinity[] values = Affinity.values();
+		if (values.length <= ID){
+			return NONE;
 		}
-		return NONE;
+
+		return values[ID];
 	}
 
 	public static Affinity[] getOrderedAffinities() {

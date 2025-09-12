@@ -383,7 +383,7 @@ public class EntitySpellProjectile extends Entity{
 		}
 		if (!AMCore.config.NoGFX() && worldObj.isRemote && this.getShootingEntity() instanceof EntityPlayer){
 			if (this.particleType == null || this.particleType.isEmpty())
-				particleType = AMParticleIcons.instance.getSecondaryParticleForAffinity(SpellUtils.instance.mainAffinityFor(getEffectStack()));
+				particleType = SpellUtils.instance.mainAffinityFor(getEffectStack()).getSecondaryParticle();
 			AMParticle particle = (AMParticle)AMCore.proxy.particleManager.spawn(worldObj, particleType, this.posX, this.posY, this.posZ);
 			if (particle != null){
 				particle.addRandomOffset(0.3f, 0.3f, 0.3f);

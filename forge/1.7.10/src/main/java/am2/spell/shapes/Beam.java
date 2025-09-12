@@ -120,7 +120,7 @@ public class Beam implements ISpellShape{
 				}
 			}
 			for (int i = 0; i < AMCore.config.getGFXLevel() + 1; ++i){
-				AMParticle particle = (AMParticle)AMCore.proxy.particleManager.spawn(world, AMParticleIcons.instance.getParticleForAffinity(affinity), beamHitVec.xCoord, beamHitVec.yCoord, beamHitVec.zCoord);
+				AMParticle particle = (AMParticle)AMCore.proxy.particleManager.spawn(world, affinity.getMainParticle(), beamHitVec.xCoord, beamHitVec.yCoord, beamHitVec.zCoord);
 				if (particle != null){
 					particle.setMaxAge(2);
 					particle.setParticleScale(0.1f);
