@@ -20,13 +20,7 @@ public abstract class IllEffectBase implements IIllEffect{
 		int myOrdinal = this.GetSeverity().ordinal();
 		int theirOrdinal = right.GetSeverity().ordinal();
 
-		if (myOrdinal == theirOrdinal){
-			return 0;
-		}else if (myOrdinal < theirOrdinal){
-			return -1;
-		}else{
-			return 1;
-		}
+		return Integer.compare(myOrdinal, theirOrdinal);
 	}
 
 	@Override

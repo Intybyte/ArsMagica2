@@ -13,7 +13,7 @@ import java.util.Map;
  *
  * @author Mithion
  */
-public interface IIllEffect extends Comparable{
+public interface IIllEffect extends Comparable<Object>{
 	/**
 	 * The severity level of the effect.  Controls at what instability level the effect could be applied.
 	 *
