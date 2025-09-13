@@ -780,19 +780,19 @@ public class AMConfig extends Configuration{
 	}
 	
 	public int getTopazMinHeight(){
-		return this.vinteumMinHeight;
+		return this.topazMinHeight;
 	}
 	
 	public int getTopazMaxHeight(){
-		return this.vinteumMaxHeight;
+		return this.topazMaxHeight;
 	}
 	
 	public int getTopazVeinSize(){
-		return this.vinteumVeinSize;
+		return this.topazVeinSize;
 	}
 	
 	public int getTopazFrequency(){
-		return this.vinteumFrequency;
+		return this.topazFrequency;
 	}
 	
 	public int getSunstoneMinHeight(){
