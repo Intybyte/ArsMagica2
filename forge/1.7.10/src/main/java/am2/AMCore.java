@@ -105,7 +105,7 @@ public class AMCore{
 
 		initAPI();
 
-		if (AMCore.config.getEnableWitchwoodForest()){
+		if (AMCore.config.isEnableWitchwoodForest()){
 			BiomeDictionary.registerBiomeType(BiomeWitchwoodForest.instance, Type.FOREST, Type.MAGICAL);
 			BiomeManager.warmBiomes.add(new BiomeEntry(BiomeWitchwoodForest.instance, 6));
 		}
@@ -119,7 +119,7 @@ public class AMCore{
 		proxy.setCompendiumSaveBase(compendiumBase);
 		proxy.postinit();
 
-		if (config.retroactiveWorldgen()){
+		if (config.isRetroactiveWorldgen()){
 			LogHelper.info("Retroactive Worldgen is enabled");
 		}
 
@@ -278,7 +278,7 @@ public class AMCore{
 		ArsMagicaApi.instance.setFlickerOperatorRegistry(FlickerOperatorRegistry.instance);
 		ArsMagicaApi.instance.setInfusionRegistry(ImbuementRegistry.instance);
 		ArsMagicaApi.instance.setEssenceRecipeHandler(RecipesEssenceRefiner.essenceRefinement());
-		ArsMagicaApi.instance.setColourblindMode(config.colourblindMode());
+		ArsMagicaApi.instance.setColourblindMode(config.isColourblindMode());
 		ArsMagicaApi.instance.setBuffHelper(BuffList.instance);
 		ArsMagicaApi.instance.setSpellUtils(SpellUtils.instance);
 

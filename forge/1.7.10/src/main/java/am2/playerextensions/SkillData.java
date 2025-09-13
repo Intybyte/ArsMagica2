@@ -577,7 +577,7 @@ public class SkillData implements IExtendedEntityProperties, ISkillData{
 			}
 		}
 
-		if (sk.getPrimaryTree() != SkillTrees.None && entry.tree != SkillTrees.Talents && sk.getPrimaryTree() != entry.tree && entry.tier >= AMCore.config.getSkillTreeSecondaryTierCap()){
+		if (sk.getPrimaryTree() != SkillTrees.None && entry.tree != SkillTrees.Talents && sk.getPrimaryTree() != entry.tree && entry.tier >= AMCore.config.getSecondarySkillTreeTierCap()){
 			state = LearnStates.LOCKED;
 		}
 

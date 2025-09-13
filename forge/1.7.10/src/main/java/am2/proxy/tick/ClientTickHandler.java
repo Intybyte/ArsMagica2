@@ -328,7 +328,7 @@ public class ClientTickHandler{
 	@SubscribeEvent
 	public void onWorldTick(TickEvent.WorldTickEvent event){
 		if (Minecraft.getMinecraft().isIntegratedServerRunning()){
-			if (AMCore.config.retroactiveWorldgen())
+			if (AMCore.config.isRetroactiveWorldgen())
 				RetroactiveWorldgenerator.instance.continueRetrogen(event.world);
 		}
 		if (event.phase == TickEvent.Phase.END){

@@ -57,7 +57,7 @@ public class AMIngameGUI{
 	public void renderGameOverlay(){
 		ItemStack ci = Minecraft.getMinecraft().thePlayer.getCurrentEquippedItem();
 
-		boolean drawAMHud = !AMCore.config.showHudMinimally() || (ci != null && (ci.getItem() == ItemsCommonProxy.spellBook || ci.getItem() == ItemsCommonProxy.spell || ci.getItem() == ItemsCommonProxy.arcaneSpellbook || ci.getItem() instanceof IBoundItem));
+		boolean drawAMHud = !AMCore.config.isShowHudMinimally() || (ci != null && (ci.getItem() == ItemsCommonProxy.spellBook || ci.getItem() == ItemsCommonProxy.spell || ci.getItem() == ItemsCommonProxy.arcaneSpellbook || ci.getItem() instanceof IBoundItem));
 		ScaledResolution scaledresolution = new ScaledResolution(mc, mc.displayWidth, mc.displayHeight);
 		int i = scaledresolution.getScaledWidth();
 		int j = scaledresolution.getScaledHeight();
@@ -169,7 +169,7 @@ public class AMIngameGUI{
 
 		float progressScaled = (mana / (maxMana + 0.01f));
 
-		if (AMCore.config.showHudBars()){
+		if (AMCore.config.isShowHudBars()){
 			//handle flashing of mana bar
 			float flashTimer = AMGuiHelper.instance.getFlashTimer(MANA_BAR_FLASH_SLOT);
 			if (flashTimer > 0){
@@ -238,7 +238,7 @@ public class AMIngameGUI{
 			}
 		}
 
-		if (AMCore.config.getShowNumerics()){
+		if (AMCore.config.isShowNumerics()){
 			String manaStr = StatCollector.translateToLocal("am2.gui.mana") + ": " + (int)(mana + bonusMana) + "/" + (int)maxMana;
 			String burnoutStr = StatCollector.translateToLocal("am2.gui.burnout") + ": " + (int)props.getCurrentFatigue() + "/" + (int)props.getMaxFatigue();
 			AMVector2 manaNumericPos = getShiftedVector(AMCore.config.getManaNumericPosition(), i, j);
@@ -258,7 +258,7 @@ public class AMIngameGUI{
 	}
 
 	private void RenderArmorStatus(int i, int j, Minecraft mc, FontRenderer fontRenderer){
-		if (!AMCore.config.showArmorUI())
+		if (!AMCore.config.isShowArmorUI())
 			return;
 
 		ScaledResolution scaledResolution = new ScaledResolution(Minecraft.getMinecraft(), Minecraft.getMinecraft().displayWidth, Minecraft.getMinecraft().displayHeight);
@@ -329,7 +329,7 @@ public class AMIngameGUI{
 
 			AMGuiHelper.instance.DrawIconAtXY(item.getIconFromDamage(affinity.representMeta), x, y, j, 12, 12, true);
 
-			if (AMCore.config.getShowNumerics()){
+			if (AMCore.config.isShowNumerics()){
 				String display = String.format("%.2f%%", AffinityData.For(mc.thePlayer).getAffinityDepth(affinity) * 100);
 				if (x < i / 2)
 					Minecraft.getMinecraft().fontRenderer.drawString(display, x + 14, y + 2, affinity.color);
@@ -373,7 +373,7 @@ public class AMIngameGUI{
 
 	public void RenderBuffs(int i, int j){
 
-		if (!AMCore.config.getShowBuffs()){
+		if (!AMCore.config.isShowBuffs()){
 			return;
 		}
 
@@ -439,10 +439,10 @@ public class AMIngameGUI{
 	public void RenderMagicXP(int i, int j){
 		ExtendedProperties props = ExtendedProperties.For(Minecraft.getMinecraft().thePlayer);
 		if (props.getMagicLevel() > 0){
-			AMVector2 position = getShiftedVector(AMCore.config.getXPBarPosition(), i, j);
+			AMVector2 position = getShiftedVector(AMCore.config.getXpBarPosition(), i, j);
 			AMVector2 dimensions = new AMVector2(182, 5);
 			Minecraft.getMinecraft().renderEngine.bindTexture(mc_gui);
-			GL11.glColor4f(0.5f, 0.5f, 1.0f, AMCore.config.showXPAlways() ? 1.0f : AMGuiHelper.instance.getMagicXPBarAlpha());
+			GL11.glColor4f(0.5f, 0.5f, 1.0f, AMCore.config.isShowXPAlways() ? 1.0f : AMGuiHelper.instance.getMagicXPBarAlpha());
 
 			//base XP bar
 			drawTexturedModalRect_Classic(position.iX, position.iY, 0, 64, dimensions.iX, dimensions.iY, dimensions.iX, dimensions.iY);
@@ -455,7 +455,7 @@ public class AMIngameGUI{
 				drawTexturedModalRect_Classic(position.iX, position.iY, 0, 69, width, dimensions.iY, width, dimensions.iY);
 			}
 
-			if (AMCore.config.getShowNumerics() && (AMCore.config.showXPAlways() || AMGuiHelper.instance.getMagicXPBarAlpha() > 0)){
+			if (AMCore.config.isShowNumerics() && (AMCore.config.isShowXPAlways() || AMGuiHelper.instance.getMagicXPBarAlpha() > 0)){
 				String xpStr = StatCollector.translateToLocal("am2.gui.xp") + ": " + +(int)(props.getMagicXP() * 100) + "/" + (int)(props.getXPToNextLevel() * 100);
 				AMVector2 numericPos = getShiftedVector(AMCore.config.getXPNumericPosition(), i, j);
 				Minecraft.getMinecraft().fontRenderer.drawString(xpStr, numericPos.iX, numericPos.iY, 0x999999);

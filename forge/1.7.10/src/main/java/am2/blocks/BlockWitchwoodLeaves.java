@@ -117,7 +117,7 @@ public class BlockWitchwoodLeaves extends BlockLeaves{
 	@Override
 	public void randomDisplayTick(World par1World, int par2, int par3, int par4, Random par5Random){
 
-		if (!AMCore.config.witchwoodLeafPFX())
+		if (!AMCore.config.isWitchwoodLeafParticles())
 			return;
 
 		if (par5Random.nextInt(300) == 0 && par1World.isAirBlock(par2, par3 - 1, par4)){

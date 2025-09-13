@@ -42,7 +42,7 @@ public class AMKeyBindings{
 		if (Minecraft.getMinecraft().currentScreen != null){
 			if (Minecraft.getMinecraft().currentScreen instanceof GuiInventory){
 				if (ManaToggleKey.isPressed()){
-					boolean curDisplayFlag = AMCore.config.displayManaInInventory();
+					boolean curDisplayFlag = AMCore.config.isDisplayManaInInventory();
 					AMCore.config.setDisplayManaInInventory(!curDisplayFlag);
 				}
 			}

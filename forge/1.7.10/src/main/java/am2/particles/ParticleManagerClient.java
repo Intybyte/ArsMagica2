@@ -18,8 +18,6 @@ import net.minecraft.util.MathHelper;
 import net.minecraft.world.World;
 import net.minecraftforge.common.MinecraftForge;
 
-import java.util.Random;
-
 public class ParticleManagerClient extends ParticleManagerServer{
 
 	public static final byte PKT_BOLT_ENT_ENT = 64;
@@ -417,12 +415,12 @@ public class ParticleManagerClient extends ParticleManagerServer{
 		float particleSpeed = 0.02f;
 
 		if (Minecraft.getMinecraft().thePlayer == ent){
-			particleIndex = AMCore.config.getAuraIndex();
+			particleIndex = AMCore.config.getAuraType();
 			particleBehaviour = AMCore.config.getAuraBehaviour();
 			particleScale = AMCore.config.getAuraScale() / 10;
 			particleAlpha = AMCore.config.getAuraAlpha();
-			particleDefaultColor = AMCore.config.getAuraColorDefault();
-			particleRandomColor = AMCore.config.getAuraColorRandom();
+			particleDefaultColor = AMCore.config.isAuraDefaultColor();
+			particleRandomColor = AMCore.config.isAuraRandomColor();
 			particleColor = AMCore.config.getAuraColor();
 			particleQuantity = AMCore.config.getAuraQuantity();
 			particleSpeed = AMCore.config.getAuraSpeed() / 10;

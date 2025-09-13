@@ -62,7 +62,7 @@ public class ServerTickHandler{
 
 	@SubscribeEvent
 	public void onWorldTick(TickEvent.WorldTickEvent event){
-		if (AMCore.config.retroactiveWorldgen())
+		if (AMCore.config.isRetroactiveWorldgen())
 			RetroactiveWorldgenerator.instance.continueRetrogen(event.world);
 
 		applyDeferredPotionEffects();

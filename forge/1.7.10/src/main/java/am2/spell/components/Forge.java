@@ -36,7 +36,7 @@ public class Forge implements ISpellComponent{
 
 	@Override
 	public boolean applyEffectEntity(ItemStack stack, World world, EntityLivingBase caster, Entity target){
-		if (target instanceof EntityVillager && AMCore.config.forgeSmeltsVillagers()){
+		if (target instanceof EntityVillager && AMCore.config.isForgeSmeltsVillagers()){
 			if (!world.isRemote && !EntityUtilities.isSummon((EntityLivingBase)target))
 				target.dropItem(Items.emerald, 1);
 			if (caster instanceof EntityPlayer)

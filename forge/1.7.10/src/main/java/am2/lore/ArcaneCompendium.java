@@ -126,7 +126,7 @@ public class ArcaneCompendium implements ILoreHelper{
 
 	public void loadUnlockData(){
 
-		if (!AMCore.config.stagedCompendium()){
+		if (!AMCore.config.isStagedCompendium()){
 			for (CompendiumEntry entry : compendium.values()){
 				entry.isLocked = false;
 				entry.isNew = false;
@@ -183,7 +183,7 @@ public class ArcaneCompendium implements ILoreHelper{
 		zeroItemTexts.clear();
 
 		//check for mod updates
-		if (AMCore.config.allowVersionChecks())
+		if (AMCore.config.isAllowVersionChecks())
 			checkForModUpdates();
 		else
 			LogHelper.info("Skipping version check due to config");
@@ -192,7 +192,7 @@ public class ArcaneCompendium implements ILoreHelper{
 		loadDocumentVersion(lang);
 
 		//check for compendium updates
-		if (AMCore.config.allowCompendiumUpdates())
+		if (AMCore.config.isAllowCompendiumUpdates())
 			updateCompendium(lang);
 		else
 			LogHelper.info("Skipping Compendium auto-update due to config");
@@ -214,7 +214,7 @@ public class ArcaneCompendium implements ILoreHelper{
 	}
 
 	private boolean updateCompendium(Language lang){
-		if (!AMCore.config.allowCompendiumUpdates())
+		if (!AMCore.config.isAllowCompendiumUpdates())
 			return false;
 
 		try{

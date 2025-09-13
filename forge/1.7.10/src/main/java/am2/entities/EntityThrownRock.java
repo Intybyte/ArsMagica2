@@ -302,7 +302,7 @@ public class EntityThrownRock extends EntityLiving{
 					if (this.target == null){
 						this.target = new AMVector3(movingobjectposition.hitVec);
 					}
-					this.worldObj.newExplosion(this, this.target.x, this.target.y, this.target.z, 0.8f, false, AMCore.config.moonstoneMeteorsDestroyTerrain());
+					this.worldObj.newExplosion(this, this.target.x, this.target.y, this.target.z, 0.8f, false, AMCore.config.isMoonstoneMeteorsDestroyTerrain());
 
 					int numOres = rand.nextInt(6) + 1;
 

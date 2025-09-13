@@ -97,7 +97,7 @@ public class GuiSpellCustomization extends GuiContainer{
 		int l = (width - xSize) / 2;
 		int i1 = (height - ySize) / 2;
 
-		if (AMCore.config.suggestSpellNames())
+		if (AMCore.config.isSuggestSpellNames())
 			spellName = new GuiTextField(fontRendererObj, l + 8, i1 + 8, xSize - 36, 16);
 		else
 			spellName = new GuiTextField(fontRendererObj, l + 8, i1 + 8, xSize - 16, 16);
@@ -119,7 +119,7 @@ public class GuiSpellCustomization extends GuiContainer{
 		this.buttonList.add(btnPrev);
 		this.buttonList.add(btnNext);
 
-		if (AMCore.config.suggestSpellNames())
+		if (AMCore.config.isSuggestSpellNames())
 			this.buttonList.add(btnRandomName);
 
 		int IIcon_start_x = l + 12;

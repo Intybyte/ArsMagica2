@@ -61,7 +61,7 @@ public class Dig implements ISpellComponent{
 
 		TileEntity te = world.getTileEntity(blockx, blocky, blockz);
 		if (te != null){
-			if (!AMCore.config.getDigBreaksTileEntities())
+			if (!AMCore.config.isDigBreaksTileEntities())
 				return false;
 			
 			if (te instanceof IKeystoneLockable && !KeystoneUtilities.instance.canPlayerAccess((IKeystoneLockable)te, DummyEntityPlayer.fromEntityLiving(caster), KeystoneAccessType.BREAK))

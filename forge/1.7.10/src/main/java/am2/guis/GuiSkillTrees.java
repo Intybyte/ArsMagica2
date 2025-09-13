@@ -144,7 +144,7 @@ public class GuiSkillTrees extends GuiScreen{
 		int l = (width - xSize) / 2;
 		int i1 = (height - ySize) / 2;
 
-		if (AMCore.config.getSkillTreeSecondaryTierCap() < SkillTreeManager.instance.getHighestTier() && (sk.getPrimaryTree() == null || sk.getPrimaryTree() == SkillTrees.None) && sk.getSpellPoints(SkillPointTypes.BLUE) > 0){
+		if (AMCore.config.getSecondarySkillTreeTierCap() < SkillTreeManager.instance.getHighestTier() && (sk.getPrimaryTree() == null || sk.getPrimaryTree() == SkillTrees.None) && sk.getSpellPoints(SkillPointTypes.BLUE) > 0){
 			String s = StatCollector.translateToLocal("am2.gui.lockWarning");
 			fontRendererObj.drawSplitString(s, l - 120, i1 + 20, 110, 0xbf6325);
 		}
@@ -235,7 +235,7 @@ public class GuiSkillTrees extends GuiScreen{
 				}
 			}
 
-			if (!AMCore.config.colourblindMode()){
+			if (!AMCore.config.isColourblindMode()){
 				drawHoveringText(text, lastMouseX, lastMouseY, fr, state == LearnStates.LEARNED ? 0xFFFFFF : type == SkillPointTypes.SILVER ? 0x888888 : type == SkillPointTypes.BLUE ? 0x4444FF : type == SkillPointTypes.GREEN ? 0x44FF44 : 0xFF4444);
 			}else{
 				text.add(StatCollector.translateToLocal("am2.gui." + type.toString().toLowerCase() + "Point"));

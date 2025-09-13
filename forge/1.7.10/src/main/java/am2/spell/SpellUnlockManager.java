@@ -92,7 +92,7 @@ public class SpellUnlockManager{
 		}
 
 		public boolean unlockIsInPrimaryTree(EntityPlayer caster){
-			if (AMCore.config.getSkillTreeSecondaryTierCap() >= SkillTreeManager.instance.getHighestTier())
+			if (AMCore.config.getSecondarySkillTreeTierCap() >= SkillTreeManager.instance.getHighestTier())
 				return true;
 			return SkillData.For(caster).getPrimaryTree() == SkillTreeManager.instance.getSkillTreeEntry(unlock).tree;
 		}

@@ -180,7 +180,7 @@ public class PowerNodeCache{
 
 		HashMap<ChunkCoordIntPair, NBTTagCompound> saveData = PowerNodeRegistry.For(world).saveAll();
 		for (ChunkCoordIntPair pair : saveData.keySet()){
-			SaveNBTToFile(world, pair, saveData.get(pair), AMCore.config.savePowerDataOnWorldSave());
+			SaveNBTToFile(world, pair, saveData.get(pair), AMCore.config.isSavePowerDataOnWorldSave());
 		}
 	}
 

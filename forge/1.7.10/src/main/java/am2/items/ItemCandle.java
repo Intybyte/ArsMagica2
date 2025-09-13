@@ -158,7 +158,7 @@ public class ItemCandle extends ArsMagicaItem{
 			stack.damageItem(1, (EntityPlayer)entity);
 			if (!world.isRemote && stack.getItemDamage() >= this.getMaxDamage())
 				((EntityPlayer)entity).inventory.setInventorySlotContents(indexInInventory, null);
-			if (!world.isRemote && AMCore.config.candlesAreRovingLights() &&
+			if (!world.isRemote && AMCore.config.isCandlesAreRovingLights() &&
 					world.isAirBlock((int)Math.round(entity.posX), (int)Math.round(entity.posY), (int)Math.round(entity.posZ)) &&
 					world.getBlockLightValue((int)Math.round(entity.posX), (int)Math.round(entity.posY), (int)Math.round(entity.posZ)) < 14){
 				world.setBlock((int)Math.round(entity.posX), (int)Math.round(entity.posY), (int)Math.round(entity.posZ), BlocksCommonProxy.invisibleUtility, 2, 2);

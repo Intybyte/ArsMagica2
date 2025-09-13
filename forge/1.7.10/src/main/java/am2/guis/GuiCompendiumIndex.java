@@ -104,7 +104,7 @@ public class GuiCompendiumIndex extends GuiScreen implements GuiYesNoCallback{
 		this.buttonList.add(nextPage);
 		this.buttonList.add(prevPage);
 		this.buttonList.add(backToIndex);
-		if (AMCore.config.allowVersionChecks())
+		if (AMCore.config.isAllowVersionChecks())
 			this.buttonList.add(updateButton);
 
 		switchCategoryAndPage();

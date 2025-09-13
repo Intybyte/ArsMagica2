@@ -26,11 +26,9 @@ import net.minecraft.network.play.server.S35PacketUpdateTileEntity;
 import net.minecraft.potion.Potion;
 import net.minecraft.util.AxisAlignedBB;
 import net.minecraft.util.MathHelper;
-import net.minecraft.world.World;
 import net.minecraftforge.common.util.Constants;
 
 import java.util.ArrayList;
-import java.util.Random;
 
 public class TileEntityKeystoneRecepticle extends TileEntityAMPower implements IInventory, IMultiblockStructureController, IKeystoneLockable{
 
@@ -247,7 +245,7 @@ public class TileEntityKeystoneRecepticle extends TileEntityAMPower implements I
 
 		int meta = worldObj.getBlockMetadata((int)newLocation.x, (int)newLocation.y, (int)newLocation.z);
 
-		if (AMCore.config.getHazardousGateways()){
+		if (AMCore.config.isHazardousGateways()){
 			//uh-oh!  Not enough power!  The teleporter will still send you though, but I wonder where...
 			float charge = PowerNodeRegistry.For(this.worldObj).getHighestPower(this);
 			if (charge < essenceCost){

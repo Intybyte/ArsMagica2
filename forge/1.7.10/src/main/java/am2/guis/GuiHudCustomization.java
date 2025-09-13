@@ -68,12 +68,12 @@ public class GuiHudCustomization extends GuiScreen{
 	public void initGui(){
 		super.initGui();
 
-		doShowBuffs = AMCore.config.getShowBuffs();
-		doShowNumerics = AMCore.config.getShowNumerics();
-		doShowHudMinimally = AMCore.config.showHudMinimally();
-		doShowArmor = AMCore.config.showArmorUI();
-		doShowXPAlways = AMCore.config.showXPAlways();
-		doShowBars = AMCore.config.showHudBars();
+		doShowBuffs = AMCore.config.isShowBuffs();
+		doShowNumerics = AMCore.config.isShowNumerics();
+		doShowHudMinimally = AMCore.config.isShowHudMinimally();
+		doShowArmor = AMCore.config.isShowArmorUI();
+		doShowXPAlways = AMCore.config.isShowXPAlways();
+		doShowBars = AMCore.config.isShowHudBars();
 
 		int barWidth = (width / 8) + 16;
 
@@ -135,7 +135,7 @@ public class GuiHudCustomization extends GuiScreen{
 		initButtonAndSnapData(armorChest, AMCore.config.getArmorPositionChest());
 		initButtonAndSnapData(armorLegs, AMCore.config.getArmorPositionLegs());
 		initButtonAndSnapData(armorBoots, AMCore.config.getArmorPositionBoots());
-		initButtonAndSnapData(xpBar, AMCore.config.getXPBarPosition());
+		initButtonAndSnapData(xpBar, AMCore.config.getXpBarPosition());
 		initButtonAndSnapData(contingency, AMCore.config.getContingencyPosition());
 		initButtonAndSnapData(manaNumeric, AMCore.config.getManaNumericPosition());
 		initButtonAndSnapData(burnoutNumeric, AMCore.config.getBurnoutNumericPosition());

@@ -178,13 +178,13 @@ public class AMConfig extends Configuration{
 	private static final String CATEGORY_POTIONS = "potions";
 
 	private int GFXLevel;
-	private boolean PlayerSpellsDamageTerrain;
-	private boolean NPCSpellsDamageTerrain;
+	private boolean playerSpellsDamageTerrain;
+	private boolean npcSpellsDamageTerrain;
 	private float DamageMultiplier;
-	private boolean UseSpecialRenderers;
-	private boolean DisplayManaInInventory;
-	private boolean IsImbueEnabled;
-	private boolean RetroWorldGen;
+	private boolean useSpecialRenderers;
+	private boolean displayManaInInventory;
+	private boolean imbueEnchantEnabled;
+	private boolean retroactiveWorldgen;
 	private boolean moonstoneMeteorsDestroyTerrain;
 	private boolean suggestSpellNames;
 	private boolean forgeSmeltsVillagers;
@@ -193,7 +193,7 @@ public class AMConfig extends Configuration{
 
 	private int witchwoodForestID;
 
-	private float FrictionCoefficient;
+	private double frictionCoefficient;
 
 	private int secondarySkillTreeTierCap;
 	private int mageVillagerProfessionID;
@@ -207,16 +207,16 @@ public class AMConfig extends Configuration{
 	private String[] appropriationBlockBlacklist;
 	private Class[] appropriationMobBlacklist;
 
-	private int AuraType;
-	private int AuraBehaviour;
-	private float AuraScale;
-	private float AuraAlpha;
-	private int AuraColor;
-	private int AuraDelay;
-	private int AuraQuantity;
-	private double AuraSpeed;
-	private boolean AuraRandomColor;
-	private boolean AuraDefaultColor;
+	private int auraType;
+	private int auraBehaviour;
+	private float auraScale;
+	private float auraAlpha;
+	private int auraColor;
+	private int auraDelay;
+	private int auraQuantity;
+	private float auraSpeed;
+	private boolean auraRandomColor;
+	private boolean auraDefaultColor;
 	private double ArmorXPInfusionFactor;
 	private double manaCap;
 	private int enderAffinityAbilityCooldown;
@@ -250,7 +250,7 @@ public class AMConfig extends Configuration{
 	private boolean hazardousGateways;
 	private boolean disarmAffectsPlayers;
 	private boolean digBreaksTileEntities;
-	private boolean savePowerOnWorldSave;
+	private boolean savePowerDataOnWorldSave;
 
 	private boolean allowCompendiumUpdates;
 	private boolean allowVersionChecks;
@@ -294,22 +294,22 @@ public class AMConfig extends Configuration{
 
 	public void init(){
 
-		PlayerSpellsDamageTerrain = get(CATEGORY_GENERAL, KEY_PlayerSpellsDamageTerrain, true, "Set to false to prevent terrain damage from player-casted spells.").getBoolean(true);
-		NPCSpellsDamageTerrain = get(CATEGORY_GENERAL, KEY_NPCSpellsDamageTerrain, false, "Set to false to prevent terrain damage from NPC-casted spells.").getBoolean(false);
+		playerSpellsDamageTerrain = get(CATEGORY_GENERAL, KEY_PlayerSpellsDamageTerrain, true, "Set to false to prevent terrain damage from player-casted spells.").getBoolean(true);
+		npcSpellsDamageTerrain = get(CATEGORY_GENERAL, KEY_NPCSpellsDamageTerrain, false, "Set to false to prevent terrain damage from NPC-casted spells.").getBoolean(false);
 
 		DamageMultiplier = (float)get(CATEGORY_GENERAL, KEY_DamageMultiplier, 1.0, "How much the damage in Ars Magica is scaled.").getDouble(1.0);
 
-		UseSpecialRenderers = get(CATEGORY_GENERAL, KEY_UseSpecialRenderers, true, "Render spell effects on equipped scrolls rather than the scroll itself (only applies to the in-game one, the one on your hotbar remains unchanged)").getBoolean(true);
+		useSpecialRenderers = get(CATEGORY_GENERAL, KEY_UseSpecialRenderers, true, "Render spell effects on equipped scrolls rather than the scroll itself (only applies to the in-game one, the one on your hotbar remains unchanged)").getBoolean(true);
 
 		boolean def = !Loader.isModLoaded("NotEnoughItems");
-		DisplayManaInInventory = get(CATEGORY_GENERAL, KEY_DisplayManaInInventory, def, "This will toggle mana display on and off in your inventory.  Default 'O' key in game.").getBoolean(def);
+		displayManaInInventory = get(CATEGORY_GENERAL, KEY_DisplayManaInInventory, def, "This will toggle mana display on and off in your inventory.  Default 'O' key in game.").getBoolean(def);
 
-		FrictionCoefficient = (float)get(CATEGORY_GENERAL, KEY_FrictionCoefficient, 0.8, "This is the multiplier used to determine velocity lost when a spell projectile bounces. 0.0 is a complete stop, 1.0 is no loss.").getDouble(0.8);
+		frictionCoefficient = get(CATEGORY_GENERAL, KEY_FrictionCoefficient, 0.8, "This is the multiplier used to determine velocity lost when a spell projectile bounces. 0.0 is a complete stop, 1.0 is no loss.").getDouble(0.8);
 
 		Property retroWorldGenProp = get(CATEGORY_GENERAL, KEY_RetroactiveWorldGen, false, "Set this to true to enable retroactive worldgen for Ars Magica structures and ores.  *WARNING* This may break your save!  Do a backup first!  Note: This will automatically turn off after running the game once.");
-		RetroWorldGen = retroWorldGenProp.getBoolean(false);
+		retroactiveWorldgen = retroWorldGenProp.getBoolean(false);
 
-		if (RetroWorldGen){
+		if (retroactiveWorldgen){
 			retroWorldGenProp.set(false);
 		}
 
@@ -375,7 +375,7 @@ public class AMConfig extends Configuration{
 
 		digBreaksTileEntities = get(CATEGORY_GENERAL, KEY_DigBreaksTEs, true, "Can the dig component break blocks that have a tile entity?").getBoolean(true);
 
-		savePowerOnWorldSave = get(CATEGORY_GENERAL, KEY_SavePowerOnWorldSave, true, "Set this to false if you are experiencing tick lage due to AM2 saving power data alongside the world save.  This will instead cache the power data in memory to be saved later.  This comes with more risk in the event of a crash, and a larger memory footprint, but increased performance. Can be used alongside chunk unload save config. Power data is still always saved at world unload (server shutdown).").getBoolean(true);
+		savePowerDataOnWorldSave = get(CATEGORY_GENERAL, KEY_SavePowerOnWorldSave, true, "Set this to false if you are experiencing tick lage due to AM2 saving power data alongside the world save.  This will instead cache the power data in memory to be saved later.  This comes with more risk in the event of a crash, and a larger memory footprint, but increased performance. Can be used alongside chunk unload save config. Power data is still always saved at world unload (server shutdown).").getBoolean(true);
 
 		canDryadsDespawn = get(CATEGORY_MOBS, KEY_CanDryadsDespawn, true, "Set this to false if you don't want dryads to despawn.").getBoolean(true);
 		
@@ -452,18 +452,18 @@ public class AMConfig extends Configuration{
 	}
 
 	public void clientInit(){
-		AuraType = get(CATEGORY_BETA, KEY_AuraType, 15).getInt(15);
-		AuraType %= AMParticle.particleTypes.length;
-		AuraBehaviour = get(CATEGORY_BETA, KEY_AuraBehaviour, 0).getInt(0);
-		AuraBehaviour %= ParticleController.AuraControllerOptions.length;
-		AuraAlpha = (float)(get(CATEGORY_BETA, KEY_AuraAlpha, 1.0D)).getDouble(1.0D);
-		AuraScale = (float)(get(CATEGORY_BETA, KEY_AuraScale, 1.0D).getDouble(1.0));
-		AuraColor = get(CATEGORY_BETA, KEY_AuraColor, 0xFFFFFF).getInt(0xFFFFFF);
-		AuraQuantity = get(CATEGORY_BETA, KEY_AuraQuanity, 1).getInt(1);
-		AuraDelay = get(CATEGORY_BETA, KEY_AuraDelay, 5).getInt(5);
-		AuraSpeed = get(CATEGORY_BETA, KEY_AuraSpeed, 0.02D).getDouble(0.02D);
-		AuraRandomColor = get(CATEGORY_BETA, KEY_AuraColorRandomize, true).getBoolean(true);
-		AuraDefaultColor = get(CATEGORY_BETA, KEY_AuraColorDefault, true).getBoolean(true);
+		auraType = get(CATEGORY_BETA, KEY_AuraType, 15).getInt(15);
+		auraType %= AMParticle.particleTypes.length;
+		auraBehaviour = get(CATEGORY_BETA, KEY_AuraBehaviour, 0).getInt(0);
+		auraBehaviour %= ParticleController.AuraControllerOptions.length;
+		auraAlpha = (float)(get(CATEGORY_BETA, KEY_AuraAlpha, 1.0D)).getDouble(1.0D);
+		auraScale = (float)(get(CATEGORY_BETA, KEY_AuraScale, 1.0D).getDouble(1.0));
+		auraColor = get(CATEGORY_BETA, KEY_AuraColor, 0xFFFFFF).getInt(0xFFFFFF);
+		auraQuantity = get(CATEGORY_BETA, KEY_AuraQuanity, 1).getInt(1);
+		auraDelay = get(CATEGORY_BETA, KEY_AuraDelay, 5).getInt(5);
+		auraSpeed = (float) get(CATEGORY_BETA, KEY_AuraSpeed, 0.02D).getDouble(0.02D);
+		auraRandomColor = get(CATEGORY_BETA, KEY_AuraColorRandomize, true).getBoolean(true);
+		auraDefaultColor = get(CATEGORY_BETA, KEY_AuraColorDefault, true).getBoolean(true);
 
 		GFXLevel = 2 - Minecraft.getMinecraft().gameSettings.particleSetting;
 
@@ -486,12 +486,12 @@ public class AMConfig extends Configuration{
 		return GFXLevel == 0;
 	}
 
-	public boolean NPCSpellsDamageTerrain(){
-		return NPCSpellsDamageTerrain;
+	public boolean isNpcSpellsDamageTerrain(){
+		return npcSpellsDamageTerrain;
 	}
 
-	public boolean PlayerSpellsDamageTerrain(){
-		return PlayerSpellsDamageTerrain;
+	public boolean isPlayerSpellsDamageTerrain(){
+		return playerSpellsDamageTerrain;
 	}
 
 	public int getGFXLevel(){
@@ -502,35 +502,35 @@ public class AMConfig extends Configuration{
 		return DamageMultiplier;
 	}
 
-	public boolean getIsImbueEnchantEnabled(){
-		return IsImbueEnabled;
+	public boolean isImbueEnchantEnabled(){
+		return imbueEnchantEnabled;
 	}
 
 	public int getImbueProcCost(int enchantID){
 		return 0;
 	}
 
-	public boolean useSpecialRenderers(){
-		return UseSpecialRenderers;
+	public boolean isUseSpecialRenderers(){
+		return useSpecialRenderers;
 	}
 
-	public boolean displayManaInInventory(){
-		return DisplayManaInInventory;
+	public boolean isDisplayManaInInventory(){
+		return displayManaInInventory;
 	}
 
 	public double getFrictionCoefficient(){
-		return FrictionCoefficient;
+		return frictionCoefficient;
 	}
 
-	public boolean retroactiveWorldgen(){
-		return RetroWorldGen;
+	public boolean isRetroactiveWorldgen(){
+		return retroactiveWorldgen;
 	}
 
-	public int getSkillTreeSecondaryTierCap(){
+	public int getSecondarySkillTreeTierCap(){
 		return secondarySkillTreeTierCap;
 	}
 
-	public int getVillagerProfessionID(){
+	public int getMageVillagerProfessionID(){
 		return mageVillagerProfessionID;
 	}
 
@@ -574,7 +574,7 @@ public class AMConfig extends Configuration{
 		return armorPositionBoots;
 	}
 
-	public AMVector2 getXPBarPosition(){
+	public AMVector2 getXpBarPosition(){
 		return xpBarPosition;
 	}
 
@@ -598,11 +598,11 @@ public class AMConfig extends Configuration{
 		return SpellBookPosition;
 	}
 
-	public boolean getShowBuffs(){
+	public boolean isShowBuffs(){
 		return showBuffs;
 	}
 
-	public boolean getShowNumerics(){
+	public boolean isShowNumerics(){
 		return showNumerics;
 	}
 
@@ -614,11 +614,11 @@ public class AMConfig extends Configuration{
 		return worldgenBlacklist;
 	}
 
-	public boolean moonstoneMeteorsDestroyTerrain(){
+	public boolean isMoonstoneMeteorsDestroyTerrain(){
 		return moonstoneMeteorsDestroyTerrain;
 	}
 
-	public boolean suggestSpellNames(){
+	public boolean isSuggestSpellNames(){
 		return suggestSpellNames;
 	}
 
@@ -630,27 +630,27 @@ public class AMConfig extends Configuration{
 		return everstoneRepairRate;
 	}
 
-	public boolean showHudMinimally(){
+	public boolean isShowHudMinimally(){
 		return showHudMinimally;
 	}
 
-	public boolean stagedCompendium(){
+	public boolean isStagedCompendium(){
 		return stagedCompendium;
 	}
 
-	public boolean showXPAlways(){
+	public boolean isShowXPAlways(){
 		return showXPAlways;
 	}
 
-	public boolean showHudBars(){
+	public boolean isShowHudBars(){
 		return showHudBars;
 	}
 
-	public boolean witchwoodLeafPFX(){
+	public boolean isWitchwoodLeafParticles(){
 		return witchwoodLeafParticles;
 	}
 
-	public boolean colourblindMode(){
+	public boolean isColourblindMode(){
 		return colourblindMode;
 	}
 
@@ -662,15 +662,15 @@ public class AMConfig extends Configuration{
 		return appropriationMobBlacklist;
 	}
 
-	public boolean allowVersionChecks(){
+	public boolean isAllowVersionChecks(){
 		return allowVersionChecks;
 	}
 
-	public boolean allowCompendiumUpdates(){
+	public boolean isAllowCompendiumUpdates(){
 		return allowCompendiumUpdates;
 	}
 
-	public boolean getHazardousGateways(){
+	public boolean isHazardousGateways(){
 		return hazardousGateways;
 	}
 
@@ -678,7 +678,7 @@ public class AMConfig extends Configuration{
 		return ArmorXPInfusionFactor;
 	}
 
-	public boolean getDisarmAffectsPlayers(){
+	public boolean isDisarmAffectsPlayers(){
 		return disarmAffectsPlayers;
 	}
 
@@ -686,16 +686,16 @@ public class AMConfig extends Configuration{
 		return manaCap;
 	}
 
-	public boolean getDigBreaksTileEntities(){
+	public boolean isDigBreaksTileEntities(){
 		return digBreaksTileEntities;
 	}
 
-	public boolean savePowerDataOnWorldSave(){
-		return savePowerOnWorldSave;
+	public boolean isSavePowerDataOnWorldSave(){
+		return savePowerDataOnWorldSave;
 	}
 
 
-	public boolean canDraydsDespawn(){
+	public boolean isCanDryadsDespawn(){
 		return canDryadsDespawn;
 	}
 
@@ -703,15 +703,15 @@ public class AMConfig extends Configuration{
 		return meteorMinSpawnLevel;
 	}
 
-	public boolean forgeSmeltsVillagers(){
+	public boolean isForgeSmeltsVillagers(){
 		return forgeSmeltsVillagers;
 	}
 
-	public boolean showArmorUI(){
+	public boolean isShowArmorUI(){
 		return this.showArmorUI;
 	}
 
-	public boolean candlesAreRovingLights(){
+	public boolean isCandlesAreRovingLights(){
 		return candlesAreRovingLights;
 	}
 
@@ -719,7 +719,7 @@ public class AMConfig extends Configuration{
 		return this.enderAffinityAbilityCooldown;
 	}
 
-	public boolean getEnableWitchwoodForest(){
+	public boolean isEnableWitchwoodForest(){
 		return this.enableWitchwoodForest;
 	}
 
@@ -727,7 +727,7 @@ public class AMConfig extends Configuration{
 		return this.witchwoodForestRarity;
 	}
 
-	public boolean getAllowCreativeTargets(){
+	public boolean isAllowCreativeTargets(){
 		return this.allowCreativeTargets;
 	}
 	
@@ -778,7 +778,7 @@ public class AMConfig extends Configuration{
 	public int getChimeriteFrequency(){
 		return this.chimeriteFrequency;
 	}
-	
+
 	public int getTopazMinHeight(){
 		return this.topazMinHeight;
 	}
@@ -815,44 +815,44 @@ public class AMConfig extends Configuration{
 	// Getters - Aura
 	//====================================================================================
 
-	public int getAuraIndex(){
-		return AuraType;
+	public int getAuraType(){
+		return auraType;
 	}
 
 	public int getAuraBehaviour(){
-		return AuraBehaviour;
+		return auraBehaviour;
 	}
 
-	public boolean getAuraColorRandom(){
-		return AuraRandomColor;
+	public boolean isAuraRandomColor(){
+		return auraRandomColor;
 	}
 
-	public boolean getAuraColorDefault(){
-		return AuraDefaultColor;
+	public boolean isAuraDefaultColor(){
+		return auraDefaultColor;
 	}
 
 	public float getAuraScale(){
-		return AuraScale;
+		return auraScale;
 	}
 
 	public int getAuraColor(){
-		return AuraColor;
+		return auraColor;
 	}
 
 	public int getAuraDelay(){
-		return AuraDelay;
+		return auraDelay;
 	}
 
 	public int getAuraQuantity(){
-		return AuraQuantity;
+		return auraQuantity;
 	}
 
 	public float getAuraSpeed(){
-		return (float)AuraSpeed;
+		return auraSpeed;
 	}
 
 	public float getAuraAlpha(){
-		return AuraAlpha;
+		return auraAlpha;
 	}
 
 
@@ -973,7 +973,7 @@ public class AMConfig extends Configuration{
 		Property prop = get(CATEGORY_BETA, KEY_AuraType, 15);
 		prop.set(index);
 
-		this.AuraType = index;
+		this.auraType = index;
 	}
 
 	public void setAuraBehaviour(int index){
@@ -984,21 +984,21 @@ public class AMConfig extends Configuration{
 		Property prop = get(CATEGORY_BETA, KEY_AuraBehaviour, 0);
 		prop.set(index);
 
-		this.AuraBehaviour = index;
+		this.auraBehaviour = index;
 	}
 
 	public void setAuraColorRandom(boolean value){
 		Property prop = get(CATEGORY_BETA, KEY_AuraColorRandomize, false);
 		prop.set(value);
 
-		this.AuraRandomColor = value;
+		this.auraRandomColor = value;
 	}
 
 	public void setAuraColorDefault(boolean value){
 		Property prop = get(CATEGORY_BETA, KEY_AuraColorDefault, true);
 		prop.set(value);
 
-		this.AuraDefaultColor = value;
+		this.auraDefaultColor = value;
 	}
 
 	public void setAuraScale(float scale){
@@ -1007,14 +1007,14 @@ public class AMConfig extends Configuration{
 		Property prop = get(CATEGORY_BETA, KEY_AuraScale, 50D);
 		prop.set(scale);
 
-		this.AuraScale = scale;
+		this.auraScale = scale;
 	}
 
 	public void setAuraColor(int color){
 		Property prop = get(CATEGORY_BETA, KEY_AuraColor, 0xFFFFFF);
 		prop.set(color);
 
-		this.AuraColor = color;
+		this.auraColor = color;
 	}
 
 	public void setAuraAlpha(float alpha){
@@ -1023,7 +1023,7 @@ public class AMConfig extends Configuration{
 		Property prop = get(CATEGORY_BETA, KEY_AuraAlpha, 255D);
 		prop.set(alpha);
 
-		this.AuraAlpha = alpha;
+		this.auraAlpha = alpha;
 	}
 
 	public void setAuraQuantity(int quantity){
@@ -1032,7 +1032,7 @@ public class AMConfig extends Configuration{
 		Property prop = get(CATEGORY_BETA, KEY_AuraAlpha, 2);
 		prop.set(quantity);
 
-		this.AuraQuantity = quantity;
+		this.auraQuantity = quantity;
 	}
 
 	public void setAuraDelay(int delay){
@@ -1042,7 +1042,7 @@ public class AMConfig extends Configuration{
 		Property prop = get(CATEGORY_BETA, KEY_AuraDelay, 5);
 		prop.set(delay);
 
-		this.AuraDelay = delay;
+		this.auraDelay = delay;
 	}
 
 	public void setAuraSpeed(float speed){
@@ -1052,7 +1052,7 @@ public class AMConfig extends Configuration{
 		Property prop = get(CATEGORY_BETA, KEY_AuraSpeed, 0.02f);
 		prop.set(speed);
 
-		this.AuraSpeed = speed;
+		this.auraSpeed = speed;
 	}
 
 	public void setDisplayManaInInventory(boolean value){
@@ -1060,14 +1060,14 @@ public class AMConfig extends Configuration{
 		Property prop = get(CATEGORY_GENERAL, KEY_DisplayManaInInventory, def, "This will toggle mana display on and off in your inventory.  Default 'O' key in game.");
 		prop.set(value);
 
-		this.DisplayManaInInventory = value;
+		this.displayManaInInventory = value;
 	}
 
 	public void disableRetroactiveWorldgen(){
 		Property prop = get(CATEGORY_GENERAL, KEY_RetroactiveWorldGen, false, "Set this to true to enable retroactive worldgen for Ars Magica structures and ores.  *WARNING* This may break your save!  Do a backup first!");
 		prop.set(false);
 
-		this.RetroWorldGen = false;
+		this.retroactiveWorldgen = false;
 	}
 
 	public void setGuiPositions(AMVector2 manaHud, AMVector2 burnoutHud, AMVector2 levelHud, AMVector2 affinityHud, AMVector2 posBuffsHud, AMVector2 negBuffsHud, AMVector2 armorHead, AMVector2 armorChest, AMVector2 armorLegs, AMVector2 armorBoots, AMVector2 xpBar, AMVector2 contingency, AMVector2 manaNumeric, AMVector2 burnoutNumeric, AMVector2 XPNumeric, AMVector2 spellBookPos, boolean showBuffs, boolean showNumerics, boolean minimalHud, boolean showArmorUI, boolean showXPAlways, boolean showHudBars){

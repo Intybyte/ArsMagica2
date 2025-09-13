@@ -30,7 +30,7 @@ public class AMWorldEventHandler{
 
 		NBTTagCompound compound = (NBTTagCompound)event.getData().getTag("ArsMagica2");
 
-		if (AMCore.config.retroactiveWorldgen() && (compound == null || !compound.hasKey(genKey))){
+		if (AMCore.config.isRetroactiveWorldgen() && (compound == null || !compound.hasKey(genKey))){
 			LogHelper.info("Detected a chunk that requires retrogen.  Adding to retrogen list.");
 			AMCore.proxy.addQueuedRetrogen(dimensionID, chunkLocation);
 		}

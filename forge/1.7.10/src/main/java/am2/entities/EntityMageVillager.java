@@ -32,7 +32,7 @@ public class EntityMageVillager extends EntityVillager{
 
 	@Override
 	public int getProfession(){
-		return AMCore.config.getVillagerProfessionID();
+		return AMCore.config.getMageVillagerProfessionID();
 	}
 
 	private void initAI(){

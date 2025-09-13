@@ -27,7 +27,7 @@ public class SeventhSanctum{
 		postOptions.put("selGenCount", "25");
 		postOptions.put("selGenType", "SEEDALL");
 
-		if (AMCore.config.suggestSpellNames())
+		if (AMCore.config.isSuggestSpellNames())
 			getSuggestions();
 		else
 			failed = true;
