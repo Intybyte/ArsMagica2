@@ -1,7 +1,7 @@
 package am2.guis;
 
 import am2.AMCore;
-import am2.api.math.AMVector2;
+import am2.common.api.math.AMVector2;
 import am2.guis.controls.GuiButtonVariableDims;
 import net.minecraft.client.Minecraft;
 import net.minecraft.client.gui.GuiButton;

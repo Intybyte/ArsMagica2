@@ -1,4 +1,4 @@
-package am2.api.math;
+package am2.common.api.math;
 
 public class AMVector2{
 	public double x;

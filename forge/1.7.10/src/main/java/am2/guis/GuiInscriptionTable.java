@@ -1,6 +1,6 @@
 package am2.guis;
 
-import am2.api.math.AMVector2;
+import am2.common.api.math.AMVector2;
 import am2.api.spell.component.interfaces.*;
 import am2.blocks.tileentities.TileEntityInscriptionTable;
 import am2.containers.ContainerInscriptionTable;

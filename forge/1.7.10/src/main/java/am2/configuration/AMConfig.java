@@ -1,7 +1,7 @@
 package am2.configuration;
 
 import am2.LogHelper;
-import am2.api.math.AMVector2;
+import am2.common.api.math.AMVector2;
 import am2.particles.AMParticle;
 import am2.particles.ParticleController;
 import cpw.mods.fml.common.Loader;

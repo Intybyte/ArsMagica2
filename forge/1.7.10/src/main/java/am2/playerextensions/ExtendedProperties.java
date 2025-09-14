@@ -4,7 +4,7 @@ import am2.AMCore;
 import am2.api.ArsMagicaApi;
 import am2.api.IExtendedProperties;
 import am2.api.events.PlayerMagicLevelChangeEvent;
-import am2.api.math.AMVector2;
+import am2.common.api.math.AMVector2;
 import am2.api.math.AMVector3;
 import am2.common.api.spell.enums.ContingencyTypes;
 import am2.common.api.spell.enums.SkillPointTypes;

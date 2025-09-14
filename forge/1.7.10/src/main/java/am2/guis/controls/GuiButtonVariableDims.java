@@ -1,6 +1,6 @@
 package am2.guis.controls;
 
-import am2.api.math.AMVector2;
+import am2.common.api.math.AMVector2;
 import net.minecraft.client.Minecraft;
 import net.minecraft.client.gui.FontRenderer;
 import net.minecraft.client.gui.GuiButton;

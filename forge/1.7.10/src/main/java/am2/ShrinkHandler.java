@@ -1,6 +1,6 @@
 package am2;
 
-import am2.api.math.AMVector2;
+import am2.common.api.math.AMVector2;
 import am2.buffs.BuffList;
 import am2.playerextensions.ExtendedProperties;
 import am2.spell.SkillManager;
