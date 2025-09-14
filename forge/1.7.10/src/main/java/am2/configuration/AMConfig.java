@@ -5,6 +5,7 @@ import am2.api.math.AMVector2;
 import am2.particles.AMParticle;
 import am2.particles.ParticleController;
 import cpw.mods.fml.common.Loader;
+import lombok.Getter;
 import net.minecraft.client.Minecraft;
 import net.minecraft.potion.Potion;
 import net.minecraftforge.common.config.Configuration;
