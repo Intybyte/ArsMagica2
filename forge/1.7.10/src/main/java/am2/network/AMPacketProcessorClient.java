@@ -369,7 +369,7 @@ public class AMPacketProcessorClient extends AMPacketProcessorServer{
 	private void handlePlayerLoginData(byte[] data, EntityPlayer player){
 		AMDataReader rdr = new AMDataReader(data, false);
 		int skillTreeLock = rdr.getInt();
-		AMCore.config.setSkillTreeSecondaryTierCap(skillTreeLock);
+		AMCore.config.setSecondarySkillTreeTierCap(skillTreeLock);
 		int[] disabledSkills = rdr.getIntArray();
 		double manaCap = rdr.getDouble();
 

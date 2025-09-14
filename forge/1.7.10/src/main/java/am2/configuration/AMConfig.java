@@ -665,7 +665,7 @@ public class AMConfig extends Configuration{
 	public void setAuraQuantity(int quantity){
 		if (quantity < 1) quantity = 1;
 		else if (quantity > 5) quantity = 5;
-		Property prop = get(CATEGORY_BETA, KEY_AuraAlpha, 2);
+		Property prop = get(CATEGORY_BETA, KEY_AuraQuanity, 2);
 		prop.set(quantity);
 
 		this.auraQuantity = quantity;
@@ -776,7 +776,7 @@ public class AMConfig extends Configuration{
 		save();
 	}
 
-	public void setSkillTreeSecondaryTierCap(int skillTreeLock){
+	public void setSecondarySkillTreeTierCap(int skillTreeLock){
 		this.secondarySkillTreeTierCap = skillTreeLock;
 	}
 
