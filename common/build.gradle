@@ -1,5 +1,6 @@
 plugins {
     id 'java'
+    id 'com.github.johnrengelman.shadow' version '7.1.2' // Add Shadow plugin
 }
 
 group = 'am2.common'
@@ -7,12 +8,21 @@ version = '1.4.0.009'
 
 repositories {
     mavenCentral()
+    maven {
+        name = "sponge"
+        url = "https://repo.spongepowered.org/maven"
+    }
 }
 
 dependencies {
+    // JUnit
     testImplementation platform('org.junit:junit-bom:5.10.0')
     testImplementation 'org.junit.jupiter:junit-jupiter'
     testRuntimeOnly 'org.junit.platform:junit-platform-launcher'
+
+    // Configurate Core (v3.x)
+    implementation 'org.spongepowered:configurate-core:3.7.2'
+    implementation 'org.spongepowered:configurate-hocon:3.7.2' // Optional: For HOCON support
 }
 
 test {
@@ -24,3 +34,15 @@ java {
         languageVersion = JavaLanguageVersion.of(8)
     }
 }
+
+// Shade Configurate into your jar
+shadowJar {
+    // Relocate to avoid conflicts if others also use Configurate
+    relocate 'ninja.leaping.configurate', 'am2.shaded.configurate'
+
+    // Optional: Customize jar name
+    archiveClassifier.set('')
+}
+
+// Make `build` depend on `shadowJar`
+build.dependsOn shadowJar
