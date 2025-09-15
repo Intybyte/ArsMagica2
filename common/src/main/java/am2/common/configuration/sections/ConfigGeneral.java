@@ -23,6 +23,9 @@ public class ConfigGeneral {
 	@Setting(comment = "How much the damage in Ars Magica is scaled.")
 	private float damageMultiplier = 1f;
 
+	@Setting(comment = "This is the multiplier used to determine velocity lost when a spell projectile bounces. 0.0 is a complete stop, 1.0 is no loss.")
+	private double frictionCoefficient = 0.8;
+
 	@Setting(comment = "Render spell effects on equipped scrolls rather than the scroll itself (only applies to the in-game one, the one on your hotbar remains unchanged)")
 	private boolean useSpecialRenderers = true;
 
