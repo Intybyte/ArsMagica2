@@ -237,8 +237,8 @@ public class AMConfig extends Configuration{
 	private AMVector2 contingencyPosition;
 	private AMVector2 manaNumericPosition;
 	private AMVector2 burnoutNumericPosition;
-	private AMVector2 XPNumericPosition;
-	private AMVector2 SpellBookPosition;
+	private AMVector2 xpNumericPosition;
+	private AMVector2 spellBookPosition;
 	private boolean showBuffs;
 	private boolean showNumerics;
 	private boolean showHudMinimally;
@@ -333,8 +333,8 @@ public class AMConfig extends Configuration{
 
 		manaNumericPosition = new AMVector2(get(CATEGORY_UI, KEY_ManaNumericPositionX, 0.7437499761581421).getDouble(0.7437499761581421), get(CATEGORY_UI, KEY_ManaNumericPositionY, 0.8941176533699036).getDouble(0.8941176533699036));
 		burnoutNumericPosition = new AMVector2(get(CATEGORY_UI, KEY_BurnoutNumericPositionX, 0.21041665971279144).getDouble(0.21041665971279144), get(CATEGORY_UI, KEY_BurnoutNumericPositionY, 0.9058823585510254).getDouble(0.9058823585510254));
-		XPNumericPosition = new AMVector2(get(CATEGORY_UI, KEY_XPNumericPositionX, 0.47083333134651184).getDouble(0.47083333134651184), get(CATEGORY_UI, KEY_XPNumericPositionY, 0.7450980544090271).getDouble(0.7450980544090271));
-		SpellBookPosition = new AMVector2(get(CATEGORY_UI, KEY_SpellBookPositionX, 0.0).getDouble(0.0), get(CATEGORY_UI, KEY_SpellBookPositionY, 0.0).getDouble(0.0));
+		xpNumericPosition = new AMVector2(get(CATEGORY_UI, KEY_XPNumericPositionX, 0.47083333134651184).getDouble(0.47083333134651184), get(CATEGORY_UI, KEY_XPNumericPositionY, 0.7450980544090271).getDouble(0.7450980544090271));
+		spellBookPosition = new AMVector2(get(CATEGORY_UI, KEY_SpellBookPositionX, 0.0).getDouble(0.0), get(CATEGORY_UI, KEY_SpellBookPositionY, 0.0).getDouble(0.0));
 
 		showHudMinimally = get(CATEGORY_UI, KEY_ShowHudMinimally, false, "Set this to true to only show the AM HUD when a spell is equipped").getBoolean(false);
 		showArmorUI = get(CATEGORY_UI, KEY_ShowArmorUI, true).getBoolean(true);
@@ -721,8 +721,8 @@ public class AMConfig extends Configuration{
 		contingencyPosition = contingency;
 		manaNumericPosition = manaNumeric;
 		burnoutNumericPosition = burnoutNumeric;
-		XPNumericPosition = XPNumeric;
-		SpellBookPosition = spellBookPos;
+		xpNumericPosition = XPNumeric;
+		spellBookPosition = spellBookPos;
 		this.showBuffs = showBuffs;
 		this.showNumerics = showNumerics;
 		this.showHudMinimally = minimalHud;
@@ -746,8 +746,8 @@ public class AMConfig extends Configuration{
 		updateAMVector2(KEY_ContingencyPositionX, KEY_ContingencyPositionY, contingencyPosition);
 		updateAMVector2(KEY_ManaNumericPositionX, KEY_ManaNumericPositionY, manaNumericPosition);
 		updateAMVector2(KEY_BurnoutNumericPositionX, KEY_BurnoutNumericPositionY, burnoutNumericPosition);
-		updateAMVector2(KEY_XPNumericPositionX, KEY_XPNumericPositionY, XPNumericPosition);
-		updateAMVector2(KEY_SpellBookPositionX, KEY_SpellBookPositionY, SpellBookPosition);
+		updateAMVector2(KEY_XPNumericPositionX, KEY_XPNumericPositionY, xpNumericPosition);
+		updateAMVector2(KEY_SpellBookPositionX, KEY_SpellBookPositionY, spellBookPosition);
 
 		Property buffProp;
 		buffProp = get(CATEGORY_UI, KEY_ShowBuffs, true);
