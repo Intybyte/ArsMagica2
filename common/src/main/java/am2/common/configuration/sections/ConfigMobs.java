@@ -17,7 +17,7 @@ public class ConfigMobs {
 	private int mageSpawnRate = 1;
 
 	@Setting
-	private int waterElementSpawnRate = 3;
+	private int waterElementalSpawnRate = 3;
 
 	@Setting
 	private int manaElementalSpawnRate = 2;
@@ -48,8 +48,8 @@ public class ConfigMobs {
 		return Math.max(mageSpawnRate, 0);
 	}
 
-	public int getWaterElementSpawnRate() {
-		return Math.max(waterElementSpawnRate, 0);
+	public int getWaterElementalSpawnRate() {
+		return Math.max(waterElementalSpawnRate, 0);
 	}
 
 	public int getManaElementalSpawnRate() {
