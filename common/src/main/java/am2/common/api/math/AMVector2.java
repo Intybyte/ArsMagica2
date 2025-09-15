@@ -1,11 +1,20 @@
 package am2.common.api.math;
 
+import lombok.NoArgsConstructor;
+import ninja.leaping.configurate.objectmapping.Setting;
+import ninja.leaping.configurate.objectmapping.serialize.ConfigSerializable;
+
+@NoArgsConstructor
+@ConfigSerializable
 public class AMVector2{
+	@Setting
 	public double x;
+
+	@Setting
 	public double y;
 
-	public int iX;
-	public int iY;
+	public transient int iX;
+	public transient int iY;
 
 	public AMVector2(double x, double y){
 		this.x = x;
