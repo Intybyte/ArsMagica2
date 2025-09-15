@@ -1,7 +1,7 @@
 package am2.common.configuration.sections;
 
-import am2.common.configuration.datatypes.ConfigurableVein;
 import lombok.Getter;
+import lombok.Setter;
 import ninja.leaping.configurate.objectmapping.Setting;
 import ninja.leaping.configurate.objectmapping.serialize.ConfigSerializable;
 
@@ -10,6 +10,7 @@ import java.util.Arrays;
 import java.util.List;
 
 @Getter
+@Setter
 @ConfigSerializable
 public class ConfigGeneral {
 
