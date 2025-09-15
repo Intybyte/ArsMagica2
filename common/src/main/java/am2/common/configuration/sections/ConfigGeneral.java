@@ -98,10 +98,6 @@ public class ConfigGeneral {
 	@Setting(comment = "List of block IDs that dig cannot break. Avoid listing unbreakable blocks like bedrock. Used for fine-tuning.")
 	private List<String> digBlacklist = new ArrayList<>();
 
-	@Setting(comment = "List of world names where AM2 should not generate any worldgen features. " +
-			"Use world names like 'overworld', 'the_nether', 'custom_world'.")
-	private List<String> worldgenBlacklist = new ArrayList<>(Arrays.asList("DIM-27", "DIM-28", "DIM-29"));
-
 	@Setting(comment = "List of block IDs that appropriation cannot pick up")
 	private List<String> appropriationBlockBlacklist = new ArrayList<>();
 

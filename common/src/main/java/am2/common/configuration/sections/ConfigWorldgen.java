@@ -5,11 +5,19 @@ import lombok.Getter;
 import ninja.leaping.configurate.objectmapping.Setting;
 import ninja.leaping.configurate.objectmapping.serialize.ConfigSerializable;
 
+import java.util.ArrayList;
+import java.util.Arrays;
+import java.util.List;
+
 @Getter
 @ConfigSerializable
 public class ConfigWorldgen {
 	@Setting(comment = "Set this to true to enable retroactive worldgen for Ars Magica structures and ores.  *WARNING* This may break your save!  Do a backup first!  Note: This will automatically turn off after running the game once.")
 	private boolean retroactiveWorldgen;
+
+	@Setting(comment = "List of world names where AM2 should not generate any worldgen features. " +
+			"Use world names like 'overworld', 'the_nether', 'custom_world'.")
+	private List<String> worldgenBlacklist = new ArrayList<>(Arrays.asList("DIM-27", "DIM-28", "DIM-29"));
 
 	//region Witchforest
 	@Setting(comment = "The biome ID for Witchwood Forests. Change this if you run into issues with other mods that add biomes.")
