@@ -51,10 +51,10 @@ public class ConfigGui {
 	private AMVector2 burnoutNumericPosition = new AMVector2(0.21041665971279144, 0.9058823585510254);
 
 	@Setting
-	private AMVector2 XPNumericPosition = new AMVector2(0.47083333134651184, 0.7450980544090271);
+	private AMVector2 xpNumericPosition = new AMVector2(0.47083333134651184, 0.7450980544090271);
 
 	@Setting
-	private AMVector2 SpellBookPosition = new AMVector2(0.0, 0.0);
+	private AMVector2 spellBookPosition = new AMVector2(0.0, 0.0);
 
 	@Setting
 	private boolean showHudMinimally = false;
@@ -73,4 +73,29 @@ public class ConfigGui {
 
 	@Setting
 	private boolean showHudBars = true;
+
+	public void setGuiPositions(AMVector2 manaHud, AMVector2 burnoutHud, AMVector2 levelHud, AMVector2 affinityHud, AMVector2 posBuffsHud, AMVector2 negBuffsHud, AMVector2 armorHead, AMVector2 armorChest, AMVector2 armorLegs, AMVector2 armorBoots, AMVector2 xpBar, AMVector2 contingency, AMVector2 manaNumeric, AMVector2 burnoutNumeric, AMVector2 XPNumeric, AMVector2 spellBookPos, boolean showBuffs, boolean showNumerics, boolean minimalHud, boolean showArmorUI, boolean showXPAlways, boolean showHudBars){
+		manaHudPosition = manaHud;
+		burnoutHudPosition = burnoutHud;
+		levelPosition = levelHud;
+		affinityPosition = affinityHud;
+		positiveBuffsPosition = posBuffsHud;
+		negativeBuffsPosition = negBuffsHud;
+		armorPositionHead = armorHead;
+		armorPositionChest = armorChest;
+		armorPositionLegs = armorLegs;
+		armorPositionBoots = armorBoots;
+		xpBarPosition = xpBar;
+		contingencyPosition = contingency;
+		manaNumericPosition = manaNumeric;
+		burnoutNumericPosition = burnoutNumeric;
+		xpNumericPosition = XPNumeric;
+		spellBookPosition = spellBookPos;
+		this.showBuffs = showBuffs;
+		this.showNumerics = showNumerics;
+		this.showHudMinimally = minimalHud;
+		this.showArmorUI = showArmorUI;
+		this.showXPAlways = showXPAlways;
+		this.showHudBars = showHudBars;
+	}
 }
