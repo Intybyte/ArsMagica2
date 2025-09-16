@@ -114,6 +114,7 @@ dependencies {
 }
 
 tasks.compileJava {
+    dependsOn(":common:shadowJar")
     options.compilerArgs.add("-Xdiags:verbose")
 }
 
