@@ -1,18 +1,18 @@
 package am2.common.configuration.sections;
 
-import am2.common.configuration.datatypes.ConfigurableIdentifier;
 import lombok.Getter;
 import ninja.leaping.configurate.objectmapping.Setting;
 import ninja.leaping.configurate.objectmapping.serialize.ConfigSerializable;
+
+import java.util.HashMap;
 
 @Getter
 @ConfigSerializable
 public class ConfigEnchantments {
 
 	@Setting
-	private ConfigurableIdentifier magic_resist = new ConfigurableIdentifier(100);
-
-	@Setting
-	private ConfigurableIdentifier soulbound = new ConfigurableIdentifier(101);
-
+	private HashMap<String, Integer> ids = new HashMap<String, Integer>() {{
+		put("magic_resist", 100);
+		put("soulbound", 101);
+	}};
 }
