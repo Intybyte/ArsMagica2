@@ -1,9 +1,12 @@
+import com.github.jengelman.gradle.plugins.shadow.tasks.ShadowJar
+
 plugins {
     id("java-library")
     id("maven-publish")
     id("org.jetbrains.gradle.plugin.idea-ext") version "1.1.8"
     id("com.gtnewhorizons.retrofuturagradle") version "1.4.0"
     id("io.freefair.lombok") version "8.14.2"
+    id("com.github.johnrengelman.shadow") version "7.1.2"
 }
 
 // Project properties
@@ -134,9 +137,16 @@ tasks.named<Jar>("jar") {
         )
     }
 
-    from(project(":common").sourceSets["main"].output)
-
     archiveBaseName = "AM2"
+}
+
+tasks.build {
+    dependsOn("shadowJar")
+}
+
+tasks.named<ShadowJar>("shadowJar") {
+
+    archiveBaseName = "AM2-full"
 }
 
 tasks.processIdeaSettings.configure {
