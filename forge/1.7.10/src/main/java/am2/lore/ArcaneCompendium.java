@@ -6,6 +6,7 @@ import am2.api.ILoreHelper;
 import am2.api.spell.component.interfaces.ISpellComponent;
 import am2.api.spell.component.interfaces.ISpellModifier;
 import am2.api.spell.component.interfaces.ISpellShape;
+import am2.common.configuration.AMConfig;
 import am2.items.ItemsCommonProxy;
 import am2.playerextensions.ExtendedProperties;
 import am2.proxy.tick.ClientTickHandler;
@@ -126,7 +127,7 @@ public class ArcaneCompendium implements ILoreHelper{
 
 	public void loadUnlockData(){
 
-		if (!AMCore.config.isStagedCompendium()){
+		if (!AMConfig.getInstance().getGeneral().isStagedCompendium()){
 			for (CompendiumEntry entry : compendium.values()){
 				entry.isLocked = false;
 				entry.isNew = false;
@@ -134,34 +135,36 @@ public class ArcaneCompendium implements ILoreHelper{
 			return;
 		}
 
-		if (saveFileLocation != null && getWorldName() != null){
-			try{
-				hasLoaded = true;
+		if(saveFileLocation == null || getWorldName() == null) {
+			return;
+		}
 
-				File file = new File(saveFileLocation + File.separatorChar + getWorldName() + ".txt");
-				if (!file.exists()){
-					LogHelper.info("Compendium unlock state not found to load.  Assuming it hasn't been created yet.");
-					return;
-				}
-				BufferedReader reader = new BufferedReader(new FileReader(file));
+		try{
+			hasLoaded = true;
 
-				String s;
-				while ((s = reader.readLine()) != null){
-					String[] split = s.trim().replace("\n", "").replace("\r", "").split("\\|");
-					if (split.length != 2)
-						continue;
-					CompendiumEntry entry = this.getEntryAbsolute(split[0]);
-					if (entry == null) continue;
-
-					entry.isLocked = split[1].contains("L");
-					entry.isNew = split[1].contains("N");
-				}
-
-				reader.close();
-			}catch (IOException e){
-				LogHelper.error("Compendium unlock state failed to load!");
-				e.printStackTrace();
+			File file = new File(saveFileLocation + File.separatorChar + getWorldName() + ".txt");
+			if (!file.exists()){
+				LogHelper.info("Compendium unlock state not found to load.  Assuming it hasn't been created yet.");
+				return;
 			}
+			BufferedReader reader = new BufferedReader(new FileReader(file));
+
+			String s;
+			while ((s = reader.readLine()) != null){
+				String[] split = s.trim().replace("\n", "").replace("\r", "").split("\\|");
+				if (split.length != 2)
+					continue;
+				CompendiumEntry entry = this.getEntryAbsolute(split[0]);
+				if (entry == null) continue;
+
+				entry.isLocked = split[1].contains("L");
+				entry.isNew = split[1].contains("N");
+			}
+
+			reader.close();
+		}catch (IOException e){
+			LogHelper.error("Compendium unlock state failed to load!");
+			e.printStackTrace();
 		}
 	}
 
@@ -183,7 +186,7 @@ public class ArcaneCompendium implements ILoreHelper{
 		zeroItemTexts.clear();
 
 		//check for mod updates
-		if (AMCore.config.isAllowVersionChecks())
+		if (AMConfig.getInstance().getGeneral().isAllowVersionChecks())
 			checkForModUpdates();
 		else
 			LogHelper.info("Skipping version check due to config");
@@ -192,7 +195,7 @@ public class ArcaneCompendium implements ILoreHelper{
 		loadDocumentVersion(lang);
 
 		//check for compendium updates
-		if (AMCore.config.isAllowCompendiumUpdates())
+		if (AMConfig.getInstance().getGeneral().isAllowCompendiumUpdates())
 			updateCompendium(lang);
 		else
 			LogHelper.info("Skipping Compendium auto-update due to config");
@@ -214,7 +217,7 @@ public class ArcaneCompendium implements ILoreHelper{
 	}
 
 	private boolean updateCompendium(Language lang){
-		if (!AMCore.config.isAllowCompendiumUpdates())
+		if (!AMConfig.getInstance().getGeneral().isAllowCompendiumUpdates())
 			return false;
 
 		try{

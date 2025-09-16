@@ -2,6 +2,7 @@ package am2.particles;
 
 import am2.AMCore;
 import am2.common.api.particle.IBeamParticle;
+import am2.configuration.GfxUtil;
 import am2.texture.ResourceManager;
 import cpw.mods.fml.relauncher.Side;
 import cpw.mods.fml.relauncher.SideOnly;
@@ -231,10 +232,10 @@ public class AMBeam extends EntityFX implements IBeamParticle{
 		GL11.glRotatef(rot, 0.0F, 1.0F, 0.0F);
 		int i = 5;
 		float inc = 36.0F;
-		if (AMCore.config.LowGFX()){
+		if (GfxUtil.isLow()){
 			i = 3;
 			inc = 90;
-		}else if (AMCore.config.NoGFX()){
+		}else if (GfxUtil.isNo()){
 			i = 1;
 			inc = 180;
 		}

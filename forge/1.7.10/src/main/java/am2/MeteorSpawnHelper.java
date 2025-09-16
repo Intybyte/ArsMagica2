@@ -2,6 +2,7 @@ package am2;
 
 import am2.api.math.AMVector3;
 import am2.blocks.tileentities.flickers.FlickerOperatorMoonstoneAttractor;
+import am2.common.configuration.AMConfig;
 import am2.entities.EntityThrownRock;
 import am2.playerextensions.ExtendedProperties;
 import net.minecraft.block.Block;
@@ -52,7 +53,7 @@ public class MeteorSpawnHelper{
 			int playerID = rand.nextInt(ws.playerEntities.size());
 			EntityPlayer player = (EntityPlayer)ws.playerEntities.get(playerID);
 
-			if (ExtendedProperties.For(player).getMagicLevel() < AMCore.config.getMeteorMinSpawnLevel()) return;
+			if (ExtendedProperties.For(player).getMagicLevel() < AMConfig.getInstance().getGeneral().getMeteorMinSpawnLevel()) return;
 
 			AMVector3 spawnCoord = new AMVector3(player);
 			boolean found = false;

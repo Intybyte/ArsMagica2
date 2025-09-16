@@ -1,6 +1,7 @@
 package am2.entities;
 
 import am2.AMCore;
+import am2.configuration.GfxUtil;
 import net.minecraft.block.Block;
 import net.minecraft.entity.Entity;
 import net.minecraft.entity.player.EntityPlayer;
@@ -42,7 +43,7 @@ public class EntityShockwave extends Entity{
 		int k = MathHelper.floor_double(this.posZ);
 		Block l = this.worldObj.getBlock(j, i, k);
 		if (l != Blocks.air)
-			for (int h = 0; h < 5 * AMCore.config.getGFXLevel(); ++h)
+			for (int h = 0; h < 5 * GfxUtil.get(); ++h)
 				this.worldObj.spawnParticle("tilecrack_" + l + "_" + this.worldObj.getBlockMetadata(j, i, k), this.posX + (this.rand.nextFloat() - 0.5D) * this.width, this.boundingBox.minY + 0.1D, this.posZ + (this.rand.nextFloat() - 0.5D) * this.width, -this.motionX * 4.0D, 1.5D, -this.motionZ * 4.0D);
 
 		double deltaX = Math.cos(moveAngle) * movingSpeed;

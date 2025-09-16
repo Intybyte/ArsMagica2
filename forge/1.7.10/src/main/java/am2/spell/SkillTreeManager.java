@@ -7,6 +7,7 @@ import am2.api.spell.ISkillTreeManager;
 import am2.api.spell.component.interfaces.ISkillTreeEntry;
 import am2.common.api.spell.enums.SkillPointTypes;
 import am2.common.api.spell.enums.SkillTrees;
+import am2.common.configuration.SkillConfiguration;
 
 import java.security.InvalidParameterException;
 import java.util.ArrayList;
@@ -63,7 +64,7 @@ public class SkillTreeManager implements ISkillTreeManager{
 		if (item == null){
 			item = SkillManager.instance.missingComponent;
 		}else{
-			enabled = AMCore.skillConfig.isSkillEnabled(SkillManager.instance.getSkillName(item));
+			enabled = SkillConfiguration.getInstance().isSkillEnabled(SkillManager.instance.getSkillName(item));
 		}
 
 		SkillTreeEntry newEntry = new SkillTreeEntry(x, y, tree, locatedPrerequisites.toArray(new SkillTreeEntry[locatedPrerequisites.size()]), item, enabled);
@@ -313,7 +314,7 @@ public class SkillTreeManager implements ISkillTreeManager{
 		checkAllPartIDs(SkillManager.instance.getAllModifiers());
 		checkAllPartIDs(SkillManager.instance.getAllTalents());
 
-		AMCore.skillConfig.save();
+		SkillConfiguration.save();
 	}
 
 	public int[] getDisabledSkillIDs(){

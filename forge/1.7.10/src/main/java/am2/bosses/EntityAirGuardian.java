@@ -5,6 +5,7 @@ import am2.api.math.AMVector3;
 import am2.bosses.ai.EntityAIDispel;
 import am2.bosses.ai.EntityAIHurricane;
 import am2.bosses.ai.EntityAISpawnWhirlwind;
+import am2.configuration.GfxUtil;
 import am2.damage.DamageSourceLightning;
 import am2.entities.ai.EntityAIGuardSpawnLocation;
 import am2.items.ItemsCommonProxy;
@@ -84,7 +85,7 @@ public class EntityAirGuardian extends AM2Boss{
 		case SPINNING:
 			this.spinRotation = (this.spinRotation - 40) % 360;
 			if (this.worldObj.isRemote){
-				for (int i = 0; i < AMCore.config.getGFXLevel(); ++i){
+				for (int i = 0; i < GfxUtil.get(); ++i){
 					AMParticle particle = (AMParticle)AMCore.proxy.particleManager.spawn(worldObj, "wind", posX + worldObj.rand.nextDouble() * 4 - 2, posY, posZ + worldObj.rand.nextDouble() * 4 - 2);
 					if (particle != null){
 						if (ticksInCurrentAction < BossActions.SPINNING.getMaxActionTime() - 10){

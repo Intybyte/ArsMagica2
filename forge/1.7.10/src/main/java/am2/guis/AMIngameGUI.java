@@ -1,11 +1,12 @@
 package am2.guis;
 
-import am2.AMCore;
 import am2.common.api.math.AMVector2;
 import am2.api.spell.ItemSpellBase;
 import am2.common.api.spell.enums.Affinity;
 import am2.common.api.spell.enums.ContingencyTypes;
 import am2.armor.ArmorHelper;
+import am2.common.configuration.AMConfig;
+import am2.common.configuration.sections.ConfigGui;
 import am2.items.IBoundItem;
 import am2.items.ItemSpellBook;
 import am2.items.ItemsCommonProxy;
@@ -55,9 +56,10 @@ public class AMIngameGUI{
 	}
 
 	public void renderGameOverlay(){
+		ConfigGui gui = AMConfig.getInstance().getGui();
 		ItemStack ci = Minecraft.getMinecraft().thePlayer.getCurrentEquippedItem();
 
-		boolean drawAMHud = !AMCore.config.isShowHudMinimally() || (ci != null && (ci.getItem() == ItemsCommonProxy.spellBook || ci.getItem() == ItemsCommonProxy.spell || ci.getItem() == ItemsCommonProxy.arcaneSpellbook || ci.getItem() instanceof IBoundItem));
+		boolean drawAMHud = !gui.isShowHudMinimally() || (ci != null && (ci.getItem() == ItemsCommonProxy.spellBook || ci.getItem() == ItemsCommonProxy.spell || ci.getItem() == ItemsCommonProxy.arcaneSpellbook || ci.getItem() instanceof IBoundItem));
 		ScaledResolution scaledresolution = new ScaledResolution(mc, mc.displayWidth, mc.displayHeight);
 		int i = scaledresolution.getScaledWidth();
 		int j = scaledresolution.getScaledHeight();
@@ -98,11 +100,12 @@ public class AMIngameGUI{
 	}
 
 	private void RenderSpellBookUI(int i, int j, FontRenderer fontrenderer, ItemStack bookStack){
+		ConfigGui gui = AMConfig.getInstance().getGui();
 		mc.renderEngine.bindTexture(spellbook_ui);
 
 		GL11.glColor4f(1.0f, 1.0f, 1.0f, 1.0f);
 
-		AMVector2 spellbookVec = getShiftedVector(AMCore.config.getSpellBookPosition(), i, j);
+		AMVector2 spellbookVec = getShiftedVector(gui.getSpellBookPosition(), i, j);
 
 		int spellUI_x = spellbookVec.iX;
 		int spellUI_y = spellbookVec.iY;
@@ -143,11 +146,11 @@ public class AMIngameGUI{
 	}
 
 	private void RenderManaBar(int i, int j, FontRenderer fontRenderer){
-
+		ConfigGui gui = AMConfig.getInstance().getGui();
 		int barWidth = i / 8;
 
-		AMVector2 fatigue_hud = getShiftedVector(AMCore.config.getBurnoutHudPosition(), i, j);
-		AMVector2 mana_hud = getShiftedVector(AMCore.config.getManaHudPosition(), i, j);
+		AMVector2 fatigue_hud = getShiftedVector(gui.getBurnoutHudPosition(), i, j);
+		AMVector2 mana_hud = getShiftedVector(gui.getManaHudPosition(), i, j);
 
 		float green = 0.5f;
 		float blue = 1.0f;
@@ -169,7 +172,7 @@ public class AMIngameGUI{
 
 		float progressScaled = (mana / (maxMana + 0.01f));
 
-		if (AMCore.config.isShowHudBars()){
+		if (gui.isShowHudBars()){
 			//handle flashing of mana bar
 			float flashTimer = AMGuiHelper.instance.getFlashTimer(MANA_BAR_FLASH_SLOT);
 			if (flashTimer > 0){
@@ -229,7 +232,7 @@ public class AMIngameGUI{
 			manaBarColor = (manaBarColor << 8) + Math.round(blue * 255);
 
 			String magicLevel = (new StringBuilder()).append("").append(ExtendedProperties.For(mc.thePlayer).getMagicLevel()).toString();
-			AMVector2 magicLevelPos = getShiftedVector(AMCore.config.getLevelPosition(), i, j);
+			AMVector2 magicLevelPos = getShiftedVector(gui.getLevelPosition(), i, j);
 			magicLevelPos.iX -= Minecraft.getMinecraft().fontRenderer.getStringWidth(magicLevel) / 2;
 			fontRenderer.drawStringWithShadow(magicLevel, magicLevelPos.iX, magicLevelPos.iY, manaBarColor);
 
@@ -238,14 +241,16 @@ public class AMIngameGUI{
 			}
 		}
 
-		if (AMCore.config.isShowNumerics()){
-			String manaStr = StatCollector.translateToLocal("am2.gui.mana") + ": " + (int)(mana + bonusMana) + "/" + (int)maxMana;
-			String burnoutStr = StatCollector.translateToLocal("am2.gui.burnout") + ": " + (int)props.getCurrentFatigue() + "/" + (int)props.getMaxFatigue();
-			AMVector2 manaNumericPos = getShiftedVector(AMCore.config.getManaNumericPosition(), i, j);
-			AMVector2 burnoutNumericPos = getShiftedVector(AMCore.config.getBurnoutNumericPosition(), i, j);
-			fontRenderer.drawString(manaStr, manaNumericPos.iX, manaNumericPos.iY, bonusMana > 0 ? 0xeae31c : 0x2080FF);
-			fontRenderer.drawString(burnoutStr, burnoutNumericPos.iX + 25 - fontRenderer.getStringWidth(burnoutStr), burnoutNumericPos.iY, 0xFF2020);
+		if(!gui.isShowNumerics()) {
+			return;
 		}
+
+		String manaStr = StatCollector.translateToLocal("am2.gui.mana") + ": " + (int)(mana + bonusMana) + "/" + (int)maxMana;
+		String burnoutStr = StatCollector.translateToLocal("am2.gui.burnout") + ": " + (int)props.getCurrentFatigue() + "/" + (int)props.getMaxFatigue();
+		AMVector2 manaNumericPos = getShiftedVector(gui.getManaNumericPosition(), i, j);
+		AMVector2 burnoutNumericPos = getShiftedVector(gui.getBurnoutNumericPosition(), i, j);
+		fontRenderer.drawString(manaStr, manaNumericPos.iX, manaNumericPos.iY, bonusMana > 0 ? 0xeae31c : 0x2080FF);
+		fontRenderer.drawString(burnoutStr, burnoutNumericPos.iX + 25 - fontRenderer.getStringWidth(burnoutStr), burnoutNumericPos.iY, 0xFF2020);
 	}
 
 	private ItemStack getSpellFromStack(ItemStack stack){
@@ -258,65 +263,69 @@ public class AMIngameGUI{
 	}
 
 	private void RenderArmorStatus(int i, int j, Minecraft mc, FontRenderer fontRenderer){
-		if (!AMCore.config.isShowArmorUI())
+		ConfigGui gui = AMConfig.getInstance().getGui();
+		if (!gui.isShowArmorUI())
 			return;
 
 		ScaledResolution scaledResolution = new ScaledResolution(Minecraft.getMinecraft(), Minecraft.getMinecraft().displayWidth, Minecraft.getMinecraft().displayHeight);
 
 		for (int slot = 0; slot < 4; ++slot){
-			if (ArmorHelper.PlayerHasArmorInSlot(mc.thePlayer, 3 - slot)){
+			if(!ArmorHelper.PlayerHasArmorInSlot(mc.thePlayer, 3 - slot)) {
+				continue;
+			}
 
-				AMVector2 position = getArmorSlotPosition(slot, scaledResolution.getScaledWidth(), scaledResolution.getScaledHeight());
-				int blackoutTimer = AMGuiHelper.instance.getBlackoutTimer(3 - slot);
-				int blackoutMaxTimer = AMGuiHelper.instance.getBlackoutTimerMax(3 - slot);
-				GL11.glColor3f(1.0f, 1.0f, 1.0f);
-				ItemStack armor = mc.thePlayer.inventory.armorInventory[3 - slot];
-				float lineweight = 4f;
-				//durability
-				if (armor.isItemDamaged() && armor.getMaxDamage() > 0){
-					float pct = 1 - (float)armor.getItemDamage() / (float)armor.getMaxDamage();
-					AMGuiHelper.line2d(position.iX, position.iY + 10, position.iX + 10, position.iY + 10, this.zLevel + 100, lineweight, 0);
+			AMVector2 position = getArmorSlotPosition(slot, scaledResolution.getScaledWidth(), scaledResolution.getScaledHeight());
+			int blackoutTimer = AMGuiHelper.instance.getBlackoutTimer(3 - slot);
+			int blackoutMaxTimer = AMGuiHelper.instance.getBlackoutTimerMax(3 - slot);
+			GL11.glColor3f(1.0f, 1.0f, 1.0f);
+			ItemStack armor = mc.thePlayer.inventory.armorInventory[3 - slot];
+			float lineweight = 4f;
+			//durability
+			if (armor.isItemDamaged() && armor.getMaxDamage() > 0){
+				float pct = 1 - (float)armor.getItemDamage() / (float)armor.getMaxDamage();
+				AMGuiHelper.line2d(position.iX, position.iY + 10, position.iX + 10, position.iY + 10, this.zLevel + 100, lineweight, 0);
 
-					int color = (int)(255.0f * (1 - pct)) << 16 | (int)(255.0f * pct) << 8;
+				int color = (int)(255.0f * (1 - pct)) << 16 | (int)(255.0f * pct) << 8;
 
-					AMGuiHelper.line2d(position.iX, position.iY + 10, position.iX + (10 * pct), position.iY + 10, this.zLevel + 101, lineweight, color);
-				}
-				//cooldown
-				if (blackoutMaxTimer > 0){
-					float pct = (float)(blackoutMaxTimer - blackoutTimer) / (float)blackoutMaxTimer;
-					AMGuiHelper.line2d(position.iX, position.iY + 11, position.iX + 10, position.iY + 11, this.zLevel + 100, lineweight, 0);
-					AMGuiHelper.line2d(position.iX, position.iY + 11, position.iX + (10 * pct), position.iY + 11, this.zLevel + 101, lineweight, 0xFF0000);
-				}else{
-					AMGuiHelper.line2d(position.iX, position.iY + 11, position.iX + 10, position.iY + 11, this.zLevel + 101, lineweight, 0x0000FF);
-				}
+				AMGuiHelper.line2d(position.iX, position.iY + 10, position.iX + (10 * pct), position.iY + 10, this.zLevel + 101, lineweight, color);
+			}
+			//cooldown
+			if (blackoutMaxTimer > 0){
+				float pct = (float)(blackoutMaxTimer - blackoutTimer) / (float)blackoutMaxTimer;
+				AMGuiHelper.line2d(position.iX, position.iY + 11, position.iX + 10, position.iY + 11, this.zLevel + 100, lineweight, 0);
+				AMGuiHelper.line2d(position.iX, position.iY + 11, position.iX + (10 * pct), position.iY + 11, this.zLevel + 101, lineweight, 0xFF0000);
+			}else{
+				AMGuiHelper.line2d(position.iX, position.iY + 11, position.iX + 10, position.iY + 11, this.zLevel + 101, lineweight, 0x0000FF);
+			}
 
-				IIcon icon = mc.thePlayer.inventory.armorInventory[3 - slot].getIconIndex();
-				if (icon != null){
-					AMGuiHelper.DrawIconAtXY(icon, position.iX, position.iY, this.zLevel, 10, 10, true);
-				}else{
-					AMGuiHelper.DrawItemAtXY(mc.thePlayer.inventory.armorInventory[3 - slot], position.iX, position.iY, this.zLevel, 0.63f);
-				}
+			IIcon icon = mc.thePlayer.inventory.armorInventory[3 - slot].getIconIndex();
+			if (icon != null){
+				AMGuiHelper.DrawIconAtXY(icon, position.iX, position.iY, this.zLevel, 10, 10, true);
+			}else{
+				AMGuiHelper.DrawItemAtXY(mc.thePlayer.inventory.armorInventory[3 - slot], position.iX, position.iY, this.zLevel, 0.63f);
 			}
 		}
 		GL11.glColor3f(1.0f, 1.0f, 1.0f);
 	}
 
 	private AMVector2 getArmorSlotPosition(int slot, int screenWidth, int screenHeight){
+		ConfigGui gui = AMConfig.getInstance().getGui();
 		switch (slot){
 		case 0:
-			return getShiftedVector(AMCore.config.getArmorPositionHead(), screenWidth, screenHeight);
+			return getShiftedVector(gui.getArmorPositionHead(), screenWidth, screenHeight);
 		case 1:
-			return getShiftedVector(AMCore.config.getArmorPositionChest(), screenWidth, screenHeight);
+			return getShiftedVector(gui.getArmorPositionChest(), screenWidth, screenHeight);
 		case 2:
-			return getShiftedVector(AMCore.config.getArmorPositionLegs(), screenWidth, screenHeight);
+			return getShiftedVector(gui.getArmorPositionLegs(), screenWidth, screenHeight);
 		case 3:
-			return getShiftedVector(AMCore.config.getArmorPositionBoots(), screenWidth, screenHeight);
+			return getShiftedVector(gui.getArmorPositionBoots(), screenWidth, screenHeight);
 		}
 		return new AMVector2(0, 0);
 	}
 
 	public void RenderAffinity(int i, int j){
-		AMVector2 affinityPos = getShiftedVector(AMCore.config.getAffinityPosition(), i, j);
+		ConfigGui gui = AMConfig.getInstance().getGui();
+		AMVector2 affinityPos = getShiftedVector(gui.getAffinityPosition(), i, j);
 
 		int x = affinityPos.iX;
 		int y = affinityPos.iY;
@@ -329,7 +338,7 @@ public class AMIngameGUI{
 
 			AMGuiHelper.instance.DrawIconAtXY(item.getIconFromDamage(affinity.representMeta), x, y, j, 12, 12, true);
 
-			if (AMCore.config.isShowNumerics()){
+			if (gui.isShowNumerics()){
 				String display = String.format("%.2f%%", AffinityData.For(mc.thePlayer).getAffinityDepth(affinity) * 100);
 				if (x < i / 2)
 					Minecraft.getMinecraft().fontRenderer.drawString(display, x + 14, y + 2, affinity.color);
@@ -341,8 +350,8 @@ public class AMIngameGUI{
 	}
 
 	public void RenderContingency(int i, int j){
-
-		AMVector2 contingencyPos = getShiftedVector(AMCore.config.getContingencyPosition(), i, j);
+		ConfigGui gui = AMConfig.getInstance().getGui();
+		AMVector2 contingencyPos = getShiftedVector(gui.getContingencyPosition(), i, j);
 
 		IIcon icon = null;
 		ContingencyTypes type = ExtendedProperties.For(Minecraft.getMinecraft().thePlayer).getContingencyType();
@@ -372,15 +381,15 @@ public class AMIngameGUI{
 	}
 
 	public void RenderBuffs(int i, int j){
-
-		if (!AMCore.config.isShowBuffs()){
+		ConfigGui gui = AMConfig.getInstance().getGui();
+		if (!gui.isShowBuffs()){
 			return;
 		}
 
 		int barWidth = i / 8;
 
-		AMVector2 posBuffStart = getShiftedVector(AMCore.config.getPositiveBuffsPosition(), i, j);
-		AMVector2 negBuffStart = getShiftedVector(AMCore.config.getNegativeBuffsPosition(), i, j);
+		AMVector2 posBuffStart = getShiftedVector(gui.getPositiveBuffsPosition(), i, j);
+		AMVector2 negBuffStart = getShiftedVector(gui.getNegativeBuffsPosition(), i, j);
 
 		int positive_buff_x = posBuffStart.iX;
 		int positive_buff_y = posBuffStart.iY;
@@ -437,12 +446,14 @@ public class AMIngameGUI{
 	}
 
 	public void RenderMagicXP(int i, int j){
+		ConfigGui gui = AMConfig.getInstance().getGui();
+
 		ExtendedProperties props = ExtendedProperties.For(Minecraft.getMinecraft().thePlayer);
 		if (props.getMagicLevel() > 0){
-			AMVector2 position = getShiftedVector(AMCore.config.getXpBarPosition(), i, j);
+			AMVector2 position = getShiftedVector(gui.getXpBarPosition(), i, j);
 			AMVector2 dimensions = new AMVector2(182, 5);
 			Minecraft.getMinecraft().renderEngine.bindTexture(mc_gui);
-			GL11.glColor4f(0.5f, 0.5f, 1.0f, AMCore.config.isShowXPAlways() ? 1.0f : AMGuiHelper.instance.getMagicXPBarAlpha());
+			GL11.glColor4f(0.5f, 0.5f, 1.0f, gui.isShowXPAlways() ? 1.0f : AMGuiHelper.instance.getMagicXPBarAlpha());
 
 			//base XP bar
 			drawTexturedModalRect_Classic(position.iX, position.iY, 0, 64, dimensions.iX, dimensions.iY, dimensions.iX, dimensions.iY);
@@ -455,9 +466,9 @@ public class AMIngameGUI{
 				drawTexturedModalRect_Classic(position.iX, position.iY, 0, 69, width, dimensions.iY, width, dimensions.iY);
 			}
 
-			if (AMCore.config.isShowNumerics() && (AMCore.config.isShowXPAlways() || AMGuiHelper.instance.getMagicXPBarAlpha() > 0)){
+			if (gui.isShowNumerics() && (gui.isShowXPAlways() || AMGuiHelper.instance.getMagicXPBarAlpha() > 0)){
 				String xpStr = StatCollector.translateToLocal("am2.gui.xp") + ": " + +(int)(props.getMagicXP() * 100) + "/" + (int)(props.getXPToNextLevel() * 100);
-				AMVector2 numericPos = getShiftedVector(AMCore.config.getXPNumericPosition(), i, j);
+				AMVector2 numericPos = getShiftedVector(gui.getXpNumericPosition(), i, j);
 				Minecraft.getMinecraft().fontRenderer.drawString(xpStr, numericPos.iX, numericPos.iY, 0x999999);
 			}
 		}

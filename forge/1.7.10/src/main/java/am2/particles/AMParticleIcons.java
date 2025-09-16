@@ -77,8 +77,6 @@ public class AMParticleIcons{
 
 		AMParticle.particleTypes = icons.keySet().toArray(new String[icons.size() + 1]);
 		AMParticle.particleTypes[AMParticle.particleTypes.length - 1] = "radiant";
-
-		AMCore.config.clientInit();
 	}
 
 	private void loadAndInitIcon(String name, String IIconPath, IIconRegister register){

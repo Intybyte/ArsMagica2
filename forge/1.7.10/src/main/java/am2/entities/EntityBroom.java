@@ -2,6 +2,7 @@ package am2.entities;
 
 import am2.AMCore;
 import am2.api.math.AMVector3;
+import am2.configuration.GfxUtil;
 import am2.entities.ai.EntityAIChestDeposit;
 import am2.entities.ai.EntityAIPickup;
 import am2.entities.ai.EntityAITargetNearbyInanimate;
@@ -173,24 +174,26 @@ public class EntityBroom extends EntityCreature{
 
 	@Override
 	protected boolean interact(EntityPlayer par1EntityPlayer){
-		if (par1EntityPlayer.getCurrentEquippedItem() != null && par1EntityPlayer.getCurrentEquippedItem().getItem() == ItemsCommonProxy.spellStaffMagitech){
-			if (this.worldObj.isRemote){
-				for (int i = 0; i < AMCore.config.getGFXLevel() * 2; ++i){
-					AMParticle particle = (AMParticle)AMCore.proxy.particleManager.spawn(worldObj, "smoke", posX, posY, posZ);
-					if (particle != null){
-						particle.AddParticleController(new ParticleFloatUpward(particle, 0.1f, 0.3f, 1, false));
-						particle.addRandomOffset(0.3, 1, 0.3);
-						particle.setMaxAge(10);
-					}
-				}
-			}else{
-				this.entityDropItem(new ItemStack(ItemsCommonProxy.magicBroom), 0);
-				dropInventoryItems();
-				this.setDead();
-			}
+		if(par1EntityPlayer.getCurrentEquippedItem() == null || par1EntityPlayer.getCurrentEquippedItem().getItem() != ItemsCommonProxy.spellStaffMagitech) {
+			return false;
+		}
+
+		if(!this.worldObj.isRemote) {
+			this.entityDropItem(new ItemStack(ItemsCommonProxy.magicBroom), 0);
+			dropInventoryItems();
+			this.setDead();
 			return true;
 		}
-		return false;
+
+		for (int i = 0; i < GfxUtil.get() * 2; ++i){
+			AMParticle particle = (AMParticle)AMCore.proxy.particleManager.spawn(worldObj, "smoke", posX, posY, posZ);
+			if (particle != null){
+				particle.AddParticleController(new ParticleFloatUpward(particle, 0.1f, 0.3f, 1, false));
+				particle.addRandomOffset(0.3, 1, 0.3);
+				particle.setMaxAge(10);
+			}
+		}
+		return true;
 	}
 
 	@Override

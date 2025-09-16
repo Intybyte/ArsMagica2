@@ -7,6 +7,8 @@ import am2.common.api.spell.enums.Affinity;
 import am2.common.api.spell.enums.LearnStates;
 import am2.common.api.spell.enums.SkillPointTypes;
 import am2.common.api.spell.enums.SkillTrees;
+import am2.common.configuration.AMConfig;
+import am2.common.configuration.sections.ConfigGeneral;
 import am2.guis.controls.GuiButtonSkillTreeTab;
 import am2.lore.ArcaneCompendium;
 import am2.lore.CompendiumEntryTypes;
@@ -139,12 +141,13 @@ public class GuiSkillTrees extends GuiScreen{
 	@Override
 	public void drawScreen(int par1, int par2, float par3){
 
+		ConfigGeneral general = AMConfig.getInstance().getGeneral();
 		SkillData sk = SkillData.For(Minecraft.getMinecraft().thePlayer);
 
 		int l = (width - xSize) / 2;
 		int i1 = (height - ySize) / 2;
 
-		if (AMCore.config.getSecondarySkillTreeTierCap() < SkillTreeManager.instance.getHighestTier() && (sk.getPrimaryTree() == null || sk.getPrimaryTree() == SkillTrees.None) && sk.getSpellPoints(SkillPointTypes.BLUE) > 0){
+		if (general.getSecondarySkillTreeTierCap() < SkillTreeManager.instance.getHighestTier() && (sk.getPrimaryTree() == null || sk.getPrimaryTree() == SkillTrees.None) && sk.getSpellPoints(SkillPointTypes.BLUE) > 0){
 			String s = StatCollector.translateToLocal("am2.gui.lockWarning");
 			fontRendererObj.drawSplitString(s, l - 120, i1 + 20, 110, 0xbf6325);
 		}
@@ -235,7 +238,7 @@ public class GuiSkillTrees extends GuiScreen{
 				}
 			}
 
-			if (!AMCore.config.isColourblindMode()){
+			if (!general.isColourblindMode()){
 				drawHoveringText(text, lastMouseX, lastMouseY, fr, state == LearnStates.LEARNED ? 0xFFFFFF : type == SkillPointTypes.SILVER ? 0x888888 : type == SkillPointTypes.BLUE ? 0x4444FF : type == SkillPointTypes.GREEN ? 0x44FF44 : 0xFF4444);
 			}else{
 				text.add(StatCollector.translateToLocal("am2.gui." + type.toString().toLowerCase() + "Point"));
@@ -409,21 +412,23 @@ public class GuiSkillTrees extends GuiScreen{
 	@Override
 	protected void mouseClicked(int par1, int par2, int par3){
 		super.mouseClicked(par1, par2, par3);
-		if (par3 == 0){
-			if (hoveredItem != null){
-				SkillData sk = SkillData.For(Minecraft.getMinecraft().thePlayer);
-				if (!sk.isEntryKnown(hoveredItem)){
-					if (sk.getLearnState(hoveredItem, Minecraft.getMinecraft().thePlayer) == LearnStates.CAN_LEARN){
-						sk.learn(hoveredItem.registeredItem);
-					}
-				}
+		if(par3 != 0) {
+			return;
+		}
 
-			}else{
-				if (this.activeTree != SkillTrees.Affinity)
-					isDragging = true;
-				lastMouseX = par1;
-				lastMouseY = par2;
+		if (hoveredItem != null){
+			SkillData sk = SkillData.For(Minecraft.getMinecraft().thePlayer);
+			if (!sk.isEntryKnown(hoveredItem)){
+				if (sk.getLearnState(hoveredItem, Minecraft.getMinecraft().thePlayer) == LearnStates.CAN_LEARN){
+					sk.learn(hoveredItem.registeredItem);
+				}
 			}
+
+		}else{
+			if (this.activeTree != SkillTrees.Affinity)
+				isDragging = true;
+			lastMouseX = par1;
+			lastMouseY = par2;
 		}
 	}
 
@@ -623,69 +628,70 @@ public class GuiSkillTrees extends GuiScreen{
 	}
 
 	protected void drawHoveringText(List par1List, int par2, int par3, FontRenderer font, int color){
-		if (!par1List.isEmpty()){
-			GL11.glDisable(GL12.GL_RESCALE_NORMAL);
-			RenderHelper.disableStandardItemLighting();
-			GL11.glDisable(GL11.GL_LIGHTING);
-			GL11.glDisable(GL11.GL_DEPTH_TEST);
-			int k = 0;
-			Iterator iterator = par1List.iterator();
-
-			while (iterator.hasNext()){
-				String s = (String)iterator.next();
-				int l = font.getStringWidth(s);
-
-				if (l > k){
-					k = l;
-				}
-			}
-
-			int i1 = par2 + 12;
-			int j1 = par3 - 12;
-			int k1 = 8;
-
-			if (par1List.size() > 1){
-				k1 += 2 + (par1List.size() - 1) * 10;
-			}
-
-			if (i1 + k > this.width){
-				i1 -= 28 + k;
-			}
-
-			if (j1 + k1 + 6 > this.height){
-				j1 = this.height - k1 - 6;
-			}
-
-			this.zLevel = 300.0F;
-			int l1 = -267386864;
-			this.drawGradientRect(i1 - 3, j1 - 4, i1 + k + 3, j1 - 3, l1, l1);
-			this.drawGradientRect(i1 - 3, j1 + k1 + 3, i1 + k + 3, j1 + k1 + 4, l1, l1);
-			this.drawGradientRect(i1 - 3, j1 - 3, i1 + k + 3, j1 + k1 + 3, l1, l1);
-			this.drawGradientRect(i1 - 4, j1 - 3, i1 - 3, j1 + k1 + 3, l1, l1);
-			this.drawGradientRect(i1 + k + 3, j1 - 3, i1 + k + 4, j1 + k1 + 3, l1, l1);
-			int i2 = 1347420415;
-			int j2 = (i2 & 16711422) >> 1 | i2 & -16777216;
-			this.drawGradientRect(i1 - 3, j1 - 3 + 1, i1 - 3 + 1, j1 + k1 + 3 - 1, i2, j2);
-			this.drawGradientRect(i1 + k + 2, j1 - 3 + 1, i1 + k + 3, j1 + k1 + 3 - 1, i2, j2);
-			this.drawGradientRect(i1 - 3, j1 - 3, i1 + k + 3, j1 - 3 + 1, i2, i2);
-			this.drawGradientRect(i1 - 3, j1 + k1 + 2, i1 + k + 3, j1 + k1 + 3, j2, j2);
-
-			for (int k2 = 0; k2 < par1List.size(); ++k2){
-				String s1 = (String)par1List.get(k2);
-				font.drawStringWithShadow(s1, i1, j1, color);
-
-				if (k2 == 0){
-					j1 += 2;
-				}
-
-				j1 += 10;
-			}
-
-			this.zLevel = 0.0F;
-			GL11.glEnable(GL11.GL_LIGHTING);
-			GL11.glEnable(GL11.GL_DEPTH_TEST);
-			RenderHelper.enableStandardItemLighting();
-			GL11.glEnable(GL12.GL_RESCALE_NORMAL);
+		if(par1List.isEmpty()) {
+			return;
 		}
+
+		GL11.glDisable(GL12.GL_RESCALE_NORMAL);
+		RenderHelper.disableStandardItemLighting();
+		GL11.glDisable(GL11.GL_LIGHTING);
+		GL11.glDisable(GL11.GL_DEPTH_TEST);
+		int k = 0;
+
+		for(Object o : par1List) {
+			String s = (String) o;
+			int l = font.getStringWidth(s);
+
+			if(l > k) {
+				k = l;
+			}
+		}
+
+		int i1 = par2 + 12;
+		int j1 = par3 - 12;
+		int k1 = 8;
+
+		if (par1List.size() > 1){
+			k1 += 2 + (par1List.size() - 1) * 10;
+		}
+
+		if (i1 + k > this.width){
+			i1 -= 28 + k;
+		}
+
+		if (j1 + k1 + 6 > this.height){
+			j1 = this.height - k1 - 6;
+		}
+
+		this.zLevel = 300.0F;
+		int l1 = -267386864;
+		this.drawGradientRect(i1 - 3, j1 - 4, i1 + k + 3, j1 - 3, l1, l1);
+		this.drawGradientRect(i1 - 3, j1 + k1 + 3, i1 + k + 3, j1 + k1 + 4, l1, l1);
+		this.drawGradientRect(i1 - 3, j1 - 3, i1 + k + 3, j1 + k1 + 3, l1, l1);
+		this.drawGradientRect(i1 - 4, j1 - 3, i1 - 3, j1 + k1 + 3, l1, l1);
+		this.drawGradientRect(i1 + k + 3, j1 - 3, i1 + k + 4, j1 + k1 + 3, l1, l1);
+		int i2 = 1347420415;
+		int j2 = (i2 & 16711422) >> 1 | i2 & -16777216;
+		this.drawGradientRect(i1 - 3, j1 - 3 + 1, i1 - 3 + 1, j1 + k1 + 3 - 1, i2, j2);
+		this.drawGradientRect(i1 + k + 2, j1 - 3 + 1, i1 + k + 3, j1 + k1 + 3 - 1, i2, j2);
+		this.drawGradientRect(i1 - 3, j1 - 3, i1 + k + 3, j1 - 3 + 1, i2, i2);
+		this.drawGradientRect(i1 - 3, j1 + k1 + 2, i1 + k + 3, j1 + k1 + 3, j2, j2);
+
+		for (int k2 = 0; k2 < par1List.size(); ++k2){
+			String s1 = (String)par1List.get(k2);
+			font.drawStringWithShadow(s1, i1, j1, color);
+
+			if (k2 == 0){
+				j1 += 2;
+			}
+
+			j1 += 10;
+		}
+
+		this.zLevel = 0.0F;
+		GL11.glEnable(GL11.GL_LIGHTING);
+		GL11.glEnable(GL11.GL_DEPTH_TEST);
+		RenderHelper.enableStandardItemLighting();
+		GL11.glEnable(GL12.GL_RESCALE_NORMAL);
 	}
 }

@@ -2,6 +2,7 @@ package am2.entities;
 
 import am2.AMCore;
 import am2.api.math.AMVector3;
+import am2.configuration.GfxUtil;
 import am2.damage.DamageSources;
 import am2.particles.*;
 import am2.playerextensions.ExtendedProperties;
@@ -73,7 +74,7 @@ public class EntityManaVortex extends Entity{
 						e.attackEntityFrom(DamageSources.causeEntityPhysicalDamage(this), damage);
 				}
 			}else{
-				for (int i = 0; i < 360; i += AMCore.config.FullGFX() ? 5 : AMCore.config.LowGFX() ? 10 : 20){
+				for (int i = 0; i < 360; i += GfxUtil.isFull() ? 5 : GfxUtil.isLow() ? 10 : 20){
 					AMParticle effect = (AMParticle)AMCore.instance.proxy.particleManager.spawn(worldObj, "ember", this.posX, this.posY, this.posZ);
 					if (effect != null){
 						effect.setIgnoreMaxAge(true);
@@ -109,10 +110,10 @@ public class EntityManaVortex extends Entity{
 
 				Vec3 playerPos = Vec3.createVectorHelper(e.posX, e.posY + e.getEyeHeight(), e.posZ);
 				if (worldObj.isRemote){
-					if (AMCore.config.NoGFX()){
+					if (GfxUtil.isNo()){
 						break;
 					}
-					if (AMCore.config.LowGFX() && (this.ticksExisted % 4) != 0){
+					if (GfxUtil.isLow() && (this.ticksExisted % 4) != 0){
 						break;
 					}
 					AMParticle effect = (AMParticle)AMCore.instance.proxy.particleManager.spawn(worldObj, "ember", e.posX, e.posY + (e.getEyeHeight() / 2), e.posZ);

@@ -1,6 +1,8 @@
 package am2.guis;
 
 import am2.AMCore;
+import am2.common.configuration.AMConfig;
+import am2.common.configuration.sections.ConfigBeta;
 import am2.guis.controls.GuiButtonVariableDims;
 import am2.guis.controls.GuiSlideControl;
 import am2.network.AMDataWriter;
@@ -56,32 +58,33 @@ public class AuraCustomizationMenu extends GuiScreen{
 
 	@Override
 	public void initGui(){
-		btnParticleType = new GuiButtonVariableDims(10, 50, 40, AMParticle.particleTypes[AMCore.config.getAuraType()]);
-		btnParticleBehaviour = new GuiButtonVariableDims(11, 50, 60, ParticleController.AuraControllerOptions[AMCore.config.getAuraBehaviour()]);
-		btnParticleColorMode = new GuiButtonVariableDims(12, 50, 80, AMCore.config.isAuraDefaultColor() ? StatCollector.translateToLocal("am2.gui.default") : AMCore.config.isAuraRandomColor() ? StatCollector.translateToLocal("am2.gui.random") : StatCollector.translateToLocal("am2.gui.custom"));
+		ConfigBeta beta = AMConfig.getInstance().getBeta();
+		btnParticleType = new GuiButtonVariableDims(10, 50, 40, AMParticle.particleTypes[beta.getAuraType()]);
+		btnParticleBehaviour = new GuiButtonVariableDims(11, 50, 60, ParticleController.AuraControllerOptions[beta.getAuraBehaviour()]);
+		btnParticleColorMode = new GuiButtonVariableDims(12, 50, 80, beta.isAuraDefaultColor() ? StatCollector.translateToLocal("am2.gui.default") : beta.isAuraRandomColor() ? StatCollector.translateToLocal("am2.gui.random") : StatCollector.translateToLocal("am2.gui.custom"));
 
 		btnParticleType.setDimensions(80, 20);
 		btnParticleBehaviour.setDimensions(80, 20);
 		btnParticleColorMode.setDimensions(80, 20);
 
-		sliParticleScale = new GuiSlideControl(14, width - 110, 40, 100, StatCollector.translateToLocal("am2.gui.scale"), AMCore.config.getAuraScale() * 10, 1f, 200f);
-		sliParticleAlpha = new GuiSlideControl(15, width - 110, 60, 100, StatCollector.translateToLocal("am2.gui.alpha"), AMCore.config.getAuraAlpha() * 100, 1f, 100f);
-		sliParticleRed = new GuiSlideControl(16, width - 110, 80, 100, StatCollector.translateToLocal("am2.gui.red"), (AMCore.config.getAuraColor() >> 16) & 0xFF, 0f, 255f);
+		sliParticleScale = new GuiSlideControl(14, width - 110, 40, 100, StatCollector.translateToLocal("am2.gui.scale"), beta.getAuraScale() * 10, 1f, 200f);
+		sliParticleAlpha = new GuiSlideControl(15, width - 110, 60, 100, StatCollector.translateToLocal("am2.gui.alpha"), beta.getAuraAlpha() * 100, 1f, 100f);
+		sliParticleRed = new GuiSlideControl(16, width - 110, 80, 100, StatCollector.translateToLocal("am2.gui.red"), (beta.getAuraColor() >> 16) & 0xFF, 0f, 255f);
 		sliParticleRed.setInteger(true);
-		sliParticleGreen = new GuiSlideControl(17, width - 110, 100, 100, StatCollector.translateToLocal("am2.gui.green"), (AMCore.config.getAuraColor() >> 8) & 0xFF, 0f, 255f);
+		sliParticleGreen = new GuiSlideControl(17, width - 110, 100, 100, StatCollector.translateToLocal("am2.gui.green"), (beta.getAuraColor() >> 8) & 0xFF, 0f, 255f);
 		sliParticleGreen.setInteger(true);
-		sliParticleBlue = new GuiSlideControl(18, width - 110, 120, 100, StatCollector.translateToLocal("am2.gui.blue"), AMCore.config.getAuraColor() & 0xFF, 0f, 255f);
+		sliParticleBlue = new GuiSlideControl(18, width - 110, 120, 100, StatCollector.translateToLocal("am2.gui.blue"), beta.getAuraColor() & 0xFF, 0f, 255f);
 		sliParticleBlue.setInteger(true);
 
-		sliParticleQuantity = new GuiSlideControl(20, width - 110, 140, 100, StatCollector.translateToLocal("am2.gui.qty"), AMCore.config.getAuraQuantity(), 1, 5);
+		sliParticleQuantity = new GuiSlideControl(20, width - 110, 140, 100, StatCollector.translateToLocal("am2.gui.qty"), beta.getAuraQuantity(), 1, 5);
 		sliParticleQuantity.setInteger(true);
 
-		sliParticleDelay = new GuiSlideControl(21, width - 110, 160, 100, StatCollector.translateToLocal("am2.gui.delay"), AMCore.config.getAuraDelay(), 1, 100);
+		sliParticleDelay = new GuiSlideControl(21, width - 110, 160, 100, StatCollector.translateToLocal("am2.gui.delay"), beta.getAuraDelay(), 1, 100);
 		sliParticleDelay.setInteger(true);
 
-		sliParticleSpeed = new GuiSlideControl(22, width - 110, 180, 100, StatCollector.translateToLocal("am2.gui.speed"), (float) AMCore.config.getAuraSpeed(), 0.05f, 10.0f);
+		sliParticleSpeed = new GuiSlideControl(22, width - 110, 180, 100, StatCollector.translateToLocal("am2.gui.speed"), beta.getAuraSpeed(), 0.05f, 10.0f);
 
-		if (AMCore.config.isAuraDefaultColor() || AMCore.config.isAuraRandomColor()){
+		if (beta.isAuraDefaultColor() || beta.isAuraRandomColor()){
 			sliParticleRed.enabled = false;
 			sliParticleBlue.enabled = false;
 			sliParticleGreen.enabled = false;
@@ -120,6 +123,7 @@ public class AuraCustomizationMenu extends GuiScreen{
 
 	@Override
 	protected void actionPerformed(GuiButton par1GuiButton){
+		ConfigBeta beta = AMConfig.getInstance().getBeta();
 
 		int index = 0;
 		boolean flag = false;
@@ -128,63 +132,63 @@ public class AuraCustomizationMenu extends GuiScreen{
 
 		switch (par1GuiButton.id){
 		case 10: //particle type
-			index = AMCore.config.getAuraType();
+			index = beta.getAuraType();
 			index++;
 			if (index >= AMParticle.particleTypes.length) index = 0;
 
-			AMCore.config.setAuraIndex(index);
+			beta.setAuraType(index);
 			btnParticleType.displayString = AMParticle.particleTypes[index];
 			break;
 		case 11: //particle behaviour
-			index = AMCore.config.getAuraBehaviour();
+			index = beta.getAuraBehaviour();
 			index++;
 			if (index >= ParticleController.AuraControllerOptions.length) index = 0;
-			AMCore.config.setAuraBehaviour(index);
+			beta.setAuraBehaviour(index);
 			btnParticleBehaviour.displayString = ParticleController.AuraControllerOptions[index];
 			break;
 		case 12: //default color
 		case 13: //random color
-			if (AMCore.config.isAuraDefaultColor()){
-				AMCore.config.setAuraColorDefault(false);
-				AMCore.config.setAuraColorRandom(true);
+			if (beta.isAuraDefaultColor()){
+				beta.setAuraDefaultColor(false);
+				beta.setAuraRandomColor(true);
 				sliParticleRed.enabled = false;
 				sliParticleBlue.enabled = false;
 				sliParticleGreen.enabled = false;
-			}else if (AMCore.config.isAuraRandomColor()){
-				AMCore.config.setAuraColorDefault(false);
-				AMCore.config.setAuraColorRandom(false);
+			}else if (beta.isAuraRandomColor()){
+				beta.setAuraDefaultColor(false);
+				beta.setAuraRandomColor(false);
 				sliParticleRed.enabled = true;
 				sliParticleBlue.enabled = true;
 				sliParticleGreen.enabled = true;
 			}else{
-				AMCore.config.setAuraColorDefault(true);
-				AMCore.config.setAuraColorRandom(false);
+				beta.setAuraDefaultColor(true);
+				beta.setAuraRandomColor(false);
 				sliParticleRed.enabled = false;
 				sliParticleBlue.enabled = false;
 				sliParticleGreen.enabled = false;
 			}
-			btnParticleColorMode.displayString = AMCore.config.isAuraDefaultColor() ? "Default" : AMCore.config.isAuraRandomColor() ? StatCollector.translateToLocal("am2.gui.random") : StatCollector.translateToLocal("am2.gui.custom");
+			btnParticleColorMode.displayString = beta.isAuraDefaultColor() ? "Default" : beta.isAuraRandomColor() ? StatCollector.translateToLocal("am2.gui.random") : StatCollector.translateToLocal("am2.gui.custom");
 			break;
 		case 14: //scale
-			AMCore.config.setAuraScale(((GuiSlideControl)par1GuiButton).getShiftedValue() / 10f);
+			beta.setAuraScale(((GuiSlideControl)par1GuiButton).getShiftedValue() / 10f);
 			break;
 		case 15: //alpha
-			AMCore.config.setAuraAlpha(((GuiSlideControl)par1GuiButton).getShiftedValue() / 100f);
+			beta.setAuraAlpha(((GuiSlideControl)par1GuiButton).getShiftedValue() / 100f);
 			break;
 		case 16: //red
 		case 17: //green
 		case 18: //blue
 			int color = ((int)sliParticleRed.getShiftedValue() & 0xFF) << 16 | ((int)sliParticleGreen.getShiftedValue() & 0xFF) << 8 | (int)sliParticleBlue.getShiftedValue() & 0xFF;
-			AMCore.config.setAuraColor(color);
+			beta.setAuraColor(color);
 			break;
 		case 20: //quantity
-			AMCore.config.setAuraQuantity((int)sliParticleQuantity.getShiftedValue());
+			beta.setAuraQuantity((int)sliParticleQuantity.getShiftedValue());
 			break;
 		case 21: //delay
-			AMCore.config.setAuraDelay((int)sliParticleDelay.getShiftedValue());
+			beta.setAuraDelay((int)sliParticleDelay.getShiftedValue());
 			break;
 		case 22: //speed
-			AMCore.config.setAuraSpeed(sliParticleSpeed.getShiftedValue());
+			beta.setAuraSpeed(sliParticleSpeed.getShiftedValue());
 			break;
 		case 200: //close
 			this.mc.displayGuiScreen(this.parent);
@@ -194,25 +198,25 @@ public class AuraCustomizationMenu extends GuiScreen{
 
 	@Override
 	public void onGuiClosed(){
-
+		ConfigBeta beta = AMConfig.getInstance().getBeta();
 		AMDataWriter writer = new AMDataWriter();
 
-		writer.add(AMCore.config.getAuraType());
-		writer.add(AMCore.config.getAuraBehaviour());
-		writer.add(AMCore.config.getAuraScale());
-		writer.add(AMCore.config.getAuraAlpha());
-		writer.add(AMCore.config.isAuraRandomColor());
-		writer.add(AMCore.config.isAuraDefaultColor());
-		writer.add(AMCore.config.getAuraColor());
-		writer.add(AMCore.config.getAuraDelay());
-		writer.add(AMCore.config.getAuraQuantity());
-		writer.add(AMCore.config.getAuraSpeed());
+		writer.add(beta.getAuraType());
+		writer.add(beta.getAuraBehaviour());
+		writer.add(beta.getAuraScale());
+		writer.add(beta.getAuraAlpha());
+		writer.add(beta.isAuraRandomColor());
+		writer.add(beta.isAuraDefaultColor());
+		writer.add(beta.getAuraColor());
+		writer.add(beta.getAuraDelay());
+		writer.add(beta.getAuraQuantity());
+		writer.add(beta.getAuraSpeed());
 
 		byte[] data = writer.generate();
 
 		AMNetHandler.INSTANCE.sendPacketToServer(AMPacketIDs.SYNC_BETA_PARTICLES, data);
 
-		AMCore.config.save();
+		AMConfig.save();
 
 		super.onGuiClosed();
 	}
@@ -228,25 +232,25 @@ public class AuraCustomizationMenu extends GuiScreen{
 
 	@Override
 	protected void mouseClicked(int x, int y, int button){
+		ConfigBeta beta = AMConfig.getInstance().getBeta();
 		GuiButton clickedBtn = getControlByXY(x, y);
+
 		if (clickedBtn != null && button == 1){
 			if (clickedBtn.id == 10){
-				int index = AMCore.config.getAuraType();
-				index--;
-				if (index < 0) index = AMParticle.particleTypes.length - 1;
+				int index = beta.getAuraType();
 
-				while (AMParticle.particleTypes[index].startsWith("lightning_bolt") && AMCore.proxy.playerTracker.getAAL(Minecraft.getMinecraft().thePlayer) < 3){
+				do {
 					index--;
-					if (index < 0) index = AMParticle.particleTypes.length - 1;
-				}
+					if(index < 0) index = AMParticle.particleTypes.length - 1;
+				} while(AMParticle.particleTypes[index].startsWith("lightning_bolt") && AMCore.proxy.playerTracker.getAAL(Minecraft.getMinecraft().thePlayer) < 3);
 
-				AMCore.config.setAuraIndex(index);
+				beta.setAuraType(index);
 				btnParticleType.displayString = AMParticle.particleTypes[index];
 			}else if (clickedBtn.id == 11){
-				int index = AMCore.config.getAuraBehaviour();
+				int index = beta.getAuraBehaviour();
 				index--;
 				if (index < 0) index = ParticleController.AuraControllerOptions.length - 1;
-				AMCore.config.setAuraBehaviour(index);
+				beta.setAuraBehaviour(index);
 				btnParticleBehaviour.displayString = ParticleController.AuraControllerOptions[index];
 			}
 		}

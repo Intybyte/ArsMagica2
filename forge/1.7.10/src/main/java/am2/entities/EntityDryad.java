@@ -2,6 +2,7 @@ package am2.entities;
 
 import am2.AMCore;
 import am2.bosses.BossSpawnHelper;
+import am2.common.configuration.AMConfig;
 import am2.items.ItemsCommonProxy;
 import am2.particles.AMParticle;
 import am2.particles.ParticleOrbitEntity;
@@ -74,7 +75,7 @@ public class EntityDryad extends EntityCreature{
 
 	@Override
 	protected boolean canDespawn(){
-		return AMCore.config.isCanDryadsDespawn();
+		return AMConfig.getInstance().getMobs().isCanDryadsDespawn();
 	}
 
 	@Override

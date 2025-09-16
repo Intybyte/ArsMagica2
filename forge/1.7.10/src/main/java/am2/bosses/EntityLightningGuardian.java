@@ -2,6 +2,7 @@ package am2.bosses;
 
 import am2.AMCore;
 import am2.bosses.ai.*;
+import am2.configuration.GfxUtil;
 import am2.items.ItemsCommonProxy;
 import am2.particles.AMParticle;
 import am2.particles.ParticleHoldPosition;
@@ -75,7 +76,7 @@ public class EntityLightningGuardian extends AM2Boss implements IAnimatedEntity{
 			int dist = 16;
 			if (this.getCurrentAction() == BossActions.CHARGE){
 				if (ticksInCurrentAction > 50){
-					for (int i = 0; i < 2 * AMCore.config.getGFXLevel(); ++i){
+					for (int i = 0; i < 2 * GfxUtil.get(); ++i){
 						AMParticle smoke = (AMParticle)AMCore.proxy.particleManager.spawn(worldObj, "smoke", posX, posY + 4, posZ);
 						if (smoke != null){
 							smoke.addRandomOffset(halfDist, 1, halfDist);
@@ -99,7 +100,7 @@ public class EntityLightningGuardian extends AM2Boss implements IAnimatedEntity{
 				}
 			}else if (this.getCurrentAction() == BossActions.LONG_CASTING){
 				if (ticksInCurrentAction > 25 && ticksInCurrentAction < 150){
-					for (int i = 0; i < 2 * AMCore.config.getGFXLevel(); ++i){
+					for (int i = 0; i < 2 * GfxUtil.get(); ++i){
 						AMParticle smoke = (AMParticle)AMCore.proxy.particleManager.spawn(worldObj, "smoke", posX, posY + 4, posZ);
 						if (smoke != null){
 							smoke.addRandomOffset(halfDist, 1, halfDist);

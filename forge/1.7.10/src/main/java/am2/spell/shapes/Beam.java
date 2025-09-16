@@ -9,6 +9,7 @@ import am2.common.api.spell.enums.Affinity;
 import am2.common.api.spell.enums.SpellCastResult;
 import am2.common.api.spell.enums.SpellModifiers;
 import am2.blocks.BlocksCommonProxy;
+import am2.configuration.GfxUtil;
 import am2.items.ItemsCommonProxy;
 import am2.particles.AMBeam;
 import am2.particles.AMParticle;
@@ -119,7 +120,7 @@ public class Beam implements ISpellShape{
 					}
 				}
 			}
-			for (int i = 0; i < AMCore.config.getGFXLevel() + 1; ++i){
+			for (int i = 0; i < GfxUtil.get() + 1; ++i){
 				AMParticle particle = (AMParticle)AMCore.proxy.particleManager.spawn(world, affinity.getMainParticle(), beamHitVec.xCoord, beamHitVec.yCoord, beamHitVec.zCoord);
 				if (particle != null){
 					particle.setMaxAge(2);

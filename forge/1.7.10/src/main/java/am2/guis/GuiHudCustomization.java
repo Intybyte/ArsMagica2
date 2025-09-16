@@ -2,6 +2,8 @@ package am2.guis;
 
 import am2.AMCore;
 import am2.common.api.math.AMVector2;
+import am2.common.configuration.AMConfig;
+import am2.common.configuration.sections.ConfigGui;
 import am2.guis.controls.GuiButtonVariableDims;
 import net.minecraft.client.Minecraft;
 import net.minecraft.client.gui.GuiButton;
@@ -68,12 +70,13 @@ public class GuiHudCustomization extends GuiScreen{
 	public void initGui(){
 		super.initGui();
 
-		doShowBuffs = AMCore.config.isShowBuffs();
-		doShowNumerics = AMCore.config.isShowNumerics();
-		doShowHudMinimally = AMCore.config.isShowHudMinimally();
-		doShowArmor = AMCore.config.isShowArmorUI();
-		doShowXPAlways = AMCore.config.isShowXPAlways();
-		doShowBars = AMCore.config.isShowHudBars();
+		ConfigGui gui = AMConfig.getInstance().getGui();
+		doShowBuffs = gui.isShowBuffs();
+		doShowNumerics = gui.isShowNumerics();
+		doShowHudMinimally = gui.isShowHudMinimally();
+		doShowArmor = gui.isShowArmorUI();
+		doShowXPAlways = gui.isShowXPAlways();
+		doShowBars = gui.isShowHudBars();
 
 		int barWidth = (width / 8) + 16;
 
@@ -125,22 +128,22 @@ public class GuiHudCustomization extends GuiScreen{
 		armorLegs.enabled = doShowArmor;
 		armorBoots.enabled = doShowArmor;
 
-		initButtonAndSnapData(manaButton, AMCore.config.getManaHudPosition());
-		initButtonAndSnapData(burnoutButton, AMCore.config.getBurnoutHudPosition()); //new AMVector2(0.5, 0.5)
-		initButtonAndSnapData(levelButton, AMCore.config.getLevelPosition());
-		initButtonAndSnapData(affinityButton, AMCore.config.getAffinityPosition());
-		initButtonAndSnapData(positiveBuffs, AMCore.config.getPositiveBuffsPosition());
-		initButtonAndSnapData(negativeBuffs, AMCore.config.getNegativeBuffsPosition());
-		initButtonAndSnapData(armorHead, AMCore.config.getArmorPositionHead());
-		initButtonAndSnapData(armorChest, AMCore.config.getArmorPositionChest());
-		initButtonAndSnapData(armorLegs, AMCore.config.getArmorPositionLegs());
-		initButtonAndSnapData(armorBoots, AMCore.config.getArmorPositionBoots());
-		initButtonAndSnapData(xpBar, AMCore.config.getXpBarPosition());
-		initButtonAndSnapData(contingency, AMCore.config.getContingencyPosition());
-		initButtonAndSnapData(manaNumeric, AMCore.config.getManaNumericPosition());
-		initButtonAndSnapData(burnoutNumeric, AMCore.config.getBurnoutNumericPosition());
-		initButtonAndSnapData(XPNumeric, AMCore.config.getXPNumericPosition());
-		initButtonAndSnapData(spellBook, AMCore.config.getSpellBookPosition());
+		initButtonAndSnapData(manaButton, gui.getManaHudPosition());
+		initButtonAndSnapData(burnoutButton, gui.getBurnoutHudPosition()); //new AMVector2(0.5, 0.5)
+		initButtonAndSnapData(levelButton, gui.getLevelPosition());
+		initButtonAndSnapData(affinityButton, gui.getAffinityPosition());
+		initButtonAndSnapData(positiveBuffs, gui.getPositiveBuffsPosition());
+		initButtonAndSnapData(negativeBuffs, gui.getNegativeBuffsPosition());
+		initButtonAndSnapData(armorHead, gui.getArmorPositionHead());
+		initButtonAndSnapData(armorChest, gui.getArmorPositionChest());
+		initButtonAndSnapData(armorLegs, gui.getArmorPositionLegs());
+		initButtonAndSnapData(armorBoots, gui.getArmorPositionBoots());
+		initButtonAndSnapData(xpBar, gui.getXpBarPosition());
+		initButtonAndSnapData(contingency, gui.getContingencyPosition());
+		initButtonAndSnapData(manaNumeric, gui.getManaNumericPosition());
+		initButtonAndSnapData(burnoutNumeric, gui.getBurnoutNumericPosition());
+		initButtonAndSnapData(XPNumeric, gui.getXpNumericPosition());
+		initButtonAndSnapData(spellBook, gui.getSpellBookPosition());
 
 		setOptionsVisibility(false);
 
@@ -239,7 +242,7 @@ public class GuiHudCustomization extends GuiScreen{
 	}
 
 	private void storeGuiPositions(){
-		AMCore.config.setGuiPositions(
+		AMConfig.getInstance().getGui().setGuiPositions(
 				getSnapVector(manaButton),
 				getSnapVector(burnoutButton),
 				getSnapVector(levelButton),
@@ -261,7 +264,8 @@ public class GuiHudCustomization extends GuiScreen{
 				doShowHudMinimally,
 				doShowArmor,
 				doShowXPAlways,
-				doShowBars);
+				doShowBars
+		);
 	}
 
 	@Override
@@ -269,53 +273,57 @@ public class GuiHudCustomization extends GuiScreen{
 		super.mouseClicked(par1, par2, par3);
 
 		for (Object button : this.buttonList){
-			if (button instanceof GuiButtonVariableDims){
-				if (((GuiButtonVariableDims)button).mousePressed(mc, par1, par2)){
-					if (button == showBuffs){
-						doShowBuffs = !doShowBuffs;
-						showBuffs.displayString = StatCollector.translateToLocal("am2.gui.buffTimers") + ": " + ((doShowBuffs) ? StatCollector.translateToLocal("am2.gui.yes") : StatCollector.translateToLocal("am2.gui.no"));
-						positiveBuffs.enabled = doShowBuffs;
-						negativeBuffs.enabled = doShowBuffs;
-						storeGuiPositions();
-					}else if (button == showNumerics){
-						doShowNumerics = !doShowNumerics;
-						showNumerics.displayString = StatCollector.translateToLocal("am2.gui.numericValues") + ": " + ((doShowNumerics) ? StatCollector.translateToLocal("am2.gui.yes") : StatCollector.translateToLocal("am2.gui.no"));
-						manaNumeric.enabled = doShowNumerics;
-						burnoutNumeric.enabled = doShowNumerics;
-						XPNumeric.enabled = doShowNumerics;
-						storeGuiPositions();
-					}else if (button == showHudMinimally){
-						doShowHudMinimally = !doShowHudMinimally;
-						showHudMinimally.displayString = StatCollector.translateToLocal("am2.gui.minimalHud") + ": " + ((doShowHudMinimally) ? StatCollector.translateToLocal("am2.gui.yes") : StatCollector.translateToLocal("am2.gui.no"));
-						storeGuiPositions();
-					}else if (button == options){
-						showOptions = !showOptions;
-						setOptionsVisibility(showOptions);
-					}else if (button == showXPAlways){
-						doShowXPAlways = !doShowXPAlways;
-						showXPAlways.displayString = StatCollector.translateToLocal("am2.gui.xpAlways") + ": " + ((doShowXPAlways) ? StatCollector.translateToLocal("am2.gui.yes") : StatCollector.translateToLocal("am2.gui.no"));
-						storeGuiPositions();
-					}else if (button == showHudBars){
-						doShowBars = !doShowBars;
-						showHudBars.displayString = StatCollector.translateToLocal("am2.gui.hudBars") + ": " + ((doShowBars) ? StatCollector.translateToLocal("am2.gui.yes") : StatCollector.translateToLocal("am2.gui.no"));
-						manaButton.enabled = doShowBars;
-						burnoutButton.enabled = doShowBars;
-						storeGuiPositions();
-					}else if (button == showArmorUI){
-						doShowArmor = !doShowArmor;
-						showArmorUI.displayString = StatCollector.translateToLocal("am2.gui.armorUI") + ": " + ((doShowHudMinimally) ? StatCollector.translateToLocal("am2.gui.yes") : StatCollector.translateToLocal("am2.gui.no"));
-						armorHead.enabled = doShowArmor;
-						armorChest.enabled = doShowArmor;
-						armorLegs.enabled = doShowArmor;
-						armorBoots.enabled = doShowArmor;
-						storeGuiPositions();
-					}else if (!showOptions){
-						dragTarget = (GuiButtonVariableDims)button;
-						AMVector2 buttonPos = ((GuiButtonVariableDims)button).getPosition();
-						AMVector2 mousePos = new AMVector2(par1, par2);
-						dragOffset = mousePos.subtract(buttonPos);
-					}
-				}
+			if(!(button instanceof GuiButtonVariableDims)) {
+				continue;
+			}
+
+			if(!((GuiButtonVariableDims) button).mousePressed(mc, par1, par2)) {
+				continue;
+			}
+
+			if (button == showBuffs){
+				doShowBuffs = !doShowBuffs;
+				showBuffs.displayString = StatCollector.translateToLocal("am2.gui.buffTimers") + ": " + ((doShowBuffs) ? StatCollector.translateToLocal("am2.gui.yes") : StatCollector.translateToLocal("am2.gui.no"));
+				positiveBuffs.enabled = doShowBuffs;
+				negativeBuffs.enabled = doShowBuffs;
+				storeGuiPositions();
+			}else if (button == showNumerics){
+				doShowNumerics = !doShowNumerics;
+				showNumerics.displayString = StatCollector.translateToLocal("am2.gui.numericValues") + ": " + ((doShowNumerics) ? StatCollector.translateToLocal("am2.gui.yes") : StatCollector.translateToLocal("am2.gui.no"));
+				manaNumeric.enabled = doShowNumerics;
+				burnoutNumeric.enabled = doShowNumerics;
+				XPNumeric.enabled = doShowNumerics;
+				storeGuiPositions();
+			}else if (button == showHudMinimally){
+				doShowHudMinimally = !doShowHudMinimally;
+				showHudMinimally.displayString = StatCollector.translateToLocal("am2.gui.minimalHud") + ": " + ((doShowHudMinimally) ? StatCollector.translateToLocal("am2.gui.yes") : StatCollector.translateToLocal("am2.gui.no"));
+				storeGuiPositions();
+			}else if (button == options){
+				showOptions = !showOptions;
+				setOptionsVisibility(showOptions);
+			}else if (button == showXPAlways){
+				doShowXPAlways = !doShowXPAlways;
+				showXPAlways.displayString = StatCollector.translateToLocal("am2.gui.xpAlways") + ": " + ((doShowXPAlways) ? StatCollector.translateToLocal("am2.gui.yes") : StatCollector.translateToLocal("am2.gui.no"));
+				storeGuiPositions();
+			}else if (button == showHudBars){
+				doShowBars = !doShowBars;
+				showHudBars.displayString = StatCollector.translateToLocal("am2.gui.hudBars") + ": " + ((doShowBars) ? StatCollector.translateToLocal("am2.gui.yes") : StatCollector.translateToLocal("am2.gui.no"));
+				manaButton.enabled = doShowBars;
+				burnoutButton.enabled = doShowBars;
+				storeGuiPositions();
+			}else if (button == showArmorUI){
+				doShowArmor = !doShowArmor;
+				showArmorUI.displayString = StatCollector.translateToLocal("am2.gui.armorUI") + ": " + ((doShowHudMinimally) ? StatCollector.translateToLocal("am2.gui.yes") : StatCollector.translateToLocal("am2.gui.no"));
+				armorHead.enabled = doShowArmor;
+				armorChest.enabled = doShowArmor;
+				armorLegs.enabled = doShowArmor;
+				armorBoots.enabled = doShowArmor;
+				storeGuiPositions();
+			}else if (!showOptions){
+				dragTarget = (GuiButtonVariableDims)button;
+				AMVector2 buttonPos = ((GuiButtonVariableDims)button).getPosition();
+				AMVector2 mousePos = new AMVector2(par1, par2);
+				dragOffset = mousePos.subtract(buttonPos);
 			}
 		}
 	}
@@ -323,7 +331,7 @@ public class GuiHudCustomization extends GuiScreen{
 	@Override
 	protected void keyTyped(char par1, int par2){
 		if (par2 == Keyboard.KEY_ESCAPE){
-			AMCore.config.saveGuiPositions();
+			AMConfig.save();
 			if (showOptions){
 				showOptions = false;
 				setOptionsVisibility(false);
@@ -482,7 +490,7 @@ public class GuiHudCustomization extends GuiScreen{
 
 	@Override
 	public void onGuiClosed(){
-		AMCore.config.saveGuiPositions();
+		AMConfig.save();
 		super.onGuiClosed();
 	}
 }

@@ -1,6 +1,7 @@
 package am2.entities;
 
 import am2.AMCore;
+import am2.configuration.GfxUtil;
 import am2.entities.ai.EntityAIFireballAttack;
 import am2.particles.AMParticle;
 import am2.particles.ParticleApproachPoint;
@@ -145,7 +146,7 @@ public class EntityFireElemental extends EntityMob{
 		}
 
 		if (worldObj.isRemote && rand.nextInt(100) > 75 && !isBurning())
-			for (int i = 0; i < AMCore.config.getGFXLevel(); i++)
+			for (int i = 0; i < GfxUtil.get(); i++)
 				worldObj.spawnParticle("largesmoke", posX + (rand.nextDouble() - 0.5D) * width, posY + rand.nextDouble() * height, posZ + (rand.nextDouble() - 0.5D) * width, 0.0D, 0.0D, 0.0D);
 		super.onUpdate();
 	}

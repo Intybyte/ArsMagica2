@@ -1,6 +1,7 @@
 package am2.entities;
 
 import am2.AMCore;
+import am2.configuration.GfxUtil;
 import am2.items.ItemsCommonProxy;
 import am2.particles.AMParticle;
 import am2.particles.ParticleFadeOut;
@@ -28,16 +29,22 @@ public class EntityAirSled extends EntityLiving{
 	public void onUpdate(){
 		this.stepHeight = 1.02f;
 
-		if (worldObj.isRemote){
-			rotation += 1f;
-			if (this.worldObj.isAirBlock((int)this.posX, (int)(this.posY - 1), (int)this.posZ)){
-				for (int i = 0; i < AMCore.config.getGFXLevel(); ++i){
-					AMParticle cloud = (AMParticle)AMCore.proxy.particleManager.spawn(worldObj, "sparkle2", posX, posY + 0.5, posZ);
-					if (cloud != null){
-						cloud.addRandomOffset(1, 1, 1);
-						cloud.AddParticleController(new ParticleFadeOut(cloud, 1, false).setFadeSpeed(0.01f));
-					}
-				}
+		if(!worldObj.isRemote) {
+			super.onUpdate();
+			return;
+		}
+
+		rotation += 1f;
+		if(!this.worldObj.isAirBlock((int) this.posX, (int) (this.posY - 1), (int) this.posZ)) {
+			super.onUpdate();
+			return;
+		}
+
+		for (int i = 0; i < GfxUtil.get(); ++i){
+			AMParticle cloud = (AMParticle)AMCore.proxy.particleManager.spawn(worldObj, "sparkle2", posX, posY + 0.5, posZ);
+			if (cloud != null){
+				cloud.addRandomOffset(1, 1, 1);
+				cloud.AddParticleController(new ParticleFadeOut(cloud, 1, false).setFadeSpeed(0.01f));
 			}
 		}
 		super.onUpdate();
@@ -56,21 +63,23 @@ public class EntityAirSled extends EntityLiving{
 	public boolean interact(EntityPlayer par1EntityPlayer){
 		if (this.riddenByEntity != null && this.riddenByEntity instanceof EntityPlayer && this.riddenByEntity != par1EntityPlayer){
 			return true;
-		}else{
-			if (!this.worldObj.isRemote){
-				if (par1EntityPlayer.isSneaking()){
-					this.setDead();
-					EntityItem item = new EntityItem(worldObj);
-					item.setPosition(posX, posY, posZ);
-					item.setEntityItemStack(ItemsCommonProxy.airSledEnchanted.copy());
-					worldObj.spawnEntityInWorld(item);
-				}else{
-					par1EntityPlayer.mountEntity(this);
-				}
-			}
+		}
 
+		if(this.worldObj.isRemote) {
 			return true;
 		}
+
+		if(!par1EntityPlayer.isSneaking()) {
+			par1EntityPlayer.mountEntity(this);
+			return true;
+		}
+
+		this.setDead();
+		EntityItem item = new EntityItem(worldObj);
+		item.setPosition(posX, posY, posZ);
+		item.setEntityItemStack(ItemsCommonProxy.airSledEnchanted.copy());
+		worldObj.spawnEntityInWorld(item);
+		return true;
 	}
 
 	@Override

@@ -8,6 +8,7 @@ import am2.api.math.AMVector3;
 import am2.api.power.PowerTypes;
 import am2.blocks.BlocksCommonProxy;
 import am2.buffs.BuffList;
+import am2.common.configuration.AMConfig;
 import am2.multiblock.IMultiblockStructureController;
 import am2.power.PowerNodeRegistry;
 import net.minecraft.entity.Entity;
@@ -245,7 +246,7 @@ public class TileEntityKeystoneRecepticle extends TileEntityAMPower implements I
 
 		int meta = worldObj.getBlockMetadata((int)newLocation.x, (int)newLocation.y, (int)newLocation.z);
 
-		if (AMCore.config.isHazardousGateways()){
+		if (AMConfig.getInstance().getGeneral().isHazardousGateways()){
 			//uh-oh!  Not enough power!  The teleporter will still send you though, but I wonder where...
 			float charge = PowerNodeRegistry.For(this.worldObj).getHighestPower(this);
 			if (charge < essenceCost){

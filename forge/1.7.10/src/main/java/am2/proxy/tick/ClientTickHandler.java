@@ -13,6 +13,7 @@ import am2.armor.ArmorHelper;
 import am2.armor.infusions.GenericImbuement;
 import am2.bosses.BossSpawnHelper;
 import am2.commands.ConfigureAMUICommand;
+import am2.common.configuration.AMConfig;
 import am2.guis.AMGuiHelper;
 import am2.guis.AMIngameGUI;
 import am2.guis.GuiHudCustomization;
@@ -328,7 +329,7 @@ public class ClientTickHandler{
 	@SubscribeEvent
 	public void onWorldTick(TickEvent.WorldTickEvent event){
 		if (Minecraft.getMinecraft().isIntegratedServerRunning()){
-			if (AMCore.config.isRetroactiveWorldgen())
+			if (AMConfig.getInstance().getWorldgen().isRetroactiveWorldgen())
 				RetroactiveWorldgenerator.instance.continueRetrogen(event.world);
 		}
 		if (event.phase == TickEvent.Phase.END){

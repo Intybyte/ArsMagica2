@@ -3,6 +3,7 @@ package am2.blocks;
 import am2.AMCore;
 import am2.api.math.AMVector3;
 import am2.bosses.BossSpawnHelper;
+import am2.configuration.GfxUtil;
 import am2.damage.DamageSources;
 import am2.particles.AMParticle;
 import am2.particles.ParticleFloatUpward;
@@ -90,11 +91,11 @@ public class BlockInlay extends BlockRailBase{
 	public void randomDisplayTick(World world, int x, int y, int z, Random rand){
 		int meta = world.getBlockMetadata(x, y, z);
 
-		if (world.isRemote && world.getBlock(x, y - 1, z).isAir(world, x, y, z) && AMCore.config.FullGFX() && rand.nextInt(10) < 4){
-			AMParticle particle = (AMParticle)AMCore.proxy.particleManager.spawn(world, AMCore.config.FullGFX() ? "radiant" : "sparkle2", x + rand.nextFloat(), y, z + rand.nextFloat());
+		if (world.isRemote && world.getBlock(x, y - 1, z).isAir(world, x, y, z) && GfxUtil.isFull() && rand.nextInt(10) < 4){
+			AMParticle particle = (AMParticle)AMCore.proxy.particleManager.spawn(world, GfxUtil.isFull() ? "radiant" : "sparkle2", x + rand.nextFloat(), y, z + rand.nextFloat());
 			if (particle != null){
 				particle.setMaxAge(20);
-				particle.setParticleScale(AMCore.config.FullGFX() ? 0.015f : 0.15f);
+				particle.setParticleScale(GfxUtil.isFull() ? 0.015f : 0.15f);
 				particle.AddParticleController(new ParticleFloatUpward(particle, 0.01f, -0.025f, 1, false));
 				if (this == BlocksCommonProxy.redstoneInlay)
 					particle.setRGBColorF(1.0f, 0.4f, 0.4f);

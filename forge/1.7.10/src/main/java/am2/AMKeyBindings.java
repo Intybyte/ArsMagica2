@@ -1,5 +1,6 @@
 package am2;
 
+import am2.common.configuration.AMConfig;
 import am2.guis.AuraCustomizationMenu;
 import am2.items.ItemSpellBook;
 import am2.items.ItemsCommonProxy;
@@ -42,8 +43,8 @@ public class AMKeyBindings{
 		if (Minecraft.getMinecraft().currentScreen != null){
 			if (Minecraft.getMinecraft().currentScreen instanceof GuiInventory){
 				if (ManaToggleKey.isPressed()){
-					boolean curDisplayFlag = AMCore.config.isDisplayManaInInventory();
-					AMCore.config.setDisplayManaInInventory(!curDisplayFlag);
+					boolean curDisplayFlag = AMConfig.getInstance().getGeneral().isDisplayManaInInventory();
+					AMConfig.getInstance().getGeneral().setDisplayManaInInventory(!curDisplayFlag);
 				}
 			}
 			return;

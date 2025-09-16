@@ -5,6 +5,8 @@ import am2.LogHelper;
 import am2.api.entities.IEntityManager;
 import am2.bosses.*;
 import am2.bosses.renderers.*;
+import am2.common.configuration.AMConfig;
+import am2.common.configuration.sections.ConfigMobs;
 import am2.entities.models.ModelBattleChicken;
 import am2.entities.models.ModelHecate;
 import am2.entities.renderers.*;
@@ -168,17 +170,18 @@ public class EntityManager implements IEntityManager{
 		BiomeDictionary.registerAllBiomes();
 
 		//SpawnListEntry wisps = new SpawnListEntry(EntityWisp.class, 1, 1, 1);
-		SpawnListEntry manaElementals = new SpawnListEntry(EntityManaElemental.class, AMCore.config.GetManaElementalSpawnRate(), 1, 1);
-		SpawnListEntry dryads = new SpawnListEntry(EntityDryad.class, AMCore.config.GetDryadSpawnRate(), 1, 2);
-		SpawnListEntry hecates_nonHell = new SpawnListEntry(EntityHecate.class, AMCore.config.GetHecateSpawnRate(), 1, 1);
-		SpawnListEntry hecates_hell = new SpawnListEntry(EntityHecate.class, AMCore.config.GetHecateSpawnRate() * 2, 1, 2);
-		SpawnListEntry manaCreepers = new SpawnListEntry(EntityManaCreeper.class, AMCore.config.GetManaCreeperSpawnRate(), 1, 1);
-		SpawnListEntry lightMages = new SpawnListEntry(EntityLightMage.class, AMCore.config.GetMageSpawnRate(), 1, 3);
-		SpawnListEntry darkMages = new SpawnListEntry(EntityDarkMage.class, AMCore.config.GetMageSpawnRate(), 1, 3);
-		SpawnListEntry waterElementals = new SpawnListEntry(EntityWaterElemental.class, AMCore.config.GetWaterElementalSpawnRate(), 1, 3);
-		SpawnListEntry darklings = new SpawnListEntry(EntityDarkling.class, AMCore.config.GetDarklingSpawnRate(), 4, 8);
-		SpawnListEntry earthElementals = new SpawnListEntry(EntityEarthElemental.class, AMCore.config.GetEarthElementalSpawnRate(), 1, 2);
-		SpawnListEntry fireElementals = new SpawnListEntry(EntityFireElemental.class, AMCore.config.GetFireElementalSpawnRate(), 1, 1);
+		ConfigMobs mobs = AMConfig.getInstance().getMobs();
+		SpawnListEntry manaElementals = new SpawnListEntry(EntityManaElemental.class, mobs.getManaElementalSpawnRate(), 1, 1);
+		SpawnListEntry dryads = new SpawnListEntry(EntityDryad.class, mobs.getDryadSpawnRate(), 1, 2);
+		SpawnListEntry hecates_nonHell = new SpawnListEntry(EntityHecate.class, mobs.getHecateSpawnRate(), 1, 1);
+		SpawnListEntry hecates_hell = new SpawnListEntry(EntityHecate.class, mobs.getHecateSpawnRate() * 2, 1, 2);
+		SpawnListEntry manaCreepers = new SpawnListEntry(EntityManaCreeper.class, mobs.getManaCreeperSpawnRate(), 1, 1);
+		SpawnListEntry lightMages = new SpawnListEntry(EntityLightMage.class, mobs.getMageSpawnRate(), 1, 3);
+		SpawnListEntry darkMages = new SpawnListEntry(EntityDarkMage.class, mobs.getMageSpawnRate(), 1, 3);
+		SpawnListEntry waterElementals = new SpawnListEntry(EntityWaterElemental.class, mobs.getWaterElementalSpawnRate(), 1, 3);
+		SpawnListEntry darklings = new SpawnListEntry(EntityDarkling.class, mobs.getDarklingSpawnRate(), 4, 8);
+		SpawnListEntry earthElementals = new SpawnListEntry(EntityEarthElemental.class, mobs.getEarthElementalSpawnRate(), 1, 2);
+		SpawnListEntry fireElementals = new SpawnListEntry(EntityFireElemental.class, mobs.getFireElementalSpawnRate(), 1, 1);
 
 		initSpawnsForBiomeTypes(manaElementals, EnumCreatureType.monster, new Type[]{Type.BEACH, Type.DESERT, Type.FOREST, Type.FROZEN, Type.HILLS, Type.JUNGLE, Type.MAGICAL, Type.MOUNTAIN, Type.PLAINS, Type.SWAMP, Type.WASTELAND}, new Type[]{Type.END, Type.NETHER, Type.MUSHROOM});
 

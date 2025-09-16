@@ -2,6 +2,7 @@ package am2.particles.ribbon;
 
 import am2.AMCore;
 import am2.api.math.AMVector3;
+import am2.configuration.GfxUtil;
 import net.minecraft.client.renderer.Tessellator;
 import net.minecraft.util.IIcon;
 import org.lwjgl.opengl.GL11;
@@ -54,7 +55,7 @@ public class Quad3D{
 		t.addVertexWithUV(p2.x, p2.y, p2.z, icon.getMaxU(), icon.getMaxV());
 		t.addVertexWithUV(p3.x, p3.y, p3.z, icon.getMinU(), icon.getMaxV());
 		t.draw();
-		if (AMCore.config.FullGFX()){
+		if (GfxUtil.isFull()){
 			double off = 0.005;
 
 			t.startDrawingQuads();

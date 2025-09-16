@@ -3,6 +3,7 @@ package am2.entities;
 import am2.AMCore;
 import am2.api.math.AMVector3;
 import am2.blocks.tileentities.TileEntityCraftingAltar;
+import am2.configuration.GfxUtil;
 import am2.entities.ai.EntityAISpellmaking;
 import am2.particles.AMParticle;
 import am2.particles.ParticleFloatUpward;
@@ -58,7 +59,7 @@ public class EntityShadowHelper extends EntityLiving{
 
 	private void spawnParticles(){
 		if (worldObj.isRemote){
-			for (int i = 0; i < 25 * AMCore.config.getGFXLevel() + 1; ++i){
+			for (int i = 0; i < 25 * GfxUtil.get() + 1; ++i){
 				AMParticle particle = (AMParticle)AMCore.proxy.particleManager.spawn(worldObj, "arcane", posX, posY, posZ);
 				if (particle != null){
 					particle.addRandomOffset(1, 1, 1);

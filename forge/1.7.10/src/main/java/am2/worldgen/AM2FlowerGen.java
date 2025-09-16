@@ -1,7 +1,7 @@
 package am2.worldgen;
 
-import am2.AMCore;
 import am2.blocks.AMFlower;
+import am2.common.configuration.AMConfig;
 import net.minecraft.world.World;
 import net.minecraft.world.gen.feature.WorldGenFlowers;
 
@@ -11,7 +11,7 @@ public class AM2FlowerGen extends WorldGenFlowers{
 
 	private AMFlower plantBlock;
 	private int plantBlockMeta;
-	private int genAttempts = AMCore.config.getFlowerGenAttempts();
+	private int genAttempts = AMConfig.getInstance().getWorldgen().getFlowerGenAttempts();
 
 	public AM2FlowerGen(AMFlower block, int meta){
 		super(block);

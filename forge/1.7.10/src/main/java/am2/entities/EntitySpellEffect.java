@@ -6,6 +6,7 @@ import am2.api.math.AMVector3;
 import am2.api.spell.component.interfaces.ISpellModifier;
 import am2.common.api.spell.enums.SpellModifiers;
 import am2.buffs.BuffEffectFrostSlowed;
+import am2.configuration.GfxUtil;
 import am2.damage.DamageSources;
 import am2.particles.*;
 import am2.spell.SpellHelper;
@@ -156,55 +157,7 @@ public class EntitySpellEffect extends Entity{
 	}
 
 	private void zoneUpdate(){
-		if (this.worldObj.isRemote){
-			if (!AMCore.config.NoGFX()){
-				this.rotation += this.rotationSpeed;
-				this.rotation %= 360;
-
-				double dist = this.dataWatcher.getWatchableObjectFloat(WATCHER_RADIUS);
-				double _rotation = rotation;
-
-				if (spellStack == null){
-					spellStack = this.dataWatcher.getWatchableObjectItemStack(22);
-					if (spellStack == null){
-						return;
-					}
-				}
-
-				int color = 0xFFFFFF;
-				if (SpellUtils.instance.modifierIsPresent(SpellModifiers.COLOR, spellStack, 0)){
-					ISpellModifier[] mods = SpellUtils.instance.getModifiersForStage(spellStack, 0);
-					int ordinalCount = 0;
-					for (ISpellModifier mod : mods){
-						if (mod instanceof Colour){
-							byte[] meta = SpellUtils.instance.getModifierMetadataFromStack(spellStack, mod, 0, ordinalCount++);
-							color = (int)mod.getModifier(SpellModifiers.COLOR, null, null, null, meta);
-						}
-					}
-				}
-
-				if ((AMCore.config.FullGFX() && this.ticksExisted % 2 == 0) || this.ticksExisted % 8 == 0){
-					for (int i = 0; i < 4; ++i){
-						_rotation = (rotation + (90 * i)) % 360;
-						double x = this.posX - Math.cos(3.141 / 180 * (_rotation)) * dist;
-						double z = this.posZ - Math.sin(3.141 / 180 * (_rotation)) * dist;
-
-						AMParticle effect = (AMParticle)AMCore.instance.proxy.particleManager.spawn(worldObj, SpellUtils.instance.mainAffinityFor(spellStack).getMainParticle(), x, posY, z);
-						if (effect != null){
-							effect.setIgnoreMaxAge(false);
-							effect.setMaxAge(20);
-							effect.setParticleScale(0.15f);
-							effect.setRGBColorI(color);
-							effect.AddParticleController(new ParticleFloatUpward(effect, 0, 0.07f, 1, false));
-							if (AMCore.config.LowGFX()){
-								effect.AddParticleController(new ParticleOrbitPoint(effect, posX, posY, posZ, 2, false).setIgnoreYCoordinate(true).SetOrbitSpeed(0.05f).SetTargetDistance(dist).setRotateDirection(true));
-							}
-						}
-					}
-				}
-
-			}
-		}
+		if(processServer()) return;
 
 		this.moveEntity(0, this.dataWatcher.getWatchableObjectInt(WATCHER_GRAVITY) / 100.0f, 0);
 
@@ -235,6 +188,67 @@ public class EntitySpellEffect extends Entity{
 				SpellHelper.instance.applyStackStage(spellStack, dummycaster, null, posX, posY, posZ, 0, worldObj, false, false, this.ticksExisted);
 			firstApply = false;
 		}
+	}
+
+	private boolean processServer() {
+		if(!this.worldObj.isRemote) {
+			return false;
+		}
+
+		if(GfxUtil.isNo()) {
+			return false;
+		}
+
+		this.rotation += this.rotationSpeed;
+		this.rotation %= 360;
+
+		double dist = this.dataWatcher.getWatchableObjectFloat(WATCHER_RADIUS);
+		double _rotation = rotation;
+
+		if (spellStack == null){
+			spellStack = this.dataWatcher.getWatchableObjectItemStack(22);
+			if (spellStack == null){
+				return true;
+			}
+		}
+
+		int color = 0xFFFFFF;
+		if (SpellUtils.instance.modifierIsPresent(SpellModifiers.COLOR, spellStack, 0)){
+			ISpellModifier[] mods = SpellUtils.instance.getModifiersForStage(spellStack, 0);
+			int ordinalCount = 0;
+			for (ISpellModifier mod : mods){
+				if (mod instanceof Colour){
+					byte[] meta = SpellUtils.instance.getModifierMetadataFromStack(spellStack, mod, 0, ordinalCount++);
+					color = (int)mod.getModifier(SpellModifiers.COLOR, null, null, null, meta);
+				}
+			}
+		}
+
+		if((!GfxUtil.isFull() || this.ticksExisted % 2 != 0) && this.ticksExisted % 8 != 0) {
+			return false;
+		}
+
+		for (int i = 0; i < 4; ++i){
+			_rotation = (rotation + (90 * i)) % 360;
+			double x = this.posX - Math.cos(3.141 / 180 * (_rotation)) * dist;
+			double z = this.posZ - Math.sin(3.141 / 180 * (_rotation)) * dist;
+
+			AMParticle effect = (AMParticle)AMCore.instance.proxy.particleManager.spawn(worldObj, SpellUtils.instance.mainAffinityFor(spellStack).getMainParticle(), x, posY, z);
+			if(effect == null) {
+				continue;
+			}
+
+			effect.setIgnoreMaxAge(false);
+			effect.setMaxAge(20);
+			effect.setParticleScale(0.15f);
+			effect.setRGBColorI(color);
+			effect.AddParticleController(new ParticleFloatUpward(effect, 0, 0.07f, 1, false));
+			if (GfxUtil.isLow()){
+				effect.AddParticleController(new ParticleOrbitPoint(effect, posX, posY, posZ, 2, false).setIgnoreYCoordinate(true).SetOrbitSpeed(0.05f).SetTargetDistance(dist).setRotateDirection(true));
+			}
+		}
+
+		return false;
 	}
 
 	private void rainOfFireUpdate(){

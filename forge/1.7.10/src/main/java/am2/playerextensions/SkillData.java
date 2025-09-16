@@ -12,6 +12,7 @@ import am2.api.spell.component.interfaces.ISpellShape;
 import am2.common.api.spell.enums.LearnStates;
 import am2.common.api.spell.enums.SkillPointTypes;
 import am2.common.api.spell.enums.SkillTrees;
+import am2.common.configuration.AMConfig;
 import am2.network.AMDataReader;
 import am2.network.AMDataWriter;
 import am2.network.AMNetHandler;
@@ -577,7 +578,7 @@ public class SkillData implements IExtendedEntityProperties, ISkillData{
 			}
 		}
 
-		if (sk.getPrimaryTree() != SkillTrees.None && entry.tree != SkillTrees.Talents && sk.getPrimaryTree() != entry.tree && entry.tier >= AMCore.config.getSecondarySkillTreeTierCap()){
+		if (sk.getPrimaryTree() != SkillTrees.None && entry.tree != SkillTrees.Talents && sk.getPrimaryTree() != entry.tree && entry.tier >= AMConfig.getInstance().getGeneral().getSecondarySkillTreeTierCap()){
 			state = LearnStates.LOCKED;
 		}
 

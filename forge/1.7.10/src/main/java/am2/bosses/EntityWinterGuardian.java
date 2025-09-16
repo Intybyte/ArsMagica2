@@ -3,6 +3,7 @@ package am2.bosses;
 import am2.AMCore;
 import am2.bosses.ai.*;
 import am2.buffs.BuffEffectFrostSlowed;
+import am2.configuration.GfxUtil;
 import am2.damage.DamageSourceFire;
 import am2.damage.DamageSourceFrost;
 import am2.damage.DamageSources;
@@ -125,7 +126,7 @@ public class EntityWinterGuardian extends AM2Boss{
 	}
 
 	private void spawnParticles(){
-		for (int i = 0; i < AMCore.config.getGFXLevel() * 4; ++i){
+		for (int i = 0; i < GfxUtil.get() * 4; ++i){
 			int rnd = rand.nextInt(10);
 			AMParticle particle = (AMParticle)AMCore.proxy.particleManager.spawn(worldObj, rnd < 5 ? "snowflakes" : "ember", posX + (rand.nextFloat() * 0.4 - 0.2), posY + 2, posZ + (rand.nextFloat() * 0.4 - 0.2));
 			if (particle != null){

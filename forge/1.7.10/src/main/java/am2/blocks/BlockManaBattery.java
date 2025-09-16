@@ -3,6 +3,7 @@ package am2.blocks;
 import am2.AMCore;
 import am2.api.power.PowerTypes;
 import am2.blocks.tileentities.TileEntityManaBattery;
+import am2.common.configuration.AMConfig;
 import am2.entities.EntityDummyCaster;
 import am2.power.PowerNodeRegistry;
 import am2.texture.ResourceManager;
@@ -62,7 +63,7 @@ public class BlockManaBattery extends PoweredBlock{
 		if (par1World.isRemote){
 			TileEntityManaBattery te = getTileEntity(par1World, par2, par3, par4);
 			if (te != null){
-				if (AMCore.config.isColourblindMode()){
+				if (AMConfig.getInstance().getGeneral().isColourblindMode()){
 					par5EntityPlayer.addChatMessage(new ChatComponentText(String.format("Charge Level: %.2f %% [%s]", PowerNodeRegistry.For(par1World).getPower(te, te.getPowerType()) / te.getCapacity() * 100, getColorNameFromPowerType(te.getPowerType()))));
 				}else{
 					par5EntityPlayer.addChatMessage(new ChatComponentText(String.format("Charge Level: %s%.2f \u00A7f%%", te.getPowerType().chatColor(), PowerNodeRegistry.For(par1World).getPower(te, te.getPowerType()) / te.getCapacity() * 100)));

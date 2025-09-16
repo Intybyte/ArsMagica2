@@ -5,6 +5,7 @@ import am2.api.math.AMVector3;
 import am2.common.api.spell.enums.Affinity;
 import am2.armor.ArmorHelper;
 import am2.armor.infusions.GenericImbuement;
+import am2.configuration.GfxUtil;
 import am2.items.ItemsCommonProxy;
 import am2.particles.AMParticle;
 import am2.particles.AMParticleIcons;
@@ -150,7 +151,7 @@ public class EntityFlicker extends EntityAmbientCreature{
 
 		if (worldObj.isRemote){
 			//for (int i = 0; i < + 1; ++i){
-			if (getRNG().nextInt(10) < AMCore.config.getGFXLevel()){
+			if (getRNG().nextInt(10) < GfxUtil.get()){
 				AMParticle effect = (AMParticle)AMCore.proxy.particleManager.spawn(worldObj, getFlickerAffinity().getMainParticle(), posX, posY, posZ);
 				if (effect != null){
 					effect.addRandomOffset(this.width, this.height, this.width);
@@ -213,7 +214,7 @@ public class EntityFlicker extends EntityAmbientCreature{
 
 	private void flick(){
 		if (this.worldObj.isRemote){
-			for (int i = 0; i < 10 * AMCore.config.getGFXLevel(); ++i){
+			for (int i = 0; i < 10 * GfxUtil.get(); ++i){
 				AMParticle particle = (AMParticle)AMCore.proxy.particleManager.spawn(worldObj, "radiant", posX, posY, posZ);
 				if (particle != null){
 					particle.AddParticleController(

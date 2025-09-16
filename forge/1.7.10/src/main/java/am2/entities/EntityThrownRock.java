@@ -5,6 +5,7 @@ import am2.api.math.AMVector3;
 import am2.api.spell.component.interfaces.ISpellModifier;
 import am2.common.api.spell.enums.SpellModifiers;
 import am2.blocks.BlocksCommonProxy;
+import am2.common.configuration.AMConfig;
 import am2.damage.DamageSources;
 import am2.items.ItemsCommonProxy;
 import am2.lore.CompendiumUnlockHandler;
@@ -302,7 +303,7 @@ public class EntityThrownRock extends EntityLiving{
 					if (this.target == null){
 						this.target = new AMVector3(movingobjectposition.hitVec);
 					}
-					this.worldObj.newExplosion(this, this.target.x, this.target.y, this.target.z, 0.8f, false, AMCore.config.isMoonstoneMeteorsDestroyTerrain());
+					this.worldObj.newExplosion(this, this.target.x, this.target.y, this.target.z, 0.8f, false, AMConfig.getInstance().getGeneral().isMoonstoneMeteorsDestroyTerrain());
 
 					int numOres = rand.nextInt(6) + 1;
 

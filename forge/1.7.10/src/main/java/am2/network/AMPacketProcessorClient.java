@@ -12,6 +12,9 @@ import am2.blocks.tileentities.TileEntityObelisk;
 import am2.bosses.BossActions;
 import am2.bosses.IArsMagicaBoss;
 import am2.buffs.BuffList;
+import am2.common.configuration.AMConfig;
+import am2.common.configuration.sections.ConfigGeneral;
+import am2.configuration.GfxUtil;
 import am2.containers.ContainerMagiciansWorkbench;
 import am2.guis.AMGuiHelper;
 import am2.guis.ArsMagicaGuiIdList;
@@ -241,7 +244,7 @@ public class AMPacketProcessorClient extends AMPacketProcessorServer{
 
 		World world = Minecraft.getMinecraft().theWorld;
 
-		for (int i = 0; i < 10 * AMCore.config.getGFXLevel(); ++i){
+		for (int i = 0; i < 10 * GfxUtil.get(); ++i){
 			world.spawnParticle("flame", x, y + 1, z, world.rand.nextDouble() - 0.5, world.rand.nextDouble() - 0.5, world.rand.nextDouble() - 0.5);
 		}
 	}
@@ -291,7 +294,7 @@ public class AMPacketProcessorClient extends AMPacketProcessorServer{
 			}
 		}
 
-		for (int i = 0; i < 360; i += AMCore.config.FullGFX() ? 5 : AMCore.config.LowGFX() ? 10 : 20){
+		for (int i = 0; i < 360; i += GfxUtil.isFull() ? 5 : GfxUtil.isLow() ? 10 : 20){
 			AMParticle effect = (AMParticle)AMCore.instance.proxy.particleManager.spawn(Minecraft.getMinecraft().theWorld, "sparkle2", x, y + 1.5, z);
 			if (effect != null){
 				effect.setIgnoreMaxAge(true);
@@ -369,11 +372,13 @@ public class AMPacketProcessorClient extends AMPacketProcessorServer{
 	private void handlePlayerLoginData(byte[] data, EntityPlayer player){
 		AMDataReader rdr = new AMDataReader(data, false);
 		int skillTreeLock = rdr.getInt();
-		AMCore.config.setSecondarySkillTreeTierCap(skillTreeLock);
+		ConfigGeneral general = AMConfig.getInstance().getGeneral();
+
+		general.setSecondarySkillTreeTierCap(skillTreeLock);
 		int[] disabledSkills = rdr.getIntArray();
 		double manaCap = rdr.getDouble();
 
-		AMCore.config.setManaCap(manaCap);
+		general.setManaCap(manaCap);
 
 		LogHelper.info("Received player login packet.");
 		LogHelper.debug("Secondary tree cap: %d", skillTreeLock);

@@ -1,5 +1,6 @@
 package am2;
 
+import am2.common.configuration.AMConfig;
 import am2.entities.EntityFlicker;
 import cpw.mods.fml.common.eventhandler.SubscribeEvent;
 import net.minecraft.nbt.NBTTagCompound;
@@ -30,7 +31,7 @@ public class AMWorldEventHandler{
 
 		NBTTagCompound compound = (NBTTagCompound)event.getData().getTag("ArsMagica2");
 
-		if (AMCore.config.isRetroactiveWorldgen() && (compound == null || !compound.hasKey(genKey))){
+		if (AMConfig.getInstance().getWorldgen().isRetroactiveWorldgen() && (compound == null || !compound.hasKey(genKey))){
 			LogHelper.info("Detected a chunk that requires retrogen.  Adding to retrogen list.");
 			AMCore.proxy.addQueuedRetrogen(dimensionID, chunkLocation);
 		}
@@ -38,12 +39,14 @@ public class AMWorldEventHandler{
 
 	@SubscribeEvent
 	public void onChunkUnload(ChunkEvent.Unload event){
-		if (!event.world.isRemote){
-			for (List l : event.getChunk().entityLists){
-				for (Object o : l){
-					if (o instanceof EntityFlicker){
-						((EntityFlicker)o).setDead();
-					}
+		if(event.world.isRemote) {
+			return;
+		}
+
+		for (List<?> l : event.getChunk().entityLists){
+			for (Object o : l){
+				if (o instanceof EntityFlicker){
+					((EntityFlicker)o).setDead();
 				}
 			}
 		}

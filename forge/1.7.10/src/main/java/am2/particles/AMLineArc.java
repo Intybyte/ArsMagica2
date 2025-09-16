@@ -2,6 +2,7 @@ package am2.particles;
 
 import am2.AMCore;
 import am2.api.math.AMVector3;
+import am2.configuration.GfxUtil;
 import cpw.mods.fml.relauncher.Side;
 import cpw.mods.fml.relauncher.SideOnly;
 import net.minecraft.client.Minecraft;
@@ -154,7 +155,7 @@ public class AMLineArc extends EntityFX{
 
 		Minecraft.getMinecraft().renderEngine.bindTexture(rl);
 
-		int fxQuality = AMCore.config.getGFXLevel() * 8;
+		int fxQuality = GfxUtil.get() * 8;
 
 		EntityPlayer player = Minecraft.getMinecraft().thePlayer;
 		double interpolatedX = player.prevPosX + (player.posX - player.prevPosX) * partialTicks;

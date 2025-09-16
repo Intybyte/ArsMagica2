@@ -8,6 +8,8 @@ import am2.api.spell.component.interfaces.ISpellComponent;
 import am2.common.api.spell.enums.Affinity;
 import am2.common.api.spell.enums.SpellModifiers;
 import am2.blocks.BlocksCommonProxy;
+import am2.common.configuration.AMConfig;
+import am2.items.ItemRune;
 import am2.items.ItemsCommonProxy;
 import am2.playerextensions.ExtendedProperties;
 import am2.spell.SpellUtils;
@@ -42,8 +44,8 @@ public class Dig implements ISpellComponent{
 		disallowedBlocks.add(Blocks.command_block);
 		disallowedBlocks.add(BlocksCommonProxy.everstone);
 
-		for (String i : AMCore.config.getDigBlacklist()){
-			if (i == null || i == "") continue;
+		for (String i : AMConfig.getInstance().getGeneral().getDigBlacklist()){
+			if (i == null || i.isEmpty()) continue;
 			disallowedBlocks.add(Block.getBlockFromName(i.replace("tile.", "")));
 		}
 	}
@@ -61,7 +63,7 @@ public class Dig implements ISpellComponent{
 
 		TileEntity te = world.getTileEntity(blockx, blocky, blockz);
 		if (te != null){
-			if (!AMCore.config.isDigBreaksTileEntities())
+			if (!AMConfig.getInstance().getGeneral().isDigBreaksTileEntities())
 				return false;
 			
 			if (te instanceof IKeystoneLockable && !KeystoneUtilities.instance.canPlayerAccess((IKeystoneLockable)te, DummyEntityPlayer.fromEntityLiving(caster), KeystoneAccessType.BREAK))
@@ -79,31 +81,32 @@ public class Dig implements ISpellComponent{
 		if (harvestLevel > miningLevel) return false;
 
 		EntityPlayer casterPlayer = DummyEntityPlayer.fromEntityLiving(caster);
-		if (ForgeEventFactory.doPlayerHarvestCheck(casterPlayer, block, true)){
-			float xMana = block.getBlockHardness(world, blockx, blocky, blockz) * hardnessManaFactor;
-			float xBurnout = ArsMagicaApi.instance.getBurnoutFromMana(xMana);
-
-			if (!world.isRemote){
-				BreakEvent event = ForgeHooks.onBlockBreakEvent(world, ((EntityPlayerMP)casterPlayer).theItemInWorldManager.getGameType(), (EntityPlayerMP)casterPlayer, blockx, blocky, blockz);
-				if (event.isCanceled()){
-					return false;
-				}
-				block.onBlockHarvested(world, blockx, blocky, blockz, meta, casterPlayer);
-				boolean flag = block.removedByPlayer(world, casterPlayer, blockx, blocky, blockz, true);
-				if(flag){
-					block.onBlockDestroyedByPlayer(world, blockx, blocky, blockz, meta);
-					block.harvestBlock(world, casterPlayer, blockx, blocky, blockz, meta);
-				}
-
-			}
-
-			ExtendedProperties.For(caster).deductMana(xMana);
-			ExtendedProperties.For(caster).addBurnout(xBurnout);
-
-			return true;
+		if(!ForgeEventFactory.doPlayerHarvestCheck(casterPlayer, block, true)) {
+			return false;
 		}
 
-		return false;
+		float xMana = block.getBlockHardness(world, blockx, blocky, blockz) * hardnessManaFactor;
+		float xBurnout = ArsMagicaApi.getBurnoutFromMana(xMana);
+
+		if (!world.isRemote){
+			BreakEvent event = ForgeHooks.onBlockBreakEvent(world, ((EntityPlayerMP)casterPlayer).theItemInWorldManager.getGameType(), (EntityPlayerMP)casterPlayer, blockx, blocky, blockz);
+			if (event.isCanceled()){
+				return false;
+			}
+			block.onBlockHarvested(world, blockx, blocky, blockz, meta, casterPlayer);
+			boolean flag = block.removedByPlayer(world, casterPlayer, blockx, blocky, blockz, true);
+			if(flag){
+				block.onBlockDestroyedByPlayer(world, blockx, blocky, blockz, meta);
+				block.harvestBlock(world, casterPlayer, blockx, blocky, blockz, meta);
+			}
+
+		}
+
+		ExtendedProperties.For(caster).deductMana(xMana);
+		ExtendedProperties.For(caster).addBurnout(xBurnout);
+
+		return true;
+
 	}
 
 	@Override
@@ -144,7 +147,7 @@ public class Dig implements ISpellComponent{
 	@Override
 	public Object[] getRecipeItems(){
 		return new Object[]{
-				new ItemStack(ItemsCommonProxy.rune, 1, ItemsCommonProxy.rune.META_ORANGE),
+				new ItemStack(ItemsCommonProxy.rune, 1, ItemRune.META_ORANGE),
 				Items.iron_shovel,
 				Items.iron_pickaxe
 		};

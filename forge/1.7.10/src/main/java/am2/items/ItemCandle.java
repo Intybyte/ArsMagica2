@@ -4,6 +4,7 @@ import am2.AMCore;
 import am2.armor.ArmorHelper;
 import am2.armor.infusions.GenericImbuement;
 import am2.blocks.BlocksCommonProxy;
+import am2.common.configuration.AMConfig;
 import am2.particles.AMParticle;
 import am2.particles.ParticleHoldPosition;
 import net.minecraft.block.Block;
@@ -146,23 +147,25 @@ public class ItemCandle extends ArsMagicaItem{
 
 	@Override
 	public void onUpdate(ItemStack stack, World world, Entity entity, int indexInInventory, boolean isCurrentlyHeld){
-		if (isCurrentlyHeld && entity instanceof EntityPlayer){
-			if (!world.isRemote && stack.hasTagCompound() && stack.getItemDamage() % 40 == 0){
-				search((EntityPlayer)entity, stack, world,
-						(int)Math.round(entity.posX),
-						(int)Math.round(entity.posY),
-						(int)Math.round(entity.posZ),
-						Block.getBlockById(stack.stackTagCompound.getInteger("search_block")),
-						stack.stackTagCompound.getInteger("search_meta"));
-			}
-			stack.damageItem(1, (EntityPlayer)entity);
-			if (!world.isRemote && stack.getItemDamage() >= this.getMaxDamage())
-				((EntityPlayer)entity).inventory.setInventorySlotContents(indexInInventory, null);
-			if (!world.isRemote && AMCore.config.isCandlesAreRovingLights() &&
-					world.isAirBlock((int)Math.round(entity.posX), (int)Math.round(entity.posY), (int)Math.round(entity.posZ)) &&
-					world.getBlockLightValue((int)Math.round(entity.posX), (int)Math.round(entity.posY), (int)Math.round(entity.posZ)) < 14){
-				world.setBlock((int)Math.round(entity.posX), (int)Math.round(entity.posY), (int)Math.round(entity.posZ), BlocksCommonProxy.invisibleUtility, 2, 2);
-			}
+		if(!isCurrentlyHeld || !(entity instanceof EntityPlayer)) {
+			return;
+		}
+
+		if (!world.isRemote && stack.hasTagCompound() && stack.getItemDamage() % 40 == 0){
+			search((EntityPlayer)entity, stack, world,
+					(int)Math.round(entity.posX),
+					(int)Math.round(entity.posY),
+					(int)Math.round(entity.posZ),
+					Block.getBlockById(stack.stackTagCompound.getInteger("search_block")),
+					stack.stackTagCompound.getInteger("search_meta"));
+		}
+		stack.damageItem(1, (EntityPlayer)entity);
+		if (!world.isRemote && stack.getItemDamage() >= this.getMaxDamage())
+			((EntityPlayer)entity).inventory.setInventorySlotContents(indexInInventory, null);
+		if (!world.isRemote && AMConfig.getInstance().getGeneral().isCandlesAreRovingLights() &&
+				world.isAirBlock((int)Math.round(entity.posX), (int)Math.round(entity.posY), (int)Math.round(entity.posZ)) &&
+				world.getBlockLightValue((int)Math.round(entity.posX), (int)Math.round(entity.posY), (int)Math.round(entity.posZ)) < 14){
+			world.setBlock((int)Math.round(entity.posX), (int)Math.round(entity.posY), (int)Math.round(entity.posZ), BlocksCommonProxy.invisibleUtility, 2, 2);
 		}
 	}
 

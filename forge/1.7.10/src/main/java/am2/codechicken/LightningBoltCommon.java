@@ -2,6 +2,7 @@ package am2.codechicken;
 
 import am2.AMCore;
 import am2.api.math.AMVector3;
+import am2.configuration.GfxUtil;
 import net.minecraft.block.Block;
 import net.minecraft.entity.Entity;
 import net.minecraft.init.Blocks;
@@ -152,11 +153,11 @@ public class LightningBoltCommon{
 		fractal(2, this.length * this.multiplier / 23.0F, 0.5F, 0.1F, 60.0F);
 		fractal(2, this.length * this.multiplier / 30.0F, 0.0F, 0.0F, 0.0F);
 		fractal(2, this.length * this.multiplier / 34.0F, 0.0F, 0.0F, 0.0F);
-		if (AMCore.config.LowGFX()){
+		if (GfxUtil.isLow()){
 			fractal(2, this.length * this.multiplier / 40.0F, 0.0F, 0.0F, 0.0F);
 		}
 
-		if (AMCore.config.FullGFX()){
+		if (GfxUtil.isFull()){
 			fractal(2, this.length * this.multiplier / 8.0F, 0.7F, 0.1F, 45.0F);
 			fractal(2, this.length * this.multiplier / 8.0F, 0.7F, 0.1F, 45.0F);
 		}

@@ -4,6 +4,7 @@ import am2.AMCore;
 import am2.api.IAffinityData;
 import am2.api.math.AMVector3;
 import am2.common.api.spell.enums.Affinity;
+import am2.common.configuration.AMConfig;
 import am2.network.AMDataReader;
 import am2.network.AMDataWriter;
 import am2.network.AMNetHandler;
@@ -416,33 +417,37 @@ public class AffinityData implements IExtendedEntityProperties, IAffinityData{
 
 	public void onAffinityAbility(){
 
-		if (getAffinityDepth(Affinity.ENDER) >= 0.75){
-			if (this.entity.isSneaking()){
-				this.hasActivatedNightVision = !this.hasActivatedNightVision;
-			}else{
-				if (this.lastGroundPosition != null){
-					if (positionIsValid(lastGroundPosition)){
-
-						spawnParticlesAt(lastGroundPosition);
-						spawnParticlesAt(new AMVector3(entity));
-
-						this.entity.setPosition(this.lastGroundPosition.x, this.lastGroundPosition.y + 1, this.lastGroundPosition.z);
-						ExtendedProperties.For((EntityLivingBase)this.entity).setFallProtection(20000);
-						this.entity.worldObj.playSoundEffect(entity.posX, entity.posY, entity.posZ, "mob.endermen.portal", 1.0F, 1.0F);
-
-						this.setCooldown(AMCore.config.getEnderAffinityAbilityCooldown());
-					}else{
-						((EntityPlayer)this.entity).addChatMessage(
-								new ChatComponentText("am2.affinity.enderTPFailed")
-						);
-					}
-				}else{
-					((EntityPlayer)this.entity).addChatMessage(
-							new ChatComponentText("am2.affinity.enderTPFailed")
-					);
-				}
-			}
+		if(!(getAffinityDepth(Affinity.ENDER) >= 0.75)) {
+			return;
 		}
+
+		if (this.entity.isSneaking()){
+			this.hasActivatedNightVision = !this.hasActivatedNightVision;
+			return;
+		}
+
+		if(this.lastGroundPosition == null) {
+			((EntityPlayer)this.entity).addChatMessage(
+					new ChatComponentText("am2.affinity.enderTPFailed")
+			);
+			return;
+		}
+
+		if(!positionIsValid(lastGroundPosition)) {
+			((EntityPlayer)this.entity).addChatMessage(
+					new ChatComponentText("am2.affinity.enderTPFailed")
+			);
+			return;
+		}
+
+		spawnParticlesAt(lastGroundPosition);
+		spawnParticlesAt(new AMVector3(entity));
+
+		this.entity.setPosition(this.lastGroundPosition.x, this.lastGroundPosition.y + 1, this.lastGroundPosition.z);
+		ExtendedProperties.For((EntityLivingBase)this.entity).setFallProtection(20000);
+		this.entity.worldObj.playSoundEffect(entity.posX, entity.posY, entity.posZ, "mob.endermen.portal", 1.0F, 1.0F);
+
+		this.setCooldown(AMConfig.getInstance().getGeneral().getEnderAffinityAbilityCooldown());
 
 		//beyond here we can handle other affinities that have activatable abilities
 	}

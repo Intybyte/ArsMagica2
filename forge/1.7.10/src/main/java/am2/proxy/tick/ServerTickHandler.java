@@ -4,6 +4,7 @@ import am2.AMCore;
 import am2.EntityItemWatcher;
 import am2.MeteorSpawnHelper;
 import am2.bosses.BossSpawnHelper;
+import am2.common.configuration.AMConfig;
 import am2.items.ItemsCommonProxy;
 import am2.network.AMDataWriter;
 import am2.network.AMNetHandler;
@@ -62,7 +63,7 @@ public class ServerTickHandler{
 
 	@SubscribeEvent
 	public void onWorldTick(TickEvent.WorldTickEvent event){
-		if (AMCore.config.isRetroactiveWorldgen())
+		if (AMConfig.getInstance().getWorldgen().isRetroactiveWorldgen())
 			RetroactiveWorldgenerator.instance.continueRetrogen(event.world);
 
 		applyDeferredPotionEffects();

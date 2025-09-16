@@ -10,6 +10,7 @@ import am2.armor.infusions.*;
 import am2.blocks.BlocksCommonProxy;
 import am2.blocks.tileentities.TileEntityParticleEmitter;
 import am2.buffs.BuffList;
+import am2.common.configuration.AMConfig;
 import am2.enchantments.AMEnchantments;
 import am2.entities.EntityManager;
 import am2.items.ItemsCommonProxy;
@@ -108,8 +109,6 @@ public class CommonProxy{
 	}
 
 	public void preinit(){
-		AMCore.config.init();
-		AMCore.skillConfig.init();
 		utils = new ProxyUtilitiesCommon();
 
 		blocks = new BlocksCommonProxy();

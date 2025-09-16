@@ -1,6 +1,7 @@
 package am2.entities;
 
 import am2.AMCore;
+import am2.common.configuration.AMConfig;
 import am2.entities.ai.EntityAIRangedAttackSpell;
 import am2.items.ItemsCommonProxy;
 import am2.playerextensions.ExtendedProperties;
@@ -32,7 +33,7 @@ public class EntityMageVillager extends EntityVillager{
 
 	@Override
 	public int getProfession(){
-		return AMCore.config.getMageVillagerProfessionID();
+		return AMConfig.getInstance().getGeneral().getMageVillagerProfessionID();
 	}
 
 	private void initAI(){

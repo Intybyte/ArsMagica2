@@ -14,6 +14,7 @@ import am2.armor.infusions.GenericImbuement;
 import am2.armor.infusions.ImbuementRegistry;
 import am2.bosses.EntityLifeGuardian;
 import am2.buffs.BuffList;
+import am2.common.configuration.AMConfig;
 import am2.guis.AMGuiHelper;
 import am2.items.ItemsCommonProxy;
 import am2.network.AMDataReader;
@@ -280,8 +281,9 @@ public class ExtendedProperties implements IExtendedProperties, IExtendedEntityP
 	}
 
 	public void setMaxMana(float maxMana){
-		if (AMCore.config.getManaCap() > 0){
-			this.maxMana = (float)Math.min(maxMana, AMCore.config.getManaCap());
+		double manaCap = AMConfig.getInstance().getGeneral().getManaCap();
+		if (manaCap > 0){
+			this.maxMana = (float)Math.min(maxMana, manaCap);
 		}else{
 			this.maxMana = maxMana;
 		}

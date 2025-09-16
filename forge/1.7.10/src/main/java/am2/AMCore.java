@@ -8,8 +8,8 @@ import am2.blocks.liquid.BlockLiquidEssence;
 import am2.blocks.tileentities.flickers.*;
 import am2.buffs.BuffList;
 import am2.commands.*;
-import am2.configuration.AMConfig;
-import am2.configuration.SkillConfiguration;
+import am2.common.configuration.AMConfig;
+import am2.common.configuration.SkillConfiguration;
 import am2.enchantments.AMEnchantmentHelper;
 import am2.entities.EntityManager;
 import am2.entities.SpawnBlacklists;
@@ -60,8 +60,6 @@ public class AMCore{
 	@SidedProxy(clientSide = "am2.proxy.ClientProxy", serverSide = "am2.proxy.CommonProxy")
 	public static CommonProxy proxy;
 
-	public static AMConfig config;
-	public static SkillConfiguration skillConfig;
 	public static final int ANY_META = 32767;
 
 	private String compendiumBase;
@@ -78,9 +76,9 @@ public class AMCore{
 
 		configBase += File.separatorChar + "AM2" + File.separatorChar;
 
-		config = new AMConfig(new File(configBase + File.separatorChar + "AM2.cfg"));
+		AMConfig.init(new File(configBase + File.separatorChar + "AM2.cfg"));
 
-		skillConfig = new SkillConfiguration(new File(configBase + "SkillConf.cfg"));
+		SkillConfiguration.init(new File(configBase + "SkillConf.cfg"));
 
 		AMNetHandler.INSTANCE.init();
 
@@ -105,7 +103,7 @@ public class AMCore{
 
 		initAPI();
 
-		if (AMCore.config.isEnableWitchwoodForest()){
+		if (AMConfig.getInstance().getWorldgen().isEnableWitchwoodForest()){
 			BiomeDictionary.registerBiomeType(BiomeWitchwoodForest.instance, Type.FOREST, Type.MAGICAL);
 			BiomeManager.warmBiomes.add(new BiomeEntry(BiomeWitchwoodForest.instance, 6));
 		}
@@ -119,7 +117,7 @@ public class AMCore{
 		proxy.setCompendiumSaveBase(compendiumBase);
 		proxy.postinit();
 
-		if (config.isRetroactiveWorldgen()){
+		if (AMConfig.getInstance().getWorldgen().isRetroactiveWorldgen()){
 			LogHelper.info("Retroactive Worldgen is enabled");
 		}
 
@@ -278,7 +276,7 @@ public class AMCore{
 		ArsMagicaApi.instance.setFlickerOperatorRegistry(FlickerOperatorRegistry.instance);
 		ArsMagicaApi.instance.setInfusionRegistry(ImbuementRegistry.instance);
 		ArsMagicaApi.instance.setEssenceRecipeHandler(RecipesEssenceRefiner.essenceRefinement());
-		ArsMagicaApi.instance.setColourblindMode(config.isColourblindMode());
+		ArsMagicaApi.instance.setColourblindMode(AMConfig.getInstance().getGeneral().isColourblindMode());
 		ArsMagicaApi.instance.setBuffHelper(BuffList.instance);
 		ArsMagicaApi.instance.setSpellUtils(SpellUtils.instance);
 

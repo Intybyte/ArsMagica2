@@ -1,8 +1,8 @@
 package am2.buffs;
 
-import am2.AMCore;
 import am2.LogHelper;
 import am2.api.potion.IBuffHelper;
+import am2.configuration.PotionCfg;
 import am2.particles.AMParticle;
 import am2.particles.ParticleLiveForBuffDuration;
 import am2.texture.ResourceManager;
@@ -79,7 +79,7 @@ public class BuffList implements IBuffHelper{
 	private static ArsMagicaPotion createAMPotion(int index, String name, int IIconRow, int iconCol, boolean isBadEffect, Class buffEffectClass){
 
 		String configID = name.replace(" ", "").toLowerCase().trim();
-		index = AMCore.config.getConfigurablePotionID(configID, index);
+		index = PotionCfg.getConfigurablePotionID(configID);
 
 		LogHelper.info("Potion %s is ID %d", name, index);
 		
@@ -99,7 +99,7 @@ public class BuffList implements IBuffHelper{
 
 	private static ManaPotion createManaPotion(int index, String name, int IIconRow, int iconCol, boolean isBadEffect, int colour){
 		String configID = name.replace(" ", "").toLowerCase().trim();
-		index = AMCore.config.getConfigurablePotionID(configID, index);
+		index = PotionCfg.getConfigurablePotionID(configID);
 		
 		LogHelper.info("Potion %s is ID %d", name, index);
 		

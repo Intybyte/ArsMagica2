@@ -5,6 +5,7 @@ import am2.api.flickers.IFlickerController;
 import am2.api.flickers.IFlickerFunctionality;
 import am2.common.api.spell.enums.Affinity;
 import am2.blocks.BlocksCommonProxy;
+import am2.configuration.GfxUtil;
 import am2.items.ItemsCommonProxy;
 import am2.particles.AMParticle;
 import net.minecraft.block.Block;
@@ -50,7 +51,7 @@ public class FlickerOperatorGentleRains implements IFlickerFunctionality{
 				return true;
 			}
 		}else{
-			for (int i = 0; i < AMCore.config.getGFXLevel() * 2; ++i){
+			for (int i = 0; i < GfxUtil.get() * 2; ++i){
 				AMParticle particle = (AMParticle)AMCore.proxy.particleManager.spawn(worldObj, "water_ball", ((TileEntity)habitat).xCoord + 0.5, ((TileEntity)habitat).yCoord + 3, ((TileEntity)habitat).zCoord + 0.5);
 				if (particle != null){
 					particle.setAffectedByGravity();

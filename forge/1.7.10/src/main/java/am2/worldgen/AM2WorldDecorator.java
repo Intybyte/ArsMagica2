@@ -2,6 +2,8 @@ package am2.worldgen;
 
 import am2.AMCore;
 import am2.blocks.BlocksCommonProxy;
+import am2.common.configuration.AMConfig;
+import am2.common.configuration.datatypes.ConfigurableVein;
 import am2.entities.SpawnBlacklists;
 import cpw.mods.fml.common.IWorldGenerator;
 import net.minecraft.init.Blocks;
@@ -37,7 +39,7 @@ public class AM2WorldDecorator implements IWorldGenerator{
 	private final AM2FlowerGen aum;
 	private final AM2FlowerGen tarmaRoot;
 
-	private ArrayList<Integer> dimensionBlacklist = new ArrayList<Integer>();
+	private ArrayList<String> dimensionBlacklist = new ArrayList<>();
 
 
 	//trees
@@ -48,41 +50,29 @@ public class AM2WorldDecorator implements IWorldGenerator{
 	private final WorldGenEssenceLakes lakes;
 	
 	//config
-	private int witchChance = AMCore.config.getWitchwoodFrequency();
-	private int poolChance = AMCore.config.getPoolFrequency();
-	private int wakeChance = AMCore.config.getWakebloomFrequency();
+	private int witchChance = AMConfig.getInstance().getWorldgen().getWitchwoodFrequency();
+	private int poolChance = AMConfig.getInstance().getWorldgen().getPoolFrequency();
+	private int wakeChance = AMConfig.getInstance().getWorldgen().getWakebloomFrequency();
 	
-	private int vinteumMin = AMCore.config.getVinteumMinHeight();
-	private int vinteumMax = AMCore.config.getVinteumMaxHeight();
-	private int vinteumVein = AMCore.config.getVinteumVeinSize();
-	private int vinteumFrequency = AMCore.config.getVinteumFrequency();
-	
-	private int chimeriteMin = AMCore.config.getChimeriteMinHeight();
-	private int chimeriteMax = AMCore.config.getChimeriteMaxHeight();
-	private int chimeriteVein = AMCore.config.getChimeriteVeinSize();
-	private int chimeriteFrequency = AMCore.config.getChimeriteFrequency();
-	
-	private int topazMin = AMCore.config.getTopazMinHeight();
-	private int topazMax = AMCore.config.getTopazMaxHeight();
-	private int topazVein = AMCore.config.getTopazVeinSize();
-	private int topazFrequency = AMCore.config.getTopazFrequency();	
-	
-	private int sunstoneMin = AMCore.config.getSunstoneMinHeight();
-	private int sunstoneMax = AMCore.config.getSunstoneMaxHeight();
-	private int sunstoneVein = AMCore.config.getSunstoneVeinSize();
-	private int sunstoneFrequency = AMCore.config.getSunstoneFrequency();
+	private ConfigurableVein vinteumCfg = AMConfig.getInstance().getWorldgen().getVinteum();
+
+	private ConfigurableVein chimeriteCfg = AMConfig.getInstance().getWorldgen().getChimerite();
+
+	private ConfigurableVein topazCfg = AMConfig.getInstance().getWorldgen().getTopaz();
+
+	private ConfigurableVein sunstoneCfg = AMConfig.getInstance().getWorldgen().getSunstone();
+
 
 	public AM2WorldDecorator(){
 
-		for (int i : AMCore.config.getWorldgenBlacklist()){
-			if (i == -1) continue;
-			dimensionBlacklist.add(i);
+		for (String i : AMConfig.getInstance().getWorldgen().getWorldgenBlacklist()){
+			dimensionBlacklist.add(i.toLowerCase());
 		}
 
-		vinteum = new WorldGenMinable(BlocksCommonProxy.AMOres, BlocksCommonProxy.AMOres.META_VINTEUM_ORE, vinteumVein, Blocks.stone);
-		chimerite = new WorldGenMinable(BlocksCommonProxy.AMOres, BlocksCommonProxy.AMOres.META_CHIMERITE_ORE, chimeriteVein, Blocks.stone);
-		blueTopaz = new WorldGenMinable(BlocksCommonProxy.AMOres, BlocksCommonProxy.AMOres.META_BLUE_TOPAZ_ORE, topazVein, Blocks.stone);
-		sunstone = new WorldGenMinable(BlocksCommonProxy.AMOres, BlocksCommonProxy.AMOres.META_SUNSTONE_ORE, sunstoneVein, Blocks.lava);
+		vinteum = new WorldGenMinable(BlocksCommonProxy.AMOres, BlocksCommonProxy.AMOres.META_VINTEUM_ORE, vinteumCfg.getVeinSize(), Blocks.stone);
+		chimerite = new WorldGenMinable(BlocksCommonProxy.AMOres, BlocksCommonProxy.AMOres.META_CHIMERITE_ORE, chimeriteCfg.getVeinSize(), Blocks.stone);
+		blueTopaz = new WorldGenMinable(BlocksCommonProxy.AMOres, BlocksCommonProxy.AMOres.META_BLUE_TOPAZ_ORE, topazCfg.getVeinSize(), Blocks.stone);
+		sunstone = new WorldGenMinable(BlocksCommonProxy.AMOres, BlocksCommonProxy.AMOres.META_SUNSTONE_ORE, sunstoneCfg.getVeinSize(), Blocks.lava);
 
 		blueOrchid = new AM2FlowerGen(BlocksCommonProxy.cerublossom, 0);
 		desertNova = new AM2FlowerGen(BlocksCommonProxy.desertNova, 0);
@@ -104,7 +94,7 @@ public class AM2WorldDecorator implements IWorldGenerator{
 			return;
 
 		if (world.provider.terrainType == WorldType.FLAT) return;
-		if (dimensionBlacklist.contains(world.provider.dimensionId)) return;
+		if (dimensionBlacklist.contains(world.provider.getDimensionName().toLowerCase())) return;
 		switch (world.provider.dimensionId){
 		case -1:
 			generateNether(random, chunkX, chunkZ, world, chunkGenerator, chunkProvider);
@@ -121,10 +111,10 @@ public class AM2WorldDecorator implements IWorldGenerator{
 	}
 
 	public void generateOverworld(Random random, int chunkX, int chunkZ, World world, IChunkProvider chunkGenerator, IChunkProvider chunkProvider){
-		generateOre(vinteum, vinteumFrequency, world, random, vinteumMin, vinteumMax, chunkX, chunkZ);
-		generateOre(chimerite, chimeriteFrequency, world, random, chimeriteMin, chimeriteMax, chunkX, chunkZ);
-		generateOre(blueTopaz, topazFrequency, world, random, topazMin, topazMax, chunkX, chunkZ);
-		generateOre(sunstone, sunstoneFrequency, world, random, sunstoneMin, sunstoneMax, chunkX, chunkZ);
+		generateOre(vinteum, vinteumCfg, world, random, chunkX, chunkZ);
+		generateOre(chimerite, chimeriteCfg, world, random, chunkX, chunkZ);
+		generateOre(blueTopaz, topazCfg, world, random, chunkX, chunkZ);
+		generateOre(sunstone, sunstoneCfg, world, random, chunkX, chunkZ);
 
 		generateFlowers(blueOrchid, world, random, chunkX, chunkZ);
 		generateFlowers(desertNova, world, random, chunkX, chunkZ);
@@ -168,6 +158,10 @@ public class AM2WorldDecorator implements IWorldGenerator{
 		int z = (chunkZ << 4) + random.nextInt(16) + 8;
 
 		flowers.generate(world, random, x, y, z);
+	}
+
+	private void generateOre(WorldGenMinable mineable, ConfigurableVein cfg, World world, Random random, int chunkX, int chunkZ) {
+		generateOre(mineable, cfg.getFrequency(), world, random, cfg.getMinHeight(), cfg.getMaxHeight(), chunkX, chunkZ);
 	}
 
 	private void generateOre(WorldGenMinable mineable, int amount, World world, Random random, int minY, int maxY, int chunkX, int chunkZ){

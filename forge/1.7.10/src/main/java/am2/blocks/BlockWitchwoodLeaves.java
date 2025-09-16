@@ -1,6 +1,7 @@
 package am2.blocks;
 
 import am2.AMCore;
+import am2.common.configuration.AMConfig;
 import am2.particles.AMParticle;
 import am2.particles.ParticleFloatUpward;
 import am2.particles.ParticlePendulum;
@@ -117,19 +118,23 @@ public class BlockWitchwoodLeaves extends BlockLeaves{
 	@Override
 	public void randomDisplayTick(World par1World, int par2, int par3, int par4, Random par5Random){
 
-		if (!AMCore.config.isWitchwoodLeafParticles())
+		if (!AMConfig.getInstance().getWorldgen().isWitchwoodLeafParticles())
 			return;
 
-		if (par5Random.nextInt(300) == 0 && par1World.isAirBlock(par2, par3 - 1, par4)){
-			AMParticle particle = (AMParticle)AMCore.proxy.particleManager.spawn(par1World, "leaf", par2 + par5Random.nextDouble(), par3 + par5Random.nextDouble(), par4 + par5Random.nextDouble());
-			if (particle != null){
-				particle.AddParticleController(new ParticleFloatUpward(particle, 0, -0.05f, 1, false));
-				particle.setMaxAge(120);
-				particle.noClip = false;
-				particle.setParticleScale(0.1f + par5Random.nextFloat() * 0.1f);
-				particle.AddParticleController(new ParticlePendulum(particle, 0.2f, 0.15f + par5Random.nextFloat() * 0.2f, 2, false));
-			}
+		if(par5Random.nextInt(300) != 0 || !par1World.isAirBlock(par2, par3 - 1, par4)) {
+			return;
 		}
+
+		AMParticle particle = (AMParticle)AMCore.proxy.particleManager.spawn(par1World, "leaf", par2 + par5Random.nextDouble(), par3 + par5Random.nextDouble(), par4 + par5Random.nextDouble());
+		if(particle == null) {
+			return;
+		}
+
+		particle.AddParticleController(new ParticleFloatUpward(particle, 0, -0.05f, 1, false));
+		particle.setMaxAge(120);
+		particle.noClip = false;
+		particle.setParticleScale(0.1f + par5Random.nextFloat() * 0.1f);
+		particle.AddParticleController(new ParticlePendulum(particle, 0.2f, 0.15f + par5Random.nextFloat() * 0.2f, 2, false));
 	}
 
 	@Override

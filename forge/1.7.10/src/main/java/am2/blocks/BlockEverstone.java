@@ -2,6 +2,7 @@ package am2.blocks;
 
 import am2.AMCore;
 import am2.blocks.tileentities.TileEntityEverstone;
+import am2.configuration.GfxUtil;
 import am2.items.ItemsCommonProxy;
 import am2.particles.AMParticle;
 import am2.texture.ResourceManager;
@@ -209,7 +210,7 @@ public class BlockEverstone extends PoweredBlock{
 
 		TileEntityEverstone everstone = getTE(world, x, y, z);
 
-		for (int i = 0; i < 5 * AMCore.config.getGFXLevel(); ++i){
+		for (int i = 0; i < 5 * GfxUtil.get(); ++i){
 			Block block = Blocks.air;
 			int blockMeta = 0;
 			if (everstone == null || everstone.getFacade() == null){

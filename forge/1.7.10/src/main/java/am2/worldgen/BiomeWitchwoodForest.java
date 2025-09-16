@@ -1,17 +1,18 @@
 package am2.worldgen;
 
-import am2.AMCore;
+import am2.common.configuration.AMConfig;
 import am2.entities.EntityDryad;
 import net.minecraft.entity.passive.EntityWolf;
 import net.minecraft.world.biome.BiomeGenBase;
 import net.minecraft.world.gen.feature.WorldGenAbstractTree;
-import net.minecraft.world.gen.feature.WorldGenerator;
 
 import java.util.Random;
 
 public class BiomeWitchwoodForest extends BiomeGenBase{
 
-	public static final BiomeGenBase instance = new BiomeWitchwoodForest(AMCore.config.getWitchwoodForestID()).setBiomeName("WitchwoodForest");
+	public static final BiomeGenBase instance = new BiomeWitchwoodForest(
+			AMConfig.getInstance().getWorldgen().getWitchwoodForestID()
+	).setBiomeName("WitchwoodForest");
 	private static final WitchwoodTreeHuge hugeTree = new WitchwoodTreeHuge(true);
 	private static final WitchwoodTreeSmall smallTree = new WitchwoodTreeSmall(true);
 

@@ -4,6 +4,7 @@ import am2.AMCore;
 import am2.api.SkillTreeEntry;
 import am2.api.spell.component.interfaces.ISkillTreeEntry;
 import am2.common.api.spell.enums.LearnStates;
+import am2.common.configuration.AMConfig;
 import am2.guis.AMGuiHelper.CompendiumBreadcrumb;
 import am2.guis.controls.GuiButtonCompendiumLink;
 import am2.guis.controls.GuiButtonCompendiumNext;
@@ -104,7 +105,7 @@ public class GuiCompendiumIndex extends GuiScreen implements GuiYesNoCallback{
 		this.buttonList.add(nextPage);
 		this.buttonList.add(prevPage);
 		this.buttonList.add(backToIndex);
-		if (AMCore.config.isAllowVersionChecks())
+		if (AMConfig.getInstance().getGeneral().isAllowVersionChecks())
 			this.buttonList.add(updateButton);
 
 		switchCategoryAndPage();

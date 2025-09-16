@@ -1,6 +1,7 @@
 package am2.blocks;
 
 import am2.AMCore;
+import am2.configuration.GfxUtil;
 import am2.particles.AMParticle;
 import am2.particles.ParticleExpandingCollapsingRingAtPoint;
 import am2.particles.ParticleFadeOut;
@@ -60,7 +61,7 @@ public class BlockDesertNova extends AMFlower{
 
 		if (par5Random.nextInt(10) != 0) return;
 
-		int increment = AMCore.config.getGFXLevel() * 15;
+		int increment = GfxUtil.get() * 15;
 
 		if (increment <= 0) return;
 

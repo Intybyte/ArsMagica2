@@ -7,6 +7,8 @@ import am2.api.spell.component.interfaces.ISpellModifier;
 import am2.common.api.spell.enums.Affinity;
 import am2.common.api.spell.enums.SpellModifiers;
 import am2.buffs.BuffList;
+import am2.common.configuration.AMConfig;
+import am2.configuration.GfxUtil;
 import am2.items.ItemsCommonProxy;
 import am2.particles.AMParticle;
 import am2.particles.AMParticleIcons;
@@ -37,7 +39,7 @@ public class EntitySpellProjectile extends Entity{
 	private int ticksExisted;
 	private int originalBounceCount; //used for resetting bounces
 
-	private final double friction_coefficient = AMCore.config.getFrictionCoefficient();
+	private final double friction_coefficient = AMConfig.getInstance().getGeneral().getFrictionCoefficient();
 
 	private ArrayList<AMVector3> blockhits;
 	private ArrayList<Integer> entityHits;
@@ -381,7 +383,7 @@ public class EntitySpellProjectile extends Entity{
 
 			f1 = 0.8F;
 		}
-		if (!AMCore.config.NoGFX() && worldObj.isRemote && this.getShootingEntity() instanceof EntityPlayer){
+		if (!GfxUtil.isNo() && worldObj.isRemote && this.getShootingEntity() instanceof EntityPlayer){
 			if (this.particleType == null || this.particleType.isEmpty())
 				particleType = SpellUtils.instance.mainAffinityFor(getEffectStack()).getSecondaryParticle();
 			AMParticle particle = (AMParticle)AMCore.proxy.particleManager.spawn(worldObj, particleType, this.posX, this.posY, this.posZ);

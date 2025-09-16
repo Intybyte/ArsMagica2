@@ -13,6 +13,7 @@ import am2.bosses.BossSpawnHelper;
 import am2.buffs.BuffEffectTemporalAnchor;
 import am2.buffs.BuffList;
 import am2.buffs.BuffStatModifiers;
+import am2.configuration.GfxUtil;
 import am2.damage.DamageSources;
 import am2.entities.EntityFlicker;
 import am2.items.ItemsCommonProxy;
@@ -568,7 +569,7 @@ public class AMEventHandler{
 			if (ExtendedProperties.For(event.entityLiving).getCurrentMana() >= event.ammount * 250f){
 				ExtendedProperties.For(event.entityLiving).deductMana(event.ammount * 100f);
 				ExtendedProperties.For(event.entityLiving).forceSync();
-				for (int i = 0; i < Math.min(event.ammount, 5 * AMCore.config.getGFXLevel()); ++i)
+				for (int i = 0; i < Math.min(event.ammount, 5 * GfxUtil.get()); ++i)
 					AMCore.proxy.particleManager.BoltFromPointToPoint(event.entityLiving.worldObj,
 							event.entityLiving.posX,
 							event.entityLiving.posY + event.entityLiving.worldObj.rand.nextFloat() * event.entityLiving.getEyeHeight(),
@@ -599,7 +600,7 @@ public class AMEventHandler{
 			event.ammount -= manaToTake / 250f;
 			ExtendedProperties.For(event.entityLiving).deductMana(manaToTake);
 			ExtendedProperties.For(event.entityLiving).forceSync();
-			for (int i = 0; i < Math.min(event.ammount, 5 * AMCore.config.getGFXLevel()); ++i)
+			for (int i = 0; i < Math.min(event.ammount, 5 * GfxUtil.get()); ++i)
 				AMCore.proxy.particleManager.BoltFromPointToPoint(event.entityLiving.worldObj,
 						event.entityLiving.posX,
 						event.entityLiving.posY + event.entityLiving.worldObj.rand.nextFloat() * event.entityLiving.getEyeHeight(),

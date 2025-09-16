@@ -9,6 +9,7 @@ import am2.common.api.spell.enums.Affinity;
 import am2.common.api.spell.enums.SpellModifiers;
 import am2.buffs.BuffEffectFury;
 import am2.buffs.BuffList;
+import am2.configuration.GfxUtil;
 import am2.items.ItemsCommonProxy;
 import am2.particles.AMParticle;
 import am2.particles.ParticleFloatUpward;
@@ -95,15 +96,17 @@ public class Fury implements ISpellComponent, IRitualInteraction{
 
 	@Override
 	public void spawnParticles(World world, double x, double y, double z, EntityLivingBase caster, Entity target, Random rand, int colorModifier){
-		for (int i = 0; i < 5 * AMCore.config.getGFXLevel(); ++i){
+		for (int i = 0; i < 5 * GfxUtil.get(); ++i){
 			AMParticle particle = (AMParticle)AMCore.proxy.particleManager.spawn(world, "pulse", x, y, z);
-			if (particle != null){
-				particle.addRandomOffset(1, 1, 1);
-				particle.setRGBColorF(1, 0, 0);
-				particle.AddParticleController(new ParticleOrbitEntity(particle, target, 0.15f, 1, false).SetTargetDistance(world.rand.nextDouble() + 1f).setIgnoreYCoordinate(true));
-				particle.AddParticleController(new ParticleFloatUpward(particle, 0, 0.1f, 1, false));
-				particle.setMaxAge(10);
+			if(particle == null) {
+				continue;
 			}
+
+			particle.addRandomOffset(1, 1, 1);
+			particle.setRGBColorF(1, 0, 0);
+			particle.AddParticleController(new ParticleOrbitEntity(particle, target, 0.15f, 1, false).SetTargetDistance(world.rand.nextDouble() + 1f).setIgnoreYCoordinate(true));
+			particle.AddParticleController(new ParticleFloatUpward(particle, 0, 0.1f, 1, false));
+			particle.setMaxAge(10);
 		}
 	}
 

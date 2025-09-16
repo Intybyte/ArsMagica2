@@ -1,6 +1,7 @@
 package am2.blocks;
 
 import am2.AMCore;
+import am2.configuration.GfxUtil;
 import am2.particles.AMParticle;
 import am2.particles.ParticleFloatUpward;
 import am2.particles.ParticleGrow;
@@ -32,7 +33,7 @@ public class BlockMageLight extends AMSpecialRenderBlock{
 
 	@Override
 	public int tickRate(World par1World){
-		return 20 - 5 * AMCore.config.getGFXLevel();
+		return 20 - 5 * GfxUtil.get();
 	}
 
 	@Override

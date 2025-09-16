@@ -2,6 +2,7 @@ package am2;
 
 import am2.armor.ArmorHelper;
 import am2.armor.infusions.GenericImbuement;
+import am2.common.configuration.AMConfig;
 import am2.enchantments.AMEnchantments;
 import am2.network.AMDataWriter;
 import am2.network.AMNetHandler;
@@ -79,8 +80,9 @@ public class PlayerTracker{
 		int[] disabledSkills = SkillTreeManager.instance.getDisabledSkillIDs();
 
 		AMDataWriter writer = new AMDataWriter();
-		writer.add(AMCore.config.getSecondarySkillTreeTierCap()).add(disabledSkills);
-		writer.add(AMCore.config.getManaCap());
+		AMConfig cfg = AMConfig.getInstance();
+		writer.add(cfg.getGeneral().getSecondarySkillTreeTierCap()).add(disabledSkills);
+		writer.add(cfg.getGeneral().getManaCap());
 		byte[] data = writer.generate();
 
 		AMNetHandler.INSTANCE.syncLoginData((EntityPlayerMP)event.player, data);

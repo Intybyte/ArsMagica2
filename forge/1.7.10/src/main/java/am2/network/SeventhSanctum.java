@@ -1,6 +1,7 @@
 package am2.network;
 
 import am2.AMCore;
+import am2.common.configuration.AMConfig;
 import am2.utility.WebRequestUtils;
 
 import java.util.HashMap;
@@ -27,7 +28,7 @@ public class SeventhSanctum{
 		postOptions.put("selGenCount", "25");
 		postOptions.put("selGenType", "SEEDALL");
 
-		if (AMCore.config.isSuggestSpellNames())
+		if (AMConfig.getInstance().getGeneral().isSuggestSpellNames())
 			getSuggestions();
 		else
 			failed = true;

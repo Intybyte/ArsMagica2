@@ -8,6 +8,7 @@ import am2.api.spell.component.interfaces.ISpellShape;
 import am2.common.api.spell.enums.Affinity;
 import am2.common.api.spell.enums.SpellCastResult;
 import am2.common.api.spell.enums.SpellModifiers;
+import am2.configuration.GfxUtil;
 import am2.entities.EntitySpellProjectile;
 import am2.items.ItemsCommonProxy;
 import am2.particles.*;
@@ -89,21 +90,23 @@ public class AoE implements ISpellShape{
 			}
 		}
 
-		for (int i = 0; i < 360; i += AMCore.config.FullGFX() ? 20 : AMCore.config.LowGFX() ? 40 : 60){
+		for (int i = 0; i < 360; i += GfxUtil.isFull() ? 20 : GfxUtil.isLow() ? 40 : 60){
 			AMParticle effect = (AMParticle)AMCore.instance.proxy.particleManager.spawn(world, pfxName, x, y + 1.5f, z);
-			if (effect != null){
-				effect.setIgnoreMaxAge(true);
-				effect.AddParticleController(new ParticleMoveOnHeading(effect, i, 0, speed, 1, false));
-				effect.noClip = false;
-				effect.setRGBColorI(color);
-				effect.AddParticleController(new ParticleFadeOut(effect, 1, false).setFadeSpeed(0.05f).setKillParticleOnFinish(true));
-				effect.AddParticleController(
-						new ParticleLeaveParticleTrail(effect, pfxName, false, 5, 1, false)
-								.addControllerToParticleList(new ParticleFadeOut(effect, 1, false).setFadeSpeed(0.1f).setKillParticleOnFinish(true))
-								.setParticleRGB_I(color)
-								.addRandomOffset(0.2f, 0.2f, 0.2f)
-				);
+			if(effect == null) {
+				continue;
 			}
+
+			effect.setIgnoreMaxAge(true);
+			effect.AddParticleController(new ParticleMoveOnHeading(effect, i, 0, speed, 1, false));
+			effect.noClip = false;
+			effect.setRGBColorI(color);
+			effect.AddParticleController(new ParticleFadeOut(effect, 1, false).setFadeSpeed(0.05f).setKillParticleOnFinish(true));
+			effect.AddParticleController(
+					new ParticleLeaveParticleTrail(effect, pfxName, false, 5, 1, false)
+							.addControllerToParticleList(new ParticleFadeOut(effect, 1, false).setFadeSpeed(0.1f).setKillParticleOnFinish(true))
+							.setParticleRGB_I(color)
+							.addRandomOffset(0.2f, 0.2f, 0.2f)
+			);
 		}
 	}
 

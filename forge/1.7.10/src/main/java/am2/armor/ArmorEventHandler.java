@@ -4,6 +4,7 @@ import am2.AMCore;
 import am2.api.items.armor.ArmorTextureEvent;
 import am2.api.items.armor.IArmorImbuement;
 import am2.api.items.armor.ImbuementApplicationTypes;
+import am2.common.configuration.AMConfig;
 import am2.playerextensions.ExtendedProperties;
 import cpw.mods.fml.common.eventhandler.Event;
 import cpw.mods.fml.common.eventhandler.SubscribeEvent;
@@ -87,7 +88,8 @@ public class ArmorEventHandler{
 	}
 
 	private void doXPInfusion(EntityPlayer player, float xpMin, float xpMax){
-		float amt = (float)((player.worldObj.rand.nextFloat() * xpMin + (xpMax - xpMin)) * AMCore.config.getArmorXPInfusionFactor());
+		float rndFloat = player.worldObj.rand.nextFloat();
+		float amt = (float)((rndFloat * xpMin + (xpMax - xpMin)) * AMConfig.getInstance().getGeneral().getArmorXPInfusionFactor());
 		ArmorHelper.addXPToArmor(amt, player);
 	}
 

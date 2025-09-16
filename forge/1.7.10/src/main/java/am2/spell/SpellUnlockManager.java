@@ -7,6 +7,7 @@ import am2.api.spell.component.interfaces.ISpellComponent;
 import am2.api.spell.component.interfaces.ISpellModifier;
 import am2.common.api.spell.enums.SkillPointTypes;
 import am2.common.api.spell.enums.SpellModifiers;
+import am2.common.configuration.AMConfig;
 import am2.playerextensions.ExtendedProperties;
 import am2.playerextensions.SkillData;
 import cpw.mods.fml.common.eventhandler.SubscribeEvent;
@@ -25,22 +26,25 @@ public class SpellUnlockManager{
 
 	@SubscribeEvent
 	public void onSpellCast(SpellCastingEvent.Pre event){
-		if (event.caster instanceof EntityPlayer){
-			if (ExtendedProperties.For(event.caster).getCurrentMana() < event.manaCost)
-				return;
-			for (UnlockEntry entry : entries){
-				//check unlocks
-				if (!event.caster.worldObj.isRemote){
-					if (entry.unlockIsInPrimaryTree((EntityPlayer)event.caster) && entry.willSpellUnlock(event.stack)){
-						entry.unlockFor((EntityPlayer)event.caster);
-					}
+		if(!(event.caster instanceof EntityPlayer)) {
+			return;
+		}
+
+		if (ExtendedProperties.For(event.caster).getCurrentMana() < event.manaCost)
+			return;
+
+		for (UnlockEntry entry : entries){
+			//check unlocks
+			if (!event.caster.worldObj.isRemote){
+				if (entry.unlockIsInPrimaryTree((EntityPlayer)event.caster) && entry.willSpellUnlock(event.stack)){
+					entry.unlockFor((EntityPlayer)event.caster);
 				}
-				if (!(entry.unlock instanceof ISpellModifier)){
-					//lock out casting of spells that contain "silver" skills you don't know, or pre-learned ones (somehow) that aren't in your primary tree
-					if (entry.unlockIsInSpell(event.stack) && (!SkillData.For((EntityPlayer)event.caster).isEntryKnown(SkillTreeManager.instance.getSkillTreeEntry(entry.unlock)) || !entry.unlockIsInPrimaryTree((EntityPlayer)event.caster))){
-						event.setCanceled(true);
-						return;
-					}
+			}
+			if (!(entry.unlock instanceof ISpellModifier)){
+				//lock out casting of spells that contain "silver" skills you don't know, or pre-learned ones (somehow) that aren't in your primary tree
+				if (entry.unlockIsInSpell(event.stack) && (!SkillData.For((EntityPlayer)event.caster).isEntryKnown(SkillTreeManager.instance.getSkillTreeEntry(entry.unlock)) || !entry.unlockIsInPrimaryTree((EntityPlayer)event.caster))){
+					event.setCanceled(true);
+					return;
 				}
 			}
 		}
@@ -62,9 +66,9 @@ public class SpellUnlockManager{
 		entries.add(new UnlockEntry(SkillManager.instance.getSkill("Prosperity"), SkillManager.instance.getSkill("Dig"), SkillManager.instance.getSkill("FeatherTouch"), SkillManager.instance.getSkill("MiningPower")));
 	}
 
-	class UnlockEntry{
-		private ISkillTreeEntry unlock;
-		private ISkillTreeEntry[] requiredComponents;
+	static class UnlockEntry{
+		private final ISkillTreeEntry unlock;
+		private final ISkillTreeEntry[] requiredComponents;
 
 		public UnlockEntry(ISkillTreeEntry unlock, ISkillTreeEntry... components){
 			this.unlock = unlock;
@@ -92,7 +96,7 @@ public class SpellUnlockManager{
 		}
 
 		public boolean unlockIsInPrimaryTree(EntityPlayer caster){
-			if (AMCore.config.getSecondarySkillTreeTierCap() >= SkillTreeManager.instance.getHighestTier())
+			if (AMConfig.getInstance().getGeneral().getSecondarySkillTreeTierCap() >= SkillTreeManager.instance.getHighestTier())
 				return true;
 			return SkillData.For(caster).getPrimaryTree() == SkillTreeManager.instance.getSkillTreeEntry(unlock).tree;
 		}

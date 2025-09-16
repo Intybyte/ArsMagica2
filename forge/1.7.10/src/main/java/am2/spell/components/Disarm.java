@@ -3,6 +3,7 @@ package am2.spell.components;
 import am2.AMCore;
 import am2.api.spell.component.interfaces.ISpellComponent;
 import am2.common.api.spell.enums.Affinity;
+import am2.common.configuration.AMConfig;
 import am2.enchantments.AMEnchantments;
 import am2.entities.EntityDarkMage;
 import am2.entities.EntityLightMage;
@@ -45,7 +46,7 @@ public class Disarm implements ISpellComponent{
 		if (target instanceof EntityLightMage || target instanceof EntityDarkMage)
 			return false;
 
-		if (target instanceof EntityPlayer && (!AMCore.config.isDisarmAffectsPlayers() || (!world.isRemote && !MinecraftServer.getServer().isPVPEnabled())))
+		if (target instanceof EntityPlayer && (!AMConfig.getInstance().getGeneral().isDisarmAffectsPlayers() || (!world.isRemote && !MinecraftServer.getServer().isPVPEnabled())))
 			return false;
 
 		if (target instanceof EntityPlayer && ((EntityPlayer)target).getHeldItem() != null && !target.worldObj.isRemote){
@@ -53,7 +54,9 @@ public class Disarm implements ISpellComponent{
 				return true;
 			((EntityPlayer)target).dropOneItem(true);
 			return true;
-		}else if (target instanceof EntityMob && ((EntityMob)target).getHeldItem() != null){
+		}
+
+		if (target instanceof EntityMob && ((EntityMob)target).getHeldItem() != null){
 
 			if (EnchantmentHelper.getEnchantmentLevel(AMEnchantments.soulbound.effectId, ((EntityMob)target).getHeldItem()) > 0)
 				return true;
@@ -67,7 +70,7 @@ public class Disarm implements ISpellComponent{
 				item.setPosition(target.posX, target.posY, target.posZ);
 				world.spawnEntityInWorld(item);
 			}
-			((EntityMob)target).setCurrentItemOrArmor(0, null);
+			target.setCurrentItemOrArmor(0, null);
 
 			((EntityMob)target).setAttackTarget(caster);
 
@@ -122,20 +125,22 @@ public class Disarm implements ISpellComponent{
 	public void spawnParticles(World world, double x, double y, double z, EntityLivingBase caster, Entity target, Random rand, int colorModifier){
 		for (int i = 0; i < 25; ++i){
 			AMParticle particle = (AMParticle)AMCore.proxy.particleManager.spawn(world, "sparkle2", x, y, z);
-			if (particle != null){
-				particle.addRandomOffset(1, 2, 1);
-				particle.AddParticleController(new ParticleMoveOnHeading(particle, MathHelper.wrapAngleTo180_double((target instanceof EntityLivingBase ? ((EntityLivingBase)target).rotationYawHead : target.rotationYaw) + 90), MathHelper.wrapAngleTo180_double(target.rotationPitch), 0.1 + rand.nextDouble() * 0.5, 1, false));
-				particle.AddParticleController(new ParticleFadeOut(particle, 1, false).setFadeSpeed(0.05f));
-				particle.setAffectedByGravity();
-				if (rand.nextBoolean())
-					particle.setRGBColorF(0.7f, 0.7f, 0.1f);
-				else
-					particle.setRGBColorF(0.1f, 0.7f, 0.1f);
-				particle.setMaxAge(40);
-				particle.setParticleScale(0.1f);
-				if (colorModifier > -1){
-					particle.setRGBColorF(((colorModifier >> 16) & 0xFF) / 255.0f, ((colorModifier >> 8) & 0xFF) / 255.0f, (colorModifier & 0xFF) / 255.0f);
-				}
+			if(particle == null) {
+				continue;
+			}
+
+			particle.addRandomOffset(1, 2, 1);
+			particle.AddParticleController(new ParticleMoveOnHeading(particle, MathHelper.wrapAngleTo180_double((target instanceof EntityLivingBase ? ((EntityLivingBase)target).rotationYawHead : target.rotationYaw) + 90), MathHelper.wrapAngleTo180_double(target.rotationPitch), 0.1 + rand.nextDouble() * 0.5, 1, false));
+			particle.AddParticleController(new ParticleFadeOut(particle, 1, false).setFadeSpeed(0.05f));
+			particle.setAffectedByGravity();
+			if (rand.nextBoolean())
+				particle.setRGBColorF(0.7f, 0.7f, 0.1f);
+			else
+				particle.setRGBColorF(0.1f, 0.7f, 0.1f);
+			particle.setMaxAge(40);
+			particle.setParticleScale(0.1f);
+			if (colorModifier > -1){
+				particle.setRGBColorF(((colorModifier >> 16) & 0xFF) / 255.0f, ((colorModifier >> 8) & 0xFF) / 255.0f, (colorModifier & 0xFF) / 255.0f);
 			}
 		}
 	}

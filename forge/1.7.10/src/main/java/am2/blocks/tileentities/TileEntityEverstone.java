@@ -3,6 +3,7 @@ package am2.blocks.tileentities;
 import am2.AMCore;
 import am2.LogHelper;
 import am2.blocks.BlocksCommonProxy;
+import am2.common.configuration.AMConfig;
 import am2.particles.AMParticle;
 import net.minecraft.block.Block;
 import net.minecraft.entity.player.EntityPlayerMP;
@@ -22,7 +23,7 @@ public class TileEntityEverstone extends TileEntity{
 	private int reconstructTimer = 0;
 	private Block facade = null;
 	private int facadeMeta = -1;
-	private static final int reconstructMax = AMCore.config.getEverstoneRepairRate();
+	private static final int reconstructMax = AMConfig.getInstance().getGeneral().getEverstoneRepairRate();
 
 	private boolean poweredFromEverstone = false;
 	private boolean poweredFromRedstone = false;

@@ -13,6 +13,7 @@ import am2.armor.ArmorHelper;
 import am2.common.armor.ArsMagicaArmorMaterial;
 import am2.blocks.BlocksCommonProxy;
 import am2.buffs.BuffList;
+import am2.common.configuration.AMConfig;
 import am2.entities.EntityDarkMage;
 import am2.entities.EntityLightMage;
 import am2.items.ItemsCommonProxy;
@@ -92,7 +93,7 @@ public class SpellHelper{
 		ISpellShape stageShape = SpellUtils.instance.getShapeForStage(stack, 0);
 		if (stageShape == null) return SpellCastResult.MALFORMED_SPELL_STACK;
 
-		if ((!AMCore.config.isAllowCreativeTargets()) && target instanceof EntityPlayerMP && ((EntityPlayerMP) target).capabilities.isCreativeMode) {
+		if ((!AMConfig.getInstance().getGeneral().isAllowCreativeTargets()) && target instanceof EntityPlayerMP && ((EntityPlayerMP) target).capabilities.isCreativeMode) {
 			return SpellCastResult.EFFECT_FAILED;
 		}
 
@@ -105,25 +106,27 @@ public class SpellHelper{
 			if (SkillTreeManager.instance.isSkillDisabled(component))
 				continue;
 
-			if (component.applyEffectEntity(stack, world, caster, target)){
-				appliedOneComponent = true;
-				if (world.isRemote){
-					int color = -1;
-					if (SpellUtils.instance.modifierIsPresent(SpellModifiers.COLOR, stack, 0)){
-						ISpellModifier[] mods = SpellUtils.instance.getModifiersForStage(stack, 0);
-						int ordinalCount = 0;
-						for (ISpellModifier mod : mods){
-							if (mod instanceof Colour){
-								byte[] meta = SpellUtils.instance.getModifierMetadataFromStack(stack, mod, 0, ordinalCount++);
-								color = (int)mod.getModifier(SpellModifiers.COLOR, null, null, null, meta);
-							}
+			if(!component.applyEffectEntity(stack, world, caster, target)) {
+				continue;
+			}
+
+			appliedOneComponent = true;
+			if (world.isRemote){
+				int color = -1;
+				if (SpellUtils.instance.modifierIsPresent(SpellModifiers.COLOR, stack, 0)){
+					ISpellModifier[] mods = SpellUtils.instance.getModifiersForStage(stack, 0);
+					int ordinalCount = 0;
+					for (ISpellModifier mod : mods){
+						if (mod instanceof Colour){
+							byte[] meta = SpellUtils.instance.getModifierMetadataFromStack(stack, mod, 0, ordinalCount++);
+							color = (int)mod.getModifier(SpellModifiers.COLOR, null, null, null, meta);
 						}
 					}
-					component.spawnParticles(world, target.posX, target.posY + target.getEyeHeight(), target.posZ, caster, target, world.rand, color);
 				}
-				if (shiftAffinityAndXP)
-					SpellUtils.instance.doAffinityShift(caster, component, stageShape);
+				component.spawnParticles(world, target.posX, target.posY + target.getEyeHeight(), target.posZ, caster, target, world.rand, color);
 			}
+			if (shiftAffinityAndXP)
+				SpellUtils.instance.doAffinityShift(caster, component, stageShape);
 		}
 
 		if (appliedOneComponent)
@@ -318,7 +321,7 @@ public class SpellHelper{
 			}
 		}
 
-		magnitude *= AMCore.config.getDamageMultiplier();
+		magnitude *= AMConfig.getInstance().getGeneral().getDamageMultiplier();
 
 		ItemStack oldItemStack = null;
 
